@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 @Repository
@@ -37,7 +37,6 @@ public class HorseDao implements IHorseDao {
             result.getTimestamp("updated").toLocalDateTime());
     }
 
-
     @Override
     public Horse findOneById(Integer id) throws PersistenceException, NotFoundException {
         LOGGER.info("Get horse with id " + id);
@@ -60,4 +59,41 @@ public class HorseDao implements IHorseDao {
             throw new NotFoundException("Could not find horse with id " + id);
         }
     }
+
+    @Override
+    public Horse insertOne(Horse horse) throws PersistenceException {
+
+        String sql="INSERT INTO HORSE(name,breed,min_Speed, max_Speed, created, updated) VALUES (?,?,?,?,?,?);";
+
+        try{
+
+            Timestamp tmstmp=Timestamp.valueOf(LocalDateTime.now());
+            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1,horse.getName());
+            statement.setString(2,horse.getBreed());
+            statement.setDouble(3,horse.getMinSpeed());
+            statement.setDouble(4,horse.getMaxSpeed());
+            statement.setTimestamp(5, tmstmp);
+            statement.setTimestamp(6, tmstmp);
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+
+            int key=1;
+            if (rs != null && rs.next()) {
+                key = rs.getInt(1);
+            }
+            horse.setCreated(tmstmp.toLocalDateTime());
+            horse.setUpdated(tmstmp.toLocalDateTime());
+            horse.setId(key);
+
+            LOGGER.info("Save horse: "+ horse.toString());
+
+            return horse;
+        } catch (SQLException e){
+            LOGGER.error("Problem while adding horse to database", e);
+            throw new PersistenceException("Could not add horse to database", e);
+        }
+
+    }
+
 }

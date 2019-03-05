@@ -14,4 +14,12 @@ public interface IHorseService {
      */
     Horse findOneById(Integer id) throws ServiceException, NotFoundException;
 
+    /**
+     *
+     * @param horse to insert into database
+     * @return horse on successful insertion
+     * @throws ServiceException  will be thrown if something goes wrong during data processing.
+     */
+    public Horse insertOne(Horse horse) throws ServiceException;
+
 }

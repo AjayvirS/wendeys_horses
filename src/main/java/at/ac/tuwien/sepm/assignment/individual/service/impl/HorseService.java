@@ -24,10 +24,21 @@ public class HorseService implements IHorseService {
 
     @Override
     public Horse findOneById(Integer id) throws ServiceException, NotFoundException {
-        LOGGER.info("Get horse with id " + id);
+        LOGGER.info("Service-Layer: Get horse with id " + id);
         try {
             return horseDao.findOneById(id);
         } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Horse insertOne(Horse horse) throws ServiceException {
+        LOGGER.info("Service-Layer: Store Horse with following name: "+horse.getName());
+        try {
+            return horseDao.insertOne(horse);
+        } catch (PersistenceException e) {
+            LOGGER.error("Problem while processing horse");
             throw new ServiceException(e.getMessage(), e);
         }
     }
