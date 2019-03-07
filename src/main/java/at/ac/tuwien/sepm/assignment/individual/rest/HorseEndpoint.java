@@ -3,6 +3,8 @@ package at.ac.tuwien.sepm.assignment.individual.rest;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.service.IHorseService;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.util.mapper.HorseMapper;
 import org.slf4j.Logger;
@@ -43,7 +45,7 @@ public class HorseEndpoint {
    public HorseDto insertOne(@RequestBody HorseDto horseDto){
         try{
             return horseMapper.entityToDto(horseService.insertOne(horseMapper.dtoToEntity(horseDto)));
-        } catch (ServiceException e) {
+        } catch (ServiceException | OutofRangeException | InvalidDataException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
    }

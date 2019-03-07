@@ -2,6 +2,8 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
 
 public interface IHorseService {
@@ -19,7 +21,8 @@ public interface IHorseService {
      * @param horse to insert into database
      * @return horse on successful insertion
      * @throws ServiceException  will be thrown if something goes wrong during data processing.
+     * @throws OutofRangeException will be thrown if values of speed are out of range
      */
-    public Horse insertOne(Horse horse) throws ServiceException;
+    Horse insertOne(Horse horse) throws ServiceException, OutofRangeException, InvalidDataException;
 
 }
