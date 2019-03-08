@@ -18,10 +18,19 @@ public interface IHorseDao {
 
     /**
      *
-     * @param horse to insert into database
-     * @return horse on successful insertion
+     * @param horse to insert into database.
+     * @return horse on successful insertion.
      * @throws PersistenceException will be thrown if something goes wrong during the database access.
      */
     Horse insertOne(Horse horse) throws PersistenceException;
 
+
+    /**
+     *
+     * @param id of the horse to be updated.
+     * @param horse to update given values of horse.
+     * @return horse on successful update.
+     * @throws PersistenceException will be thrown if something goes wrong during the database access.
+     */
+    Horse updateOneById(Integer id, Horse horse) throws PersistenceException, NotFoundException;
 }

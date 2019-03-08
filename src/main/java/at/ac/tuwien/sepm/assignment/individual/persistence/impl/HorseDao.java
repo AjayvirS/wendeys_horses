@@ -50,12 +50,13 @@ public class HorseDao implements IHorseDao {
                 horse = dbResultToHorseDto(result);
             }
         } catch (SQLException e) {
-            LOGGER.error("Problem while executing SQL select statement for reading horse with id " + id, e);
+            LOGGER.error("Problem while executing SQL SELECT statement for reading horse with id " + id, e);
             throw new PersistenceException("Could not read horses with id " + id, e);
         }
         if (horse != null) {
             return horse;
         } else {
+            LOGGER.error("Could not find horse with id "+id);
             throw new NotFoundException("Could not find horse with id " + id);
         }
     }
@@ -63,22 +64,22 @@ public class HorseDao implements IHorseDao {
     @Override
     public Horse insertOne(Horse horse) throws PersistenceException {
 
-        String sql="INSERT INTO HORSE(name,breed,min_Speed, max_Speed, created, updated) VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT INTO HORSE(name,breed,min_Speed, max_Speed, created, updated) VALUES (?,?,?,?,?,?);";
 
-        try{
+        try {
 
-            Timestamp tmstmp=Timestamp.valueOf(LocalDateTime.now());
-            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1,horse.getName());
-            statement.setString(2,horse.getBreed());
-            statement.setDouble(3,horse.getMinSpeed());
-            statement.setDouble(4,horse.getMaxSpeed());
+            Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
+            PreparedStatement statement = dbConnectionManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, horse.getName());
+            statement.setString(2, horse.getBreed());
+            statement.setDouble(3, horse.getMinSpeed());
+            statement.setDouble(4, horse.getMaxSpeed());
             statement.setTimestamp(5, tmstmp);
             statement.setTimestamp(6, tmstmp);
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
 
-            int key=1;
+            int key = 1;
             if (rs != null && rs.next()) {
                 key = rs.getInt(1);
             }
@@ -86,12 +87,50 @@ public class HorseDao implements IHorseDao {
             horse.setUpdated(tmstmp.toLocalDateTime());
             horse.setId(key);
 
-            LOGGER.info("Save horse: "+ horse.toString());
+            LOGGER.info("Save horse: " + horse.toString());
 
             return horse;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Problem while adding horse to database", e);
             throw new PersistenceException("Could not add horse to database", e);
+        }
+
+    }
+
+    @Override
+    public Horse updateOneById(Integer id, Horse horse) throws PersistenceException, NotFoundException {
+        Horse temphorse = null;
+        LOGGER.info("Update horse with id: " + id);
+        String sql = "UPDATE horse SET name = ?, breed = ?, min_Speed=?, max_Speed=?, updated=? WHERE id=?";
+        try {
+
+            Connection con = dbConnectionManager.getConnection();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.clearParameters();
+
+
+            temphorse = findOneById(id);
+
+            statement = con.prepareStatement(sql);
+            Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
+            statement.setString(1, horse.getName());
+            statement.setString(2, horse.getBreed());
+            statement.setDouble(3, horse.getMinSpeed());
+            statement.setDouble(4, horse.getMaxSpeed());
+            statement.setTimestamp(5, tmstmp);
+            statement.setInt(6, id);
+            statement.executeUpdate();
+
+            statement.clearParameters();
+
+            temphorse = findOneById(id);
+
+            return temphorse;
+
+        } catch (
+            SQLException e) {
+            LOGGER.error("Problem while executing SQL UPDATE statement for updating horse with id " + id, e);
+            throw new PersistenceException("Could not update horse with id " + id, e);
         }
 
     }

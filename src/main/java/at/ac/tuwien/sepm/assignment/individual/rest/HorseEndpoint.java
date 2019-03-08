@@ -35,7 +35,7 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.findOneById(id));
         } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during read horse with id " + id, e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with id " + id, e);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse: " + e.getMessage(), e);
         }
@@ -47,6 +47,21 @@ public class HorseEndpoint {
             return horseMapper.entityToDto(horseService.insertOne(horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException | OutofRangeException | InvalidDataException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+   }
+
+   @RequestMapping(value="{id}",method=RequestMethod.PUT)
+    public HorseDto updateOneById(@PathVariable("id") Integer id, @RequestBody HorseDto horseDto){
+        try{
+            return horseMapper.entityToDto(horseService.updateOneById(id, horseMapper.dtoToEntity(horseDto)));
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with id " + id, e);
+        } catch (OutofRangeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during read horse with id " + id, e);
+        } catch (InvalidDataException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during updating horse: " + e.getMessage(), e);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating horse: " + e.getMessage(), e);
         }
    }
 }
