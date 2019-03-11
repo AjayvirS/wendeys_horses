@@ -38,8 +38,9 @@ public class HorseService implements IHorseService {
     public Horse insertOne(Horse horse) throws ServiceException, OutofRangeException, InvalidDataException {
 
         try {
+            LOGGER.info("Check credentials of horse to be inserted");
             checkCredentials(horse);
-            LOGGER.info("Store Horse with following name: "+horse.getName());
+            LOGGER.info("Insert Horse with following name: "+horse.getName());
             return horseDao.insertOne(horse);
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing horse");
@@ -60,8 +61,9 @@ public class HorseService implements IHorseService {
     @Override
     public Horse updateOneById(Integer id, Horse horse) throws ServiceException, OutofRangeException, InvalidDataException, NotFoundException{
         try{
+            LOGGER.info("Check credentials of horse to be inserted");
             checkCredentials(horse);
-            LOGGER.info("Updating horse with id "+ id);
+            LOGGER.info("Update horse with id "+ id);
             return horseDao.updateOneById(id, horse);
         } catch (PersistenceException e){
             LOGGER.error("Error while processing horse");
@@ -70,8 +72,19 @@ public class HorseService implements IHorseService {
 
     }
 
+    @Override
+    public void deleteOneById(Integer id) throws ServiceException, NotFoundException{
+        try{
+            LOGGER.info("Delete horse with id "+id);
+            horseDao.deleteOneById(id);
+        } catch (PersistenceException e) {
+            LOGGER.error("Error while processing horse");
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
     private boolean speedOutOfRange(Horse horse){
-        return (horse.getMinSpeed()<40.0 || horse.getMaxSpeed()>60);
+        return (horse.getMinSpeed()<40.0 || horse.getMaxSpeed()>60.0);
 
     }
     private boolean invalidHorseName(Horse horse){

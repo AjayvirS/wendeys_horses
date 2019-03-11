@@ -37,4 +37,12 @@ public interface IHorseService {
      * @throws NotFoundException will be thrown if the horse could not be found in the system.
      */
     Horse updateOneById(Integer id, Horse horse) throws ServiceException, OutofRangeException, InvalidDataException, NotFoundException;
+
+
+    /**
+     * @param id of the horse to delete.
+     * @throws ServiceException  will be thrown if something goes wrong during data processing.
+     * @throws NotFoundException will be thrown if the horse could not be found in the system.
+     */
+    void deleteOneById(Integer id) throws ServiceException, NotFoundException;
 }

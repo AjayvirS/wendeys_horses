@@ -63,7 +63,7 @@ public class HorseDao implements IHorseDao {
 
     @Override
     public Horse insertOne(Horse horse) throws PersistenceException {
-
+        LOGGER.info("Insert horse");
         String sql = "INSERT INTO HORSE(name,breed,min_Speed, max_Speed, created, updated) VALUES (?,?,?,?,?,?);";
 
         try {
@@ -87,8 +87,6 @@ public class HorseDao implements IHorseDao {
             horse.setUpdated(tmstmp.toLocalDateTime());
             horse.setId(key);
 
-            LOGGER.info("Save horse: " + horse.toString());
-
             return horse;
         } catch (SQLException e) {
             LOGGER.error("Problem while adding horse to database", e);
@@ -108,7 +106,7 @@ public class HorseDao implements IHorseDao {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.clearParameters();
 
-
+            //throws NotFoundException
             temphorse = findOneById(id);
 
             statement = con.prepareStatement(sql);
@@ -123,14 +121,41 @@ public class HorseDao implements IHorseDao {
 
             statement.clearParameters();
 
+            //throws NotFoundException
             temphorse = findOneById(id);
 
             return temphorse;
 
         } catch (
             SQLException e) {
-            LOGGER.error("Problem while executing SQL UPDATE statement for updating horse with id " + id, e);
+            LOGGER.error("Could not update horse with " + id, e);
             throw new PersistenceException("Could not update horse with id " + id, e);
+        }
+
+    }
+
+
+    @Override
+    public void deleteOneById(Integer id) throws PersistenceException, NotFoundException{
+        LOGGER.info("Delete horse with id "+id);
+
+        String sql="DELETE FROM horse WHERE id=?";
+        try{
+            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
+            statement.setInt(1,id);
+            int checkZero=statement.executeUpdate();
+
+            if(checkZero>0){
+                return;
+            } else{
+                LOGGER.error("Could not find horse with id "+id);
+                throw new NotFoundException("Could not find horse with id "+id);
+            }
+
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete horse with id "+id,e);
+            throw new PersistenceException("Could not delete horse with id "+id,e);
         }
 
     }
