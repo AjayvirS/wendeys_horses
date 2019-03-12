@@ -31,9 +31,9 @@ public interface IHorseService {
 
 
     /**
-     * @param id of the horse to update.
-     * @param horse to update given values of horse.
-     * @return horse on successful insertion.
+     * @param id of the horse to be updated.
+     * @param horse to update given values of horse, may contain null fields.
+     * @return horse on successful insertion else below exception thrown.
      * @throws ServiceException  will be thrown if something goes wrong during data processing.
      * @throws OutofRangeException will be thrown if values of speed are out of range.
      * @throws InvalidDataException will be thrown if invalid data such as unexpected null fields are supplied.
@@ -43,7 +43,7 @@ public interface IHorseService {
 
 
     /**
-     * @param id of the horse to delete.
+     * @param id of the horse to be deleted.
      * @throws ServiceException  will be thrown if something goes wrong during data processing.
      * @throws NotFoundException will be thrown if the horse could not be found in the system.
      */
@@ -52,12 +52,12 @@ public interface IHorseService {
 
     /**
      *
-     * @param name filters records by name [OPTIONAL]
-     * @param breed to filters records by breed [OPTIONAL]
-     * @param minSpeed filers records to get all horses with greater or equal [OPTIONAL]
-     * @param maxSpeed filers records to get all horses with smaller or equal [OPTIONAL]
-     * @return A list of filtered records of horses as ArrayList
-     * @throws NotFoundException will be thrown if list returned is empty
+     * @param name filters records by name [OPTIONAL].
+     * @param breed to filters records by breed [OPTIONAL].
+     * @param minSpeed filers records to get all horses with greater or equal [OPTIONAL].
+     * @param maxSpeed filers records to get all horses with smaller or equal [OPTIONAL].
+     * @return A list of filtered records of horses as ArrayList.
+     * @throws NotFoundException will be thrown if list returned is empty.
      */
     ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws ServiceException, NotFoundException;
 }
