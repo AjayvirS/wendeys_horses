@@ -114,14 +114,11 @@ public class HorseDao implements IHorseDao {
 
             //throws NotFoundException
             temphorse = findOneById(id);
-            if(horse.getMinSpeed()==null){
-                //if(temphorse.get)
-            }
 
             statement = con.prepareStatement(sql);
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
-            statement.setString(1, horse.getName());
-            statement.setString(2, horse.getBreed());
+            statement.setString(1, horse.getName()==null?temphorse.getName():horse.getName());
+            statement.setString(2, horse.getBreed()==null?temphorse.getBreed():horse.getBreed());
             statement.setDouble(3, horse.getMinSpeed()==null?temphorse.getMinSpeed():horse.getMinSpeed());
             statement.setDouble(4, horse.getMaxSpeed()==null?temphorse.getMaxSpeed():horse.getMaxSpeed());
             statement.setTimestamp(5, tmstmp);
