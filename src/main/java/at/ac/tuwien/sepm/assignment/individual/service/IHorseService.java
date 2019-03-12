@@ -6,6 +6,8 @@ import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataExc
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
 
+import java.util.ArrayList;
+
 public interface IHorseService {
 
     /**
@@ -45,4 +47,6 @@ public interface IHorseService {
      * @throws NotFoundException will be thrown if the horse could not be found in the system.
      */
     void deleteOneById(Integer id) throws ServiceException, NotFoundException;
+
+    ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws ServiceException, NotFoundException;
 }

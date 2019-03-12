@@ -12,8 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/v1/horses")
@@ -29,7 +32,6 @@ public class HorseEndpoint {
         this.horseService = horseService;
         this.horseMapper = horseMapper;
     }
-
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -79,7 +81,18 @@ public class HorseEndpoint {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public HorseDto[] getAllorFiltered(@Nullable String name, String breed, Double minSpeed, Double maxSpeed) {
+        try {
 
+            return horseMapper.entitiesToDto(horseService.getAllOrFiltered(name, breed, minSpeed, maxSpeed));
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with following optional" + (name == null ? "" : "Name: " + name) +
+                (breed == null ? "" : ", Breed: " + breed) + (minSpeed == null ? "" : ", min. Speed: " + minSpeed) + (maxSpeed == null ? "" : "max. Speed: " + maxSpeed), e);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse: " + e.getMessage(), e);
+        }
+    }
 
 
 }
