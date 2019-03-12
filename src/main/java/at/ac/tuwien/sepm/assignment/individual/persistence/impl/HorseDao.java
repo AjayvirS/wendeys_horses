@@ -109,6 +109,7 @@ public class HorseDao implements IHorseDao {
             //throws NotFoundException
             temphorse = findOneById(id);
 
+
             statement = con.prepareStatement(sql);
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
             statement.setString(1, horse.getName());
