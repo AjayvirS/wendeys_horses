@@ -119,8 +119,8 @@ public class HorseDao implements IHorseDao {
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
             statement.setString(1, horse.getName());
             statement.setString(2, horse.getBreed());
-            statement.setDouble(3, horse.getMinSpeed());
-            statement.setDouble(4, horse.getMaxSpeed());
+            statement.setDouble(3, horse.getMinSpeed()==null?temphorse.getMinSpeed():horse.getMinSpeed());
+            statement.setDouble(4, horse.getMaxSpeed()==null?temphorse.getMaxSpeed():horse.getMaxSpeed());
             statement.setTimestamp(5, tmstmp);
             statement.setInt(6, id);
             statement.executeUpdate();
