@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,9 +103,9 @@ public class HorseDao implements IHorseDao {
     }
 
     @Override
-    public Horse updateOneById(Integer id, Horse horse) throws PersistenceException, NotFoundException {
-        Horse temphorse = null;
-        LOGGER.info("Update horse with id: " + id);
+    public Horse updateOneById(Integer id, Horse horse) throws PersistenceException, NotFoundException, InvalidDataException {
+        Horse dbHorse = null;
+        LOGGER.info("Update horse with id " + id);
         String sql = "UPDATE horse SET name = ?, breed = ?, min_Speed=?, max_Speed=?, updated=? WHERE id=?";
         try {
 
@@ -113,24 +114,35 @@ public class HorseDao implements IHorseDao {
             statement.clearParameters();
 
             //throws NotFoundException
-            temphorse = findOneById(id);
+            dbHorse = findOneById(id);
+
+            if(horse.getMinSpeed()!=null){
+                if(dbHorse.getMaxSpeed()<horse.getMinSpeed()){
+                    throw new InvalidDataException("Input min speed is larger than max speed present in database!");
+                }
+            }
+            if(horse.getMaxSpeed()!=null){
+                if(dbHorse.getMinSpeed()>horse.getMaxSpeed()){
+                    throw new InvalidDataException("Input max speed is smaller than min speed present in database!");
+                }
+            }
 
             statement = con.prepareStatement(sql);
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
-            statement.setString(1, horse.getName()==null?temphorse.getName():horse.getName());
-            statement.setString(2, horse.getBreed()==null?temphorse.getBreed():horse.getBreed());
-            statement.setDouble(3, horse.getMinSpeed()==null?temphorse.getMinSpeed():horse.getMinSpeed());
-            statement.setDouble(4, horse.getMaxSpeed()==null?temphorse.getMaxSpeed():horse.getMaxSpeed());
+            statement.setString(1, horse.getName()==null?dbHorse.getName():horse.getName());
+            statement.setString(2, horse.getBreed()==null?dbHorse.getBreed():horse.getBreed());
+            statement.setDouble(3, horse.getMinSpeed()==null?dbHorse.getMinSpeed():horse.getMinSpeed());
+            statement.setDouble(4, horse.getMaxSpeed()==null?dbHorse.getMaxSpeed():horse.getMaxSpeed());
             statement.setTimestamp(5, tmstmp);
             statement.setInt(6, id);
             statement.executeUpdate();
             statement.clearParameters();
 
             //throws NotFoundException
-            temphorse = findOneById(id);
+            dbHorse = findOneById(id);
             statement.close();
 
-            return temphorse;
+            return dbHorse;
         } catch (
             SQLException e) {
             LOGGER.error("Could not update horse with " + id, e);
@@ -168,6 +180,7 @@ public class HorseDao implements IHorseDao {
 
     @Override
     public ArrayList<Horse> getAllOrFiltered(Horse horse) throws PersistenceException, NotFoundException {
+        LOGGER.info("Get horse/s with optional parameters: "+horse.printOptionals());
         ArrayList<Horse> filteredList= new ArrayList<>();
         String sql="SELECT * FROM horse WHERE name LIKE ? AND COALESCE(horse.breed,'') LIKE ? AND min_speed>=? AND max_speed<=?";
         try{

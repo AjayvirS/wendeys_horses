@@ -50,7 +50,7 @@ public class HorseService implements IHorseService {
             throw new ServiceException(e.getMessage(), e);
         }
     }
-    
+
     @Override
     public Horse updateOneById(Integer id, Horse horse) throws ServiceException, OutofRangeException, InvalidDataException, NotFoundException {
         try {
@@ -123,9 +123,14 @@ public class HorseService implements IHorseService {
         }
     }
 
-    private void invalidHorseUpdateData(Horse horse) throws InvalidDataException{
+    private void invalidHorseUpdateData(Horse horse) throws InvalidDataException, OutofRangeException {
+
+        if(isSpeedOutOfRange(horse)){
+            LOGGER.error("Speed is out of range.");
+            throw new OutofRangeException("The minimum and maximum speed needs to be between 40 and 60 km/h!");
+        }
         isMaxSmallerMin(horse);
-        if(horse.getName().isBlank()){
+        if(horse.getName()!=null && horse.getName().isBlank()){
             throw new InvalidDataException("Name must be set.");
         }
 

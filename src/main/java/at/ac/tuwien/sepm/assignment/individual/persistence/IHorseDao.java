@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.persistence;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public interface IHorseDao {
      * @return horse on successful update.
      * @throws PersistenceException will be thrown if something goes wrong during the database access.
      */
-    Horse updateOneById(Integer id, Horse horse) throws PersistenceException, NotFoundException;
+    Horse updateOneById(Integer id, Horse horse) throws PersistenceException, NotFoundException, InvalidDataException;
 
 
     /**
