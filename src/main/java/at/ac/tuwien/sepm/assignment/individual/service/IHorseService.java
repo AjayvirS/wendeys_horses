@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
@@ -48,5 +49,15 @@ public interface IHorseService {
      */
     void deleteOneById(Integer id) throws ServiceException, NotFoundException;
 
+
+    /**
+     *
+     * @param name filters records by name [OPTIONAL]
+     * @param breed to filters records by breed [OPTIONAL]
+     * @param minSpeed filers records to get all horses with greater or equal [OPTIONAL]
+     * @param maxSpeed filers records to get all horses with smaller or equal [OPTIONAL]
+     * @return A list of filtered records of horses as ArrayList
+     * @throws NotFoundException will be thrown if list returned is empty
+     */
     ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws ServiceException, NotFoundException;
 }
