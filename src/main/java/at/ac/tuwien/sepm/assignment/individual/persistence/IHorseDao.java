@@ -43,13 +43,10 @@ public interface IHorseDao {
 
     /**
      *
-     * @param name filters records by name [OPTIONAL]
-     * @param breed to filters records by breed [OPTIONAL]
-     * @param minSpeed filers records to get all horses with greater or equal [OPTIONAL]
-     * @param maxSpeed filers records to get all horses with smaller or equal [OPTIONAL]
+     * @param horse filters records by name, breed, minSpeed, maxSpeed [OPTIONAL]
      * @return A list of filtered records of horses as ArrayList
      * @throws PersistenceException will be thrown if something goes wrong during the database access
      * @throws NotFoundException will be thrown if list returned is empty
      */
-    ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws PersistenceException, NotFoundException;
+    ArrayList getAllOrFiltered(Horse horse) throws PersistenceException, NotFoundException;
 }

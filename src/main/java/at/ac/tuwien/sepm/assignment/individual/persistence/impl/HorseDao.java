@@ -5,6 +5,7 @@ import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
+import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +114,9 @@ public class HorseDao implements IHorseDao {
 
             //throws NotFoundException
             temphorse = findOneById(id);
-
+            if(horse.getMinSpeed()==null){
+                //if(temphorse.get)
+            }
 
             statement = con.prepareStatement(sql);
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
@@ -167,23 +170,23 @@ public class HorseDao implements IHorseDao {
     }
 
     @Override
-    public ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws PersistenceException, NotFoundException {
-        ArrayList<Horse> filteredList= new ArrayList<Horse>();
+    public ArrayList<Horse> getAllOrFiltered(Horse horse) throws PersistenceException, NotFoundException {
+        ArrayList<Horse> filteredList= new ArrayList<>();
         String sql="SELECT * FROM horse WHERE name LIKE ? AND COALESCE(horse.breed,'') LIKE ? AND min_speed>=? AND max_speed<=?";
         try{
             PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
-            if(name==null){
+            if(horse.getName()==null){
                 statement.setString(1, "%");
-            } else statement.setString(1, name);
-            if(breed==null){
+            } else statement.setString(1, horse.getName());
+            if(horse.getBreed()==null){
                 statement.setString(2, "%");
-            } else statement.setString(2, breed);
-            if(minSpeed==null){
+            } else statement.setString(2, horse.getBreed());
+            if(horse.getMinSpeed()==null){
                 statement.setDouble(3, 40.0);
-            } else statement.setDouble(3, minSpeed);
-            if(maxSpeed==null){
+            } else statement.setDouble(3, horse.getMinSpeed());
+            if(horse.getMaxSpeed()==null){
                 statement.setDouble(4, 60.0);
-            } else statement.setDouble(4, maxSpeed);
+            } else statement.setDouble(4, horse.getMaxSpeed());
 
             ResultSet rs=statement.executeQuery();
 
@@ -198,10 +201,8 @@ public class HorseDao implements IHorseDao {
         }
 
         if(filteredList.isEmpty()){
-            LOGGER.error("Could not find horse/s with following optional parameters: "+(name==null?"":"Name: "+name)+
-                (breed==null?"":", Breed: "+breed)+(minSpeed==null?"":", min. Speed: "+minSpeed)+(maxSpeed==null?"":"max. Speed: "+maxSpeed));
-            throw new NotFoundException("Could not find horses with optional parameters: "+(name==null?"":"Name: "+name)+
-                (breed==null?"":", Breed: "+breed)+(minSpeed==null?"":", min. Speed: "+minSpeed)+(maxSpeed==null?"":"max. Speed: "+maxSpeed));
+            LOGGER.error("Could not find horse/s with following optional parameters: "+horse.printOptionals());
+            throw new NotFoundException("Could not find horses with optional parameters: "+horse.printOptionals());
         } else return filteredList;
 
     }

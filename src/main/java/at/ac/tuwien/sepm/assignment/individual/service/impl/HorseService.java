@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
+import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.service.IHorseService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
@@ -52,7 +53,6 @@ public class HorseService implements IHorseService {
     }
 
 
-
     @Override
     public Horse updateOneById(Integer id, Horse horse) throws ServiceException, OutofRangeException, InvalidDataException, NotFoundException {
         try {
@@ -61,7 +61,7 @@ public class HorseService implements IHorseService {
             LOGGER.info("Update horse with id " + id);
             return horseDao.updateOneById(id, horse);
         } catch (PersistenceException e) {
-            LOGGER.error("Error while processing horse with id "+id);
+            LOGGER.error("Error while processing horse with id " + id);
             throw new ServiceException(e.getMessage(), e);
         }
 
@@ -80,11 +80,10 @@ public class HorseService implements IHorseService {
 
 
     @Override
-    public ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws ServiceException, NotFoundException {
-        LOGGER.info("Get horse/s with following optional parameters: " +(name==null?"":"Name: "+name)+
-            (breed==null?"":", Breed: "+breed)+(minSpeed==null?"":", min. Speed: "+minSpeed)+(maxSpeed==null?"":"max. Speed: "+maxSpeed));
+    public ArrayList<Horse> getAllOrFiltered(Horse horse) throws ServiceException, NotFoundException {
+        LOGGER.info("Get horse/s with following optional parameters: " + horse.printOptionals());
         try {
-            return horseDao.getAllOrFiltered(name, breed, minSpeed, maxSpeed);
+            return horseDao.getAllOrFiltered(horse);
         } catch (PersistenceException e) {
 
             throw new ServiceException(e.getMessage(), e);
@@ -104,21 +103,21 @@ public class HorseService implements IHorseService {
     }
 
     private boolean invalidHorseInputData(Horse horse) throws InvalidDataException {
-        if(horse.getName() == null){
+        if (horse.getName() == null) {
             throw new InvalidDataException("Name must be set!");
         }
-        if(horse.getMinSpeed()==null){
+        if (horse.getMinSpeed() == null) {
             throw new InvalidDataException("Min speed must be set!");
         }
-        if(horse.getMaxSpeed()==null){
+        if (horse.getMaxSpeed() == null) {
             throw new InvalidDataException("Max speed must be set!");
         }
         return true;
     }
 
-    private boolean isMaxSmallerMin(Horse horse){
-        if (horse.getMinSpeed()!=null && horse.getMaxSpeed()!=null){
-            return horse.getMinSpeed()<=horse.getMaxSpeed();
+    private boolean isMaxSmallerMin(Horse horse) {
+        if (horse.getMinSpeed() != null && horse.getMaxSpeed() != null) {
+            return horse.getMinSpeed() <= horse.getMaxSpeed();
         } else return false;
     }
 
@@ -129,7 +128,7 @@ public class HorseService implements IHorseService {
         } else if (invalidHorseInputData(horse)) {
             LOGGER.error("Invalid name.");
             throw new InvalidDataException("Name must be set.");
-        } else if(isMaxSmallerMin(horse)){
+        } else if (isMaxSmallerMin(horse)) {
             LOGGER.error("Maximum speed is larger than minimum speed");
             throw new InvalidDataException("Maximum speed needs to be smaller or equal to minimum speed!");
         }

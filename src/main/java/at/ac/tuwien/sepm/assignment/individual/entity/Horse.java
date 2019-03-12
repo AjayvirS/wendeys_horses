@@ -114,5 +114,10 @@ public class Horse {
             ", updated=" + updated +
             '}';
     }
+    public String printOptionals(){
+        return (this.getName() == null ? "" : "Name: " + this.getName()) +
+            (this.getBreed() == null ? "" : ", Breed: " + this.getBreed()) + (this.getMinSpeed() == null ? "" : ", min. Speed: " + this.getMinSpeed()) + (this.getMaxSpeed() == null ? "" : "max. Speed: " + this.getMaxSpeed());
+
+    }
 
 }

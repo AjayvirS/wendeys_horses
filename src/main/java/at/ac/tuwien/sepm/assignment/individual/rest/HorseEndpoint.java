@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -82,13 +80,12 @@ public class HorseEndpoint {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public HorseDto[] getAllorFiltered(@Nullable String name, String breed, Double minSpeed, Double maxSpeed) {
+    public HorseDto[] getAllorFiltered(HorseDto horseDto) {
         try {
 
-            return horseMapper.entitiesToDto(horseService.getAllOrFiltered(name, breed, minSpeed, maxSpeed));
+            return horseMapper.entitiesToDto(horseService.getAllOrFiltered(horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with following optional" + (name == null ? "" : "Name: " + name) +
-                (breed == null ? "" : ", Breed: " + breed) + (minSpeed == null ? "" : ", min. Speed: " + minSpeed) + (maxSpeed == null ? "" : "max. Speed: " + maxSpeed), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with following optional " + horseMapper.dtoToEntity(horseDto).printOptionals());
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse: " + e.getMessage(), e);
         }
