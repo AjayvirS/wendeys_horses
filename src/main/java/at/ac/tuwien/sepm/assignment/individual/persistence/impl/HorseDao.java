@@ -49,16 +49,20 @@ public class HorseDao implements IHorseDao {
             while (result.next()) {
                 horse = dbResultToHorseDto(result);
             }
+            statement.close();
         } catch (SQLException e) {
             LOGGER.error("Problem while executing SQL SELECT statement for reading horse with id " + id, e);
             throw new PersistenceException("Error while accessing database", e);
         }
+
+
         if (horse != null) {
             return horse;
         } else {
             LOGGER.error("Could not find horse with id "+id);
             throw new NotFoundException("Could not find horse with id " + id);
         }
+
     }
 
     @Override
@@ -86,6 +90,7 @@ public class HorseDao implements IHorseDao {
             horse.setCreated(tmstmp.toLocalDateTime());
             horse.setUpdated(tmstmp.toLocalDateTime());
             horse.setId(key);
+            statement.close();
 
             return horse;
         } catch (SQLException e) {
@@ -123,6 +128,7 @@ public class HorseDao implements IHorseDao {
 
             //throws NotFoundException
             temphorse = findOneById(id);
+            statement.close();
 
             return temphorse;
         } catch (
@@ -144,6 +150,7 @@ public class HorseDao implements IHorseDao {
             statement.setInt(1,id);
             int checkZero=statement.executeUpdate();
 
+            statement.close();
             if(checkZero>0){
                 return;
             } else{
@@ -184,7 +191,7 @@ public class HorseDao implements IHorseDao {
                 filteredList.add(dbResultToHorseDto(rs));
             }
 
-
+            statement.close();
         } catch (SQLException e) {
             LOGGER.error("Problem while executing SQL SELECT statement");
             throw new PersistenceException("Error while accessing database");
