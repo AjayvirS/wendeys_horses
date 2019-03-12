@@ -84,7 +84,7 @@ public class HorseService implements IHorseService {
     }
 
     private boolean speedOutOfRange(Horse horse){
-        return (horse.getMinSpeed()<40.0 || horse.getMaxSpeed()>60.0);
+        return (horse.getMinSpeed()!=null && horse.getMaxSpeed()!=null && horse.getMinSpeed()<40.0 || horse.getMaxSpeed()>60.0);
 
     }
     private boolean invalidHorseName(Horse horse){

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.ArrayList;
 
 
 @Repository
@@ -51,7 +51,7 @@ public class HorseDao implements IHorseDao {
             }
         } catch (SQLException e) {
             LOGGER.error("Problem while executing SQL SELECT statement for reading horse with id " + id, e);
-            throw new PersistenceException("Could not read horses with id " + id, e);
+            throw new PersistenceException("Error while accessing database", e);
         }
         if (horse != null) {
             return horse;
@@ -118,14 +118,12 @@ public class HorseDao implements IHorseDao {
             statement.setTimestamp(5, tmstmp);
             statement.setInt(6, id);
             statement.executeUpdate();
-
             statement.clearParameters();
 
             //throws NotFoundException
             temphorse = findOneById(id);
 
             return temphorse;
-
         } catch (
             SQLException e) {
             LOGGER.error("Could not update horse with " + id, e);
@@ -159,5 +157,49 @@ public class HorseDao implements IHorseDao {
         }
 
     }
+
+    @Override
+    public ArrayList getAllOrFiltered(String name, String breed, double minSpeed, double maxSpeed) throws PersistenceException, NotFoundException {
+        ArrayList<Horse> filteredList= new ArrayList<Horse>();
+        String sql="SELECT * FROM horse WHERE 1=1 AND name=? AND COALESCE(horse.breed,'')=? AND min_speed=? AND max_speed=?";
+        try{
+            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
+            if(name==null){
+                statement.setString(1, "%");
+            } else statement.setString(1, name);
+            if(breed==null){
+                statement.setString(2, "%");
+            } else statement.setString(2, "%");
+            if(minSpeed==0.0){
+                statement.setDouble(3, minSpeed);
+            } else statement.setDouble(3, minSpeed);
+            if(maxSpeed==0.0){
+                statement.setDouble(4, maxSpeed);
+            } else statement.setDouble(4, maxSpeed);
+
+            ResultSet rs=statement.executeQuery();
+
+
+            while(rs.next()){
+                filteredList.add(dbResultToHorseDto(rs));
+            }
+
+
+        } catch (SQLException e) {
+            LOGGER.error("Problem while executing SQL SELECT statement");
+            throw new PersistenceException("Error while accessing database");
+        }
+
+        if(filteredList.isEmpty()){
+            LOGGER.error("Could not find horse/s with following optional parameters: "+name==null?"":"Name: "+name+
+                breed==null?"":", Breed: "+breed+minSpeed==null?"":", min. Speed: "+minSpeed+maxSpeed==null?"":"max. Speed: "+maxSpeed);
+            throw new NotFoundException("Could not find horses with optional parameters"+name==null?"":"Name: "+name+
+                breed==null?"":", Breed: "+breed+minSpeed==null?"":", min. Speed: "+minSpeed+maxSpeed==null?"":"max. Speed: "+maxSpeed);
+        } else return filteredList;
+
+
+    }
+
+
 
 }

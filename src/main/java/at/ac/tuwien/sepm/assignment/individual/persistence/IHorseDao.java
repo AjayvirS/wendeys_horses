@@ -3,7 +3,8 @@ package at.ac.tuwien.sepm.assignment.individual.persistence;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
-import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
+
+import java.util.ArrayList;
 
 public interface IHorseDao {
 
@@ -39,4 +40,6 @@ public interface IHorseDao {
      * @throws NotFoundException if horse with id does not exist
      */
     void deleteOneById(Integer id) throws PersistenceException, NotFoundException;
+
+    ArrayList getAllOrFiltered(String name, String breed, double minSpeed, double maxSpeed) throws PersistenceException, NotFoundException;
 }
