@@ -159,9 +159,9 @@ public class HorseDao implements IHorseDao {
     }
 
     @Override
-    public ArrayList getAllOrFiltered(String name, String breed, double minSpeed, double maxSpeed) throws PersistenceException, NotFoundException {
+    public ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws PersistenceException, NotFoundException {
         ArrayList<Horse> filteredList= new ArrayList<Horse>();
-        String sql="SELECT * FROM horse WHERE 1=1 AND name=? AND COALESCE(horse.breed,'')=? AND min_speed=? AND max_speed=?";
+        String sql="SELECT * FROM horse WHERE name=? AND COALESCE(horse.breed,'')=? AND min_speed=? AND max_speed=?";
         try{
             PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
             if(name==null){
@@ -170,11 +170,11 @@ public class HorseDao implements IHorseDao {
             if(breed==null){
                 statement.setString(2, "%");
             } else statement.setString(2, "%");
-            if(minSpeed==0.0){
-                statement.setDouble(3, minSpeed);
+            if(minSpeed==null){
+                statement.setDouble(3, 40.0);
             } else statement.setDouble(3, minSpeed);
-            if(maxSpeed==0.0){
-                statement.setDouble(4, maxSpeed);
+            if(maxSpeed==null){
+                statement.setDouble(4, 60.0);
             } else statement.setDouble(4, maxSpeed);
 
             ResultSet rs=statement.executeQuery();
@@ -196,7 +196,6 @@ public class HorseDao implements IHorseDao {
             throw new NotFoundException("Could not find horses with optional parameters"+name==null?"":"Name: "+name+
                 breed==null?"":", Breed: "+breed+minSpeed==null?"":", min. Speed: "+minSpeed+maxSpeed==null?"":"max. Speed: "+maxSpeed);
         } else return filteredList;
-
 
     }
 

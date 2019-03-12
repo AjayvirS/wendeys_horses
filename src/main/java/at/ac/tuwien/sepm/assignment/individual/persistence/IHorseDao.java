@@ -41,5 +41,15 @@ public interface IHorseDao {
      */
     void deleteOneById(Integer id) throws PersistenceException, NotFoundException;
 
-    ArrayList getAllOrFiltered(String name, String breed, double minSpeed, double maxSpeed) throws PersistenceException, NotFoundException;
+    /**
+     *
+     * @param name to filter records by name [OPTIONAL]
+     * @param breed to filter records by breed [OPTIONAL]
+     * @param minSpeed to filter records by minimum Speed [OPTIONAL]
+     * @param maxSpeed to filter records by maximum Speed [OPTIONAL]
+     * @return A list of filtered records of horses
+     * @throws PersistenceException will be thrown if something goes wrong during database access
+     * @throws NotFoundException will be thrown if list returned is empty
+     */
+    ArrayList getAllOrFiltered(String name, String breed, Double minSpeed, Double maxSpeed) throws PersistenceException, NotFoundException;
 }
