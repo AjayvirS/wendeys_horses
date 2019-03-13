@@ -9,3 +9,12 @@ CREATE TABLE IF NOT EXISTS horse (
   created   DATETIME     NOT NULL,
   updated   DATETIME     NOT NULL
 );
+
+--create table jockey if not exists
+CREATE TABLE IF NOT EXISTS jockey (
+  id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name      VARCHAR(255) NOT NULL,
+  skill     DOUBLE,
+  created   DATETIME     NOT NULL,
+  updated   DATETIME     NOT NULL
+);

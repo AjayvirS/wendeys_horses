@@ -82,7 +82,6 @@ public class HorseEndpoint {
     @RequestMapping(method = RequestMethod.GET)
     public HorseDto[] getAllorFiltered(HorseDto horseDto) {
         try {
-
             return horseMapper.entitiesToDto(horseService.getAllOrFiltered(horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with following optional " + horseMapper.dtoToEntity(horseDto).printOptionals());

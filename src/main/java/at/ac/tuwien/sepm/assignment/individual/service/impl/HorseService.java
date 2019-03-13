@@ -118,7 +118,7 @@ public class HorseService implements IHorseService {
         if (horse.getMaxSpeed() == null) {
             throw new InvalidDataException("Max speed must be set!");
         } else if (isMaxSmallerMin(horse)) {
-            LOGGER.error("Maximum speed is larger than minimum speed");
+            LOGGER.error("Maximum speed is smaller than minimum speed");
             throw new InvalidDataException("Maximum speed needs to be smaller or equal to minimum speed!");
         }
     }
@@ -133,6 +133,5 @@ public class HorseService implements IHorseService {
         if(horse.getName()!=null && horse.getName().isBlank()){
             throw new InvalidDataException("Name must be set.");
         }
-
     }
 }
