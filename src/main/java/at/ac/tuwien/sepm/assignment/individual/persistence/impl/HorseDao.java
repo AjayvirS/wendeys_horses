@@ -186,10 +186,10 @@ public class HorseDao implements IHorseDao {
             PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
             if(horse.getName()==null){
                 statement.setString(1, "%");
-            } else statement.setString(1, horse.getName());
+            } else statement.setString(1, "%"+horse.getName()+"%");
             if(horse.getBreed()==null){
                 statement.setString(2, "%");
-            } else statement.setString(2, horse.getBreed());
+            } else statement.setString(2, "%"+horse.getBreed()+"%");
             if(horse.getMinSpeed()==null){
                 statement.setDouble(3, 40.0);
             } else statement.setDouble(3, horse.getMinSpeed());
