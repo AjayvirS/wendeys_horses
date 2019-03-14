@@ -133,7 +133,8 @@ public class HorseService implements IHorseService {
         }
         isMaxSmallerMin(horse);
         if(horse.getName()!=null && horse.getName().isBlank()){
-            throw new InvalidDataException("Name cannot be empty.");
+            LOGGER.error("Name cannot be empty");
+            throw new InvalidDataException("Name cannot be empty!");
         }
     }
 }

@@ -58,6 +58,7 @@ public class JockeyService implements IJockeyService {
 
     private void invalidHorseUpdateData(Jockey jockey) throws InvalidDataException {
         if(jockey.getName()!=null && jockey.getName().isBlank()){
+            LOGGER.error("Name cannot be empty");
             throw new InvalidDataException("Name cannot be empty.");
         }
     }
