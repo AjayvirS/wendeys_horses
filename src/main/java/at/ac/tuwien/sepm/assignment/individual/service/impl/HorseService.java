@@ -70,7 +70,7 @@ public class HorseService implements IHorseService {
             LOGGER.info("Delete horse with id " + id);
             horseDao.deleteOneById(id);
         } catch (PersistenceException e) {
-            LOGGER.error("Error while processing horse");
+            LOGGER.error("Error while processing horse with id "+id);
             throw new ServiceException(e.getMessage(), e);
         }
     }

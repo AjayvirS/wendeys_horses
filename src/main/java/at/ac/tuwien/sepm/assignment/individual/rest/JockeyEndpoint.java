@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/v1/jockeys")
 public class JockeyEndpoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HorseEndpoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JockeyEndpoint.class);
     private static final String BASE_URL = "/api/v1/jockeys";
     private final IJockeyService jockeyService;
     private final JockeyMapper jockeyMapper;
@@ -56,4 +56,19 @@ public class JockeyEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating jockey: " + e.getMessage(), e);
         }
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteOneById(@PathVariable("id") Integer id) {
+        LOGGER.info("DELETE " + BASE_URL + "/" + id);
+        try {
+            jockeyService.deleteOneById(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during deleting jockey: " + e.getMessage(), e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockey with id " + id, e);
+        }
+    }
+
+
+
 }

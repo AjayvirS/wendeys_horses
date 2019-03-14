@@ -13,4 +13,6 @@ public interface IJockeyService {
     Jockey insertOne(Jockey jockey) throws ServiceException, OutofRangeException, InvalidDataException;
 
     Jockey updateOneById(Integer id, Jockey jockey) throws ServiceException, OutofRangeException, InvalidDataException, NotFoundException;
+
+    void deleteOneById(Integer id) throws ServiceException, NotFoundException;
 }

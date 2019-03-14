@@ -13,4 +13,6 @@ public interface IJockeyDao {
     Jockey updateOneById(Integer id, Jockey jockey) throws PersistenceException, NotFoundException, InvalidDataException;
 
     Jockey findOneById(Integer id) throws PersistenceException, NotFoundException;
+
+    //void deleteOneById(Integer id) throws PersistenceException, NotFoundException;
 }

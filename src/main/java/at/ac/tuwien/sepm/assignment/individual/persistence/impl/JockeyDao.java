@@ -5,7 +5,6 @@ import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
-import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +58,7 @@ public class JockeyDao implements IJockeyDao {
     }
 
     @Override
-    public Jockey updateOneById(Integer id, Jockey jockey) throws PersistenceException, NotFoundException, InvalidDataException {
+    public Jockey updateOneById(Integer id, Jockey jockey) throws PersistenceException, NotFoundException {
         Jockey dbJockey = null;
         LOGGER.info("Update jockey with id " + id);
         String sql = "UPDATE jockey SET name = ?, skill = ?, updated=? WHERE id=?";
@@ -129,5 +128,8 @@ public class JockeyDao implements IJockeyDao {
             result.getTimestamp("created").toLocalDateTime(),
             result.getTimestamp("updated").toLocalDateTime());
     }
+
+
+
 
 }
