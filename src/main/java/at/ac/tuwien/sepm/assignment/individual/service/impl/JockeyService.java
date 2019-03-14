@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
+import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
@@ -27,7 +28,7 @@ public class JockeyService implements IJockeyService {
 
 
     @Override
-    public Jockey insertOne(Jockey jockey) throws ServiceException, OutofRangeException, InvalidDataException {
+    public Jockey insertOne(Jockey jockey) throws ServiceException, InvalidDataException {
 
 
         try {
@@ -41,9 +42,27 @@ public class JockeyService implements IJockeyService {
         }
     }
 
+    @Override
+    public Jockey updateOneById(Integer id, Jockey jockey) throws ServiceException, InvalidDataException, NotFoundException {
+        try {
+            LOGGER.info("Validate of jockey to be updated");
+            invalidHorseUpdateData(jockey);
+            LOGGER.info("Update jockey with id " + id);
+            return jockeyDao.updateOneById(id, jockey);
+        } catch (PersistenceException e) {
+            LOGGER.error("Error while processing jockey with id " + id);
+            throw new ServiceException(e.getMessage(), e);
+        }
 
+    }
 
-    private void invalidJockeyInputData(Jockey jockey) throws OutofRangeException, InvalidDataException {
+    private void invalidHorseUpdateData(Jockey jockey) throws InvalidDataException {
+        if(jockey.getName()!=null && jockey.getName().isBlank()){
+            throw new InvalidDataException("Name cannot be empty.");
+        }
+    }
+
+    private void invalidJockeyInputData(Jockey jockey) throws InvalidDataException {
         if(jockey.getName().isBlank()){
             throw new InvalidDataException("Name must be set.");
         }
