@@ -12,9 +12,10 @@ CREATE TABLE IF NOT EXISTS horse (
 
 --create table jockey if not exists
 CREATE TABLE IF NOT EXISTS jockey (
+  -- use auto incrementing IDs as primary key
   id        BIGINT AUTO_INCREMENT PRIMARY KEY,
   name      VARCHAR(255) NOT NULL,
-  skill     DOUBLE,
+  skill     DOUBLE       NOT NULL,
   created   DATETIME     NOT NULL,
   updated   DATETIME     NOT NULL
 );

@@ -11,16 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+
+@RestController
+@RequestMapping("/api/v1/jockeys")
 public class JockeyEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HorseEndpoint.class);
-    private static final String BASE_URL = "/api/v1/horses";
+    private static final String BASE_URL = "/api/v1/jockeys";
     private final IJockeyService jockeyService;
     private final JockeyMapper jockeyMapper;
 
@@ -38,7 +38,7 @@ public class JockeyEndpoint {
             return jockeyMapper.entityToDto(jockeyService.insertOne(jockeyMapper.dtoToEntity(jockeyDto)));
 
         } catch (ServiceException | OutofRangeException | InvalidDataException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during inserting horse: " + e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during inserting jockey: " + e.getMessage(), e);
         }
     }
 }

@@ -1,9 +1,12 @@
 package at.ac.tuwien.sepm.assignment.individual.util.mapper;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.JockeyDto;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+
+@Component
 public class JockeyMapper {
     public JockeyDto entityToDto(Jockey jockey) {
         return new JockeyDto(jockey.getId(), jockey.getName(), jockey.getSkill(), jockey.getCreated(), jockey.getUpdated());

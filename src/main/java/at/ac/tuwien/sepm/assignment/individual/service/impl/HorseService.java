@@ -43,7 +43,7 @@ public class HorseService implements IHorseService {
         try {
             LOGGER.info("Validate data of horse to be inserted");
             invalidHorseInputData(horse);
-            LOGGER.info("Insert Horse with following name: " + horse.getName());
+            LOGGER.info("Insert Horse with following data: " + horse.printOptionals());
             return horseDao.insertOne(horse);
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing horse");
@@ -109,13 +109,16 @@ public class HorseService implements IHorseService {
         if (isSpeedOutOfRange(horse)) {
             LOGGER.error("Speed is out of range.");
             throw new OutofRangeException("The minimum and maximum speed needs to be between 40 and 60 km/h!");
-        } else if (horse.getName() == null) {
+        } else if (horse.getName().isBlank()) {
+            LOGGER.error("Name is not set.");
             throw new InvalidDataException("Name must be set!");
         }
         if (horse.getMinSpeed() == null) {
+            LOGGER.error("Min speed is not set.");
             throw new InvalidDataException("Min speed must be set!");
         }
         if (horse.getMaxSpeed() == null) {
+            LOGGER.error("Max speed is not set.");
             throw new InvalidDataException("Max speed must be set!");
         } else if (isMaxSmallerMin(horse)) {
             LOGGER.error("Maximum speed is smaller than minimum speed");
@@ -130,8 +133,8 @@ public class HorseService implements IHorseService {
             throw new OutofRangeException("The minimum and maximum speed needs to be between 40 and 60 km/h!");
         }
         isMaxSmallerMin(horse);
-        if(horse.getName()!=null && horse.getName().isBlank()){
-            throw new InvalidDataException("Name must be set.");
+        if(horse.getName()!=null && horse.getName().length()==0){
+            throw new InvalidDataException("Name cannot be empty.");
         }
     }
 }

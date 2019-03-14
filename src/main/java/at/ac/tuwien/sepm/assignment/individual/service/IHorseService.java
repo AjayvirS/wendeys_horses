@@ -2,7 +2,6 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;

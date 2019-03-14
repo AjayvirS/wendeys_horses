@@ -34,7 +34,7 @@ public class HorseEndpoint {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HorseDto getOneById(@PathVariable("id") Integer id) {
-        LOGGER.info("GET " + BASE_URL + "/" + id);
+        LOGGER.info("GET Horse: " + BASE_URL + "/" + id);
         try {
             return horseMapper.entityToDto(horseService.findOneById(id));
         } catch (ServiceException e) {
@@ -47,6 +47,7 @@ public class HorseEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public HorseDto insertOne(@RequestBody HorseDto horseDto) {
+        LOGGER.info("POST Horse: " + horseDto.toString());
         try {
             return horseMapper.entityToDto(horseService.insertOne(horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException | OutofRangeException | InvalidDataException e) {
@@ -56,6 +57,8 @@ public class HorseEndpoint {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public HorseDto updateOneById(@PathVariable("id") Integer id, @RequestBody HorseDto horseDto) {
+        LOGGER.info("PUT Horse: " + (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
+            (horseDto.getBreed() == null ? "" : ", Breed: " + horseDto.getBreed()) + (horseDto.getMinSpeed() == null ? "" : ", min. Speed: " + horseDto.getMinSpeed()) + (horseDto.getMaxSpeed() == null ? "" : "max. Speed: " + horseDto.getMaxSpeed()));
         try {
             return horseMapper.entityToDto(horseService.updateOneById(id, horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException e) {
@@ -69,7 +72,7 @@ public class HorseEndpoint {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteOneById(@PathVariable("id") Integer id) {
-        LOGGER.info("GET " + BASE_URL + "/" + id);
+        LOGGER.info("DELETE " + BASE_URL + "/" + id);
         try {
             horseService.deleteOneById(id);
         } catch (NotFoundException e) {
@@ -81,6 +84,9 @@ public class HorseEndpoint {
 
     @RequestMapping(method = RequestMethod.GET)
     public HorseDto[] getAllorFiltered(HorseDto horseDto) {
+
+        LOGGER.info("GET Horses Filtered: " + (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
+            (horseDto.getBreed() == null ? "" : ", Breed: " + horseDto.getBreed()) + (horseDto.getMinSpeed() == null ? "" : ", min. Speed: " + horseDto.getMinSpeed()) + (horseDto.getMaxSpeed() == null ? "" : "max. Speed: " + horseDto.getMaxSpeed()));
         try {
             return horseMapper.entitiesToDto(horseService.getAllOrFiltered(horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException e) {

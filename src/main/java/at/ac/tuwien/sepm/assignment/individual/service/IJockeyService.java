@@ -1,10 +1,10 @@
 package at.ac.tuwien.sepm.assignment.individual.service;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
+
 
 public interface IJockeyService {
 
