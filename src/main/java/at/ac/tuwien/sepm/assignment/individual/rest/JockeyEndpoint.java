@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.JockeyDto;
 import at.ac.tuwien.sepm.assignment.individual.service.IJockeyService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
@@ -51,7 +50,7 @@ public class JockeyEndpoint {
             return jockeyMapper.entityToDto(jockeyService.updateOneById(id, jockeyMapper.dtoToEntity(jockeyDto)));
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockey with id " + id, e);
-        } catch (InvalidDataException | OutofRangeException e) {
+        } catch (InvalidDataException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during updating jockey: " + e.getMessage(), e);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating jockey: " + e.getMessage(), e);
@@ -92,9 +91,9 @@ public class JockeyEndpoint {
         try {
             return jockeyMapper.entityToDto(jockeyService.findOneById(id));
         } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with id " + id, e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockey with id " + id, e);
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse: " + e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading jockey: " + e.getMessage(), e);
         }
     }
 

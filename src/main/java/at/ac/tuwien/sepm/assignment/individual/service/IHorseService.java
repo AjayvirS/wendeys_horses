@@ -26,7 +26,7 @@ public interface IHorseService {
      * @throws OutofRangeException will be thrown if values of speed are out of range.
      * @throws InvalidDataException will be thrown if invalid data such as unexpected null fields are supplied.
      */
-    Horse insertOne(Horse horse) throws ServiceException, OutofRangeException, InvalidDataException;
+    Horse insertOne(Horse horse) throws ServiceException, InvalidDataException, OutofRangeException;
 
 
     /**
@@ -50,7 +50,7 @@ public interface IHorseService {
 
 
     /**
-     * @param horse filters records by name, breed, minSpeed, maxSpeed [OPTIONAL]
+     * @param horse to filter records by name, breed, minSpeed, maxSpeed [OPTIONAL]
      * @return A list of filtered records of horses as ArrayList.
      * @throws NotFoundException will be thrown if list returned is empty.
      */
