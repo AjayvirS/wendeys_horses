@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 @Repository
@@ -152,6 +153,40 @@ public class JockeyDao implements IJockeyDao {
             LOGGER.error("Could not delete jockey with id "+id,e);
             throw new PersistenceException("Could not delete jockey with id "+id,e);
         }
+
+    }
+
+
+    @Override
+    public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws PersistenceException, NotFoundException {
+        LOGGER.info("Get jockey/s with optional parameters: "+jockey.printOptionals());
+        ArrayList<Jockey> filteredList= new ArrayList<>();
+        String sql="SELECT * FROM jockey WHERE name LIKE ? AND skill>=?";
+        try{
+            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
+            if(jockey.getName()==null){
+                statement.setString(1, "%");
+            } else statement.setString(1, "%"+jockey.getName()+"%");
+            if(jockey.getSkill()==null){
+                statement.setDouble(2, -Double.MAX_VALUE);
+            } else statement.setDouble(2, jockey.getSkill());
+
+            ResultSet rs=statement.executeQuery();
+
+            while(rs.next()){
+                filteredList.add(dbResultToJockey(rs));
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            LOGGER.error("Problem while executing SQL SELECT statement");
+            throw new PersistenceException("Error while accessing database");
+        }
+
+        if(filteredList.isEmpty()){
+            LOGGER.error("Could not find jockey/s with following optional parameters: "+jockey.printOptionals());
+            throw new NotFoundException("Could not find jockeys with optional parameters: "+jockey.printOptionals());
+        } else return filteredList;
 
     }
 

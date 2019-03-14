@@ -88,9 +88,9 @@ public class HorseEndpoint {
         try {
             return horseMapper.entitiesToDto(horseService.getAllOrFiltered(horseMapper.dtoToEntity(horseDto)));
         } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with following optional " + horseMapper.dtoToEntity(horseDto).printOptionals());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horses with following optional " + horseMapper.dtoToEntity(horseDto).printOptionals());
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse: " + e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horses: " + e.getMessage(), e);
         }
     }
 

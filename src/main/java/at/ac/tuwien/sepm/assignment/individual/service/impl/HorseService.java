@@ -76,12 +76,12 @@ public class HorseService implements IHorseService {
     }
 
     @Override
-    public ArrayList<Horse> getAllOrFiltered(Horse horse) throws ServiceException, NotFoundException {
+    public ArrayList getAllOrFiltered(Horse horse) throws ServiceException, NotFoundException {
         LOGGER.info("Get horse/s with following optional parameters: " + horse.printOptionals());
         try {
             return horseDao.getAllOrFiltered(horse);
         } catch (PersistenceException e) {
-
+            LOGGER.error("Error while processing horses with following optional parameters: "+horse.printOptionals());
             throw new ServiceException(e.getMessage(), e);
         }
     }

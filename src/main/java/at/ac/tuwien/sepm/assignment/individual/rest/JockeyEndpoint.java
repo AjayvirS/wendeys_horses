@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.JockeyDto;
 import at.ac.tuwien.sepm.assignment.individual.service.IJockeyService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
@@ -66,6 +67,21 @@ public class JockeyEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during deleting jockey: " + e.getMessage(), e);
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockey with id " + id, e);
+        }
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET)
+    public JockeyDto[] getAllorFiltered(JockeyDto jockeyDto) {
+
+        LOGGER.info("GET Horses Filtered: " + (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
+            (jockeyDto.getSkill() == null ? "" : ", Skill: " + jockeyDto.getSkill()));
+        try {
+            return jockeyMapper.entitiesToDto(jockeyService.getAllOrFiltered(jockeyMapper.dtoToEntity(jockeyDto)));
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockeys with following optional " + jockeyMapper.dtoToEntity(jockeyDto).printOptionals());
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading jockeys: " + e.getMessage(), e);
         }
     }
 

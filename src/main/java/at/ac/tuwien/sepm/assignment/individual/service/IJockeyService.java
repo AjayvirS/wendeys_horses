@@ -7,6 +7,8 @@ import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataExc
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
 
+import java.util.ArrayList;
+
 
 public interface IJockeyService {
 
@@ -15,4 +17,6 @@ public interface IJockeyService {
     Jockey updateOneById(Integer id, Jockey jockey) throws ServiceException, OutofRangeException, InvalidDataException, NotFoundException;
 
     void deleteOneById(Integer id) throws ServiceException, NotFoundException;
+
+    ArrayList<Jockey> getAllOrFiltered(Jockey dtoToEntity) throws ServiceException, NotFoundException;
 }

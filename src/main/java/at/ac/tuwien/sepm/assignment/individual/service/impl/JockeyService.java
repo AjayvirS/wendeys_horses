@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class JockeyService implements IJockeyService {
 
@@ -60,6 +62,17 @@ public class JockeyService implements IJockeyService {
             jockeyDao.deleteOneById(id);
         } catch (PersistenceException e) {
             LOGGER.error("Error while processing jockey with id "+id);
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws ServiceException, NotFoundException {
+        LOGGER.info("Get jockey/s with following optional parameters: " + jockey.printOptionals());
+        try {
+            return jockeyDao.getAllOrFiltered(jockey);
+        } catch (PersistenceException e) {
+            LOGGER.error("Error while processing jockeys with following optional parameters: "+jockey.printOptionals());
             throw new ServiceException(e.getMessage(), e);
         }
     }
