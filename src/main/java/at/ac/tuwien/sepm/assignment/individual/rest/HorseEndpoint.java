@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-
 @RestController
 @RequestMapping("/api/v1/horses")
 public class HorseEndpoint {

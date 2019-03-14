@@ -4,7 +4,6 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
-import at.ac.tuwien.sepm.assignment.individual.rest.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.service.IHorseService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
@@ -133,7 +132,7 @@ public class HorseService implements IHorseService {
             throw new OutofRangeException("The minimum and maximum speed needs to be between 40 and 60 km/h!");
         }
         isMaxSmallerMin(horse);
-        if(horse.getName()!=null && horse.getName().length()==0){
+        if(horse.getName()!=null && horse.getName().isBlank()){
             throw new InvalidDataException("Name cannot be empty.");
         }
     }
