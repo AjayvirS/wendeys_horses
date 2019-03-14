@@ -129,6 +129,32 @@ public class JockeyDao implements IJockeyDao {
             result.getTimestamp("updated").toLocalDateTime());
     }
 
+    @Override
+    public void deleteOneById(Integer id) throws PersistenceException, NotFoundException{
+        LOGGER.info("Delete jockey with id "+id);
+
+        String sql="DELETE FROM jockey WHERE id=?";
+        try{
+            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
+            statement.setInt(1,id);
+            int checkZero=statement.executeUpdate();
+
+            statement.close();
+            if(checkZero>0){
+                return;
+            } else{
+                LOGGER.error("Could not find jockey with id "+id);
+                throw new NotFoundException("Could not find jockey with id "+id);
+            }
+
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete jockey with id "+id,e);
+            throw new PersistenceException("Could not delete jockey with id "+id,e);
+        }
+
+    }
+
 
 
 
