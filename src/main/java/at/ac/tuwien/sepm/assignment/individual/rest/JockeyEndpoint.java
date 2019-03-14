@@ -96,6 +96,4 @@ public class JockeyEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading jockey: " + e.getMessage(), e);
         }
     }
-
-
 }
