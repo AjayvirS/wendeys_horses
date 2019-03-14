@@ -19,4 +19,6 @@ public interface IJockeyService {
     void deleteOneById(Integer id) throws ServiceException, NotFoundException;
 
     ArrayList<Jockey> getAllOrFiltered(Jockey dtoToEntity) throws ServiceException, NotFoundException;
+
+    Jockey findOneById(Integer id) throws ServiceException, NotFoundException;
 }

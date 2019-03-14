@@ -159,7 +159,7 @@ public class JockeyDao implements IJockeyDao {
 
     @Override
     public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws PersistenceException, NotFoundException {
-        LOGGER.info("Get jockey/s with optional parameters: "+jockey.printOptionals());
+        LOGGER.info("Get jockey/s with following optional parameters: "+jockey.printOptionals());
         ArrayList<Jockey> filteredList= new ArrayList<>();
         String sql="SELECT * FROM jockey WHERE name LIKE ? AND skill>=?";
         try{

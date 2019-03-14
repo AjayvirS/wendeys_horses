@@ -77,6 +77,17 @@ public class JockeyService implements IJockeyService {
         }
     }
 
+
+    @Override
+    public Jockey findOneById(Integer id) throws ServiceException, NotFoundException {
+        LOGGER.info("Get jockey with id " + id);
+        try {
+            return jockeyDao.findOneById(id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
     private void invalidJockeyUpdateData(Jockey jockey) throws InvalidDataException {
         if(jockey.getName()!=null && jockey.getName().isBlank()){
             LOGGER.error("Name cannot be empty");

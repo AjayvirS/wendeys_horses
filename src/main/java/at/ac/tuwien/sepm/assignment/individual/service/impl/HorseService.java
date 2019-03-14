@@ -100,7 +100,7 @@ public class HorseService implements IHorseService {
 
     private boolean isMaxSmallerMin(Horse horse) {
         if (horse.getMinSpeed() != null && horse.getMaxSpeed() != null) {
-            return horse.getMinSpeed() <= horse.getMaxSpeed();
+            return horse.getMinSpeed() > horse.getMaxSpeed();
         } else return false;
     }
 

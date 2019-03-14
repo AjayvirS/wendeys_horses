@@ -86,5 +86,17 @@ public class JockeyEndpoint {
     }
 
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public JockeyDto getOneById(@PathVariable("id") Integer id) {
+        LOGGER.info("GET Horse: " + BASE_URL + "/" + id);
+        try {
+            return jockeyMapper.entityToDto(jockeyService.findOneById(id));
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse with id " + id, e);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse: " + e.getMessage(), e);
+        }
+    }
+
 
 }
