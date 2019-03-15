@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
-@RequestMapping("/api/v1/jockeys")
+@RequestMapping("/api/v1/simulations")
 public class SimulationEndpoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimulationEndpoint.class);
@@ -35,7 +35,10 @@ public class SimulationEndpoint {
     public SimulationDto insertOne(@RequestBody SimulationDto simulationDto) {
         try {
             return simulationMapper.entityToDto(simulationService.insertOne(simulationMapper.DtoToEntity(simulationDto)));
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
 }

@@ -84,7 +84,7 @@ public class HorseDao implements IHorseDao {
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
 
-            int key = 1;
+            int key=1;
             if (rs != null && rs.next()) {
                 key = rs.getInt(1);
             }

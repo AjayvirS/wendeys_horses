@@ -1,32 +1,22 @@
 package at.ac.tuwien.sepm.assignment.individual.rest.dto;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
+import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipant;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class SimulationDto {
-    private Integer id;
     private String name;
-    private LocalDateTime created;
+    private ArrayList<SimulationParticipant> simulationParticipants;
 
     public SimulationDto(){
 
     }
 
-    public SimulationDto(Integer id, String name, LocalDateTime created){
-        this.id=id;
+    public SimulationDto(String name, ArrayList<SimulationParticipant> simulationParticipants){
         this.name=name;
-        this.created=created;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.simulationParticipants=simulationParticipants;
     }
 
     public String getName() {
@@ -37,12 +27,12 @@ public class SimulationDto {
         this.name = name;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public ArrayList<SimulationParticipant> getSimulationParticipants() {
+        return simulationParticipants;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setSimulationParticipants(ArrayList<SimulationParticipant> simulationParticipants) {
+        this.simulationParticipants = simulationParticipants;
     }
 
     @Override
@@ -50,25 +40,21 @@ public class SimulationDto {
         if (this == o) return true;
         if (!(o instanceof Simulation)) return false;
         SimulationDto simulationDto = (SimulationDto) o;
-        return Objects.equals(id, simulationDto.id) &&
-            Objects.equals(name, simulationDto.name) &&
-            Objects.equals(created, simulationDto.created);
+        return Objects.equals(name, simulationDto.name) &&
+            Objects.equals(simulationParticipants, simulationDto.simulationParticipants);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, created);
+        return Objects.hash(name, simulationParticipants);
     }
 
     @Override
     public String toString() {
-        return "SimulationDto{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", created=" + created +
+        return "SimulationDto{"+
+            "name='" + name + '\'' +
+            ", Simulation Participants=" + simulationParticipants.toString() +
             '}';
     }
-
-
 }

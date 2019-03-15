@@ -1,20 +1,28 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Simulation {
     private Integer id;
     private String name;
     private LocalDateTime created;
+    private ArrayList<SimulationParticipant> simulationParticipants;
 
     public Simulation(){
 
     }
 
-    public Simulation(Integer id, String name, LocalDateTime created){
+    public Simulation(Integer id, String name, LocalDateTime created, ArrayList<SimulationParticipant> simulationParticipants){
         this.id=id;
         this.name=name;
         this.created=created;
+        this.simulationParticipants=simulationParticipants;
+    }
+
+    public Simulation(String name, ArrayList<SimulationParticipant>simulationParticipants){
+        this.simulationParticipants=simulationParticipants;
+        this.name=name;
     }
 
     public Integer getId() {
@@ -41,6 +49,14 @@ public class Simulation {
         this.created = created;
     }
 
+    public ArrayList<SimulationParticipant> getSimulationParticipants() {
+        return simulationParticipants;
+    }
+
+    public void setSimulationParticipants(ArrayList<SimulationParticipant> simulationParticipants) {
+        this.simulationParticipants = simulationParticipants;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,6 +79,7 @@ public class Simulation {
             "id=" + id +
             ", name='" + name + '\'' +
             ", created=" + created +
+            "Simulation Participants: "+simulationParticipants.toString()+
             '}';
     }
 }
