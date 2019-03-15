@@ -71,7 +71,17 @@ public class SimulationService implements ISimulationService {
                 throw new OutofRangeException("Luck factor of participant "+i+" is out of range!");
             }
 
-          
+            for (int j = 0; j < simulation.getSimulationParticipants().size(); j++) {
+                SimulationParticipant simPart2=simulation.getSimulationParticipants().get(i);
+                if(simPart.getJockeyId().equals(simPart2.getJockeyId())){
+                    LOGGER.error("Duplicate jockey found.");
+                    throw new InvalidDataException("Jockey with id"+simPart.getJockeyId()+" can only take part once in this race!");
+                }
+                if(simPart.getHorseId().equals(simPart2.getHorseId())){
+                    LOGGER.error("Duplicate horse found.");
+                    throw new InvalidDataException("Horse with id"+simPart.getJockeyId()+" can only take part once in this race!");
+                }
+            }
 
         }
     }
