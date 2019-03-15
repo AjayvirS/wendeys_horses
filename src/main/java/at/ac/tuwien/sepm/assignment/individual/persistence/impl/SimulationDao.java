@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
+import at.ac.tuwien.sepm.assignment.individual.entity.*;
+import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.ISimulationDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
@@ -8,9 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 
 @Repository
 public class SimulationDao implements ISimulationDao {
@@ -21,13 +23,18 @@ public class SimulationDao implements ISimulationDao {
 
     @Autowired
     public SimulationDao(DBConnectionManager dbConnectionManager) {
+
         this.dbConnectionManager = dbConnectionManager;
+
     }
 
     @Override
-    public Simulation insertOne(Simulation simulation) throws PersistenceException {
+    public Simulation insertOne(ArrayList<SimulationParticipantCompleted> simPartsComp, Simulation simulation) throws PersistenceException {
         LOGGER.info("Insert Simulation");
         String sql = "INSERT INTO simulation(name,created) VALUES (?,?);";
+        String sql2="INSERT INTO hj_combination(rank, horse_name, jockey_name, avg_speed, horse_speed, jockey_skill, luckfactor, simulationid) " +
+            "VALUES (?,?,?,?,?,?,?,?)";
+
 
         try {
 
@@ -41,12 +48,36 @@ public class SimulationDao implements ISimulationDao {
             if (rs != null && rs.next()) {
                 key = rs.getInt(1);
             }
-            statement.close();
-            return null;
 
+            for (int i = 0; i < simPartsComp.size(); i++) {
+                simPartsComp.get(i).setSimulationId(key);
+
+            }
+            statement.close();
+            //@TODO
+            /*
+                insert method has simulation participants completed;
+                need to insert every participant into table hj_combination;
+                reset this statement or use new statement to insert data into hj_combination
+                simpartsComp.simId=key
+             */
+
+
+            return null;
         } catch (SQLException e) {
             LOGGER.error("Problem while adding jockey to database", e);
             throw new PersistenceException("Could not add jockey to database", e);
         }
     }
+
+
+
+    private static Simulation dbResultToSimulation(ResultSet result) throws SQLException {
+        return new Simulation(
+            result.getInt("id"),
+            result.getString("name"),
+            result.getTimestamp("created").toLocalDateTime());
+    }
+
+
 }

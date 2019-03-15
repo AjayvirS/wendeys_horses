@@ -8,22 +8,30 @@ public class Simulation {
     private String name;
     private LocalDateTime created;
     private ArrayList<SimulationParticipant> simulationParticipants;
+    private ArrayList<SimulationParticipantCompleted> simulationParticipantsCompleted;
 
     public Simulation(){
 
     }
 
-    public Simulation(Integer id, String name, LocalDateTime created, ArrayList<SimulationParticipant> simulationParticipants){
+    public Simulation(Integer id, String name, LocalDateTime created, ArrayList<SimulationParticipantCompleted> simulationParticipantsCompleted){
         this.id=id;
         this.name=name;
         this.created=created;
-        this.simulationParticipants=simulationParticipants;
+        this.simulationParticipantsCompleted=simulationParticipantsCompleted;
     }
 
     public Simulation(String name, ArrayList<SimulationParticipant>simulationParticipants){
         this.simulationParticipants=simulationParticipants;
         this.name=name;
     }
+
+    public Simulation(Integer id, String name, LocalDateTime created){
+        this.id=id;
+        this.name=name;
+        this.created=created;
+    }
+
 
     public Integer getId() {
         return id;

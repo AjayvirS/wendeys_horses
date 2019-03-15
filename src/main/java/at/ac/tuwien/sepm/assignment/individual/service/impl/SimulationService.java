@@ -1,8 +1,10 @@
 package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
-import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipant;
+import at.ac.tuwien.sepm.assignment.individual.entity.*;
+import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
+import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.ISimulationDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.service.ISimulationService;
@@ -14,6 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 @Service
 public class SimulationService implements ISimulationService {
 
@@ -21,21 +29,41 @@ public class SimulationService implements ISimulationService {
     private static float luckRangeMin=0.95f;
     private static final Logger LOGGER = LoggerFactory.getLogger(SimulationService.class);
     private final ISimulationDao simulationDao;
+    private  final IJockeyDao jockeyDao;
+    private final IHorseDao horseDao;
 
     @Autowired
-    public SimulationService(ISimulationDao simulationDao){
+    public SimulationService(ISimulationDao simulationDao, IJockeyDao jockeyDao, IHorseDao horseDao){
         this.simulationDao=simulationDao;
+        this.horseDao=horseDao;
+        this.jockeyDao=jockeyDao;
 
     }
 
     @Override
-    public Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException {
+    public Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException, NotFoundException {
 
         try {
             LOGGER.info("Validate data of simulation to be inserted");
             validateData(simulation);
+
+
+            LOGGER.info("Prepare Simulation and calculate values based on horse speed, luck and skill");
+            ArrayList<Horse> horses=getParticipantHorses(simulation);
+            ArrayList<Jockey> jockeys= getParticipantJockeys(simulation);
+            ArrayList<Float>luckFactors= getLuckFactors(simulation);
+
+            ArrayList<SimulationParticipantCompleted>completeds= getCalculatedSimulation(horses, jockeys, luckFactors, simulation);
+            Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantCompleted::getAvgSpeed));
+
+            LOGGER.info("Simulation data calculated and sorted by highest average Speed");
+            LOGGER.info("Setting rank of participants");
+            for (int i = 0; i < completeds.size(); i++) {
+                completeds.get(i).setRank(i);
+            }
             LOGGER.info("Insert simulation with following data: " + "Name: "+simulation.getName()+", Participants: "+simulation.getSimulationParticipants());
-            return simulationDao.insertOne(simulation);
+            return simulationDao.insertOne(completeds, simulation);
+
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing jockey");
             throw new ServiceException(e.getMessage(), e);
@@ -84,5 +112,66 @@ public class SimulationService implements ISimulationService {
             }
 
         }
+    }
+
+
+    private ArrayList<Float> getLuckFactors(Simulation simulation) {
+        ArrayList<Float>luckFactors=new ArrayList<>();
+
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            luckFactors.add(simulation.getSimulationParticipants().get(i).getLuckFactor());
+        }
+
+        return luckFactors;
+    }
+
+    private ArrayList<SimulationParticipantCompleted> getCalculatedSimulation(ArrayList<Horse> horses, ArrayList<Jockey> jockeys, ArrayList<Float> luckFactors, Simulation simulation) {
+        double p_min, p_max, k, p, k2, d;
+        float g;
+        ArrayList<SimulationParticipantCompleted> completeds=new ArrayList<>();
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.UP);
+        String horseName=null, jockeyName=null;
+
+        for (int i = 0; i < horses.size(); i++) {
+
+            p_min=horses.get(i).getMinSpeed();
+            p_max=horses.get(i).getMaxSpeed();
+            k=jockeys.get(i).getSkill();
+            g=luckFactors.get(i);
+            p=(g-0.95)*((p_max-p_min)/(1.05-0.95))+p_min;
+            k2=1+((0.15*1/Math.PI)*Math.atan((1/5f)*k));
+            p=Double.valueOf(df.format(p));
+            k2=Double.valueOf(df.format(k2));
+            d=k2*p*g;
+            d=Double.valueOf(df.format(d));
+            jockeyName=jockeys.get(i).getName();
+            horseName=horses.get(i).getName();
+            completeds.add(new SimulationParticipantCompleted(null, null, g, d, k, p, horseName, jockeyName, simulation.getId()));
+        }
+
+        return completeds;
+
+    }
+
+    private ArrayList<Jockey> getParticipantJockeys(Simulation simulation) throws NotFoundException, PersistenceException {
+
+        ArrayList<Jockey>jockeys=new ArrayList<>();
+
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            jockeys.add(jockeyDao.findOneById(simulation.getSimulationParticipants().get(i).getJockeyId()));
+        }
+
+        return jockeys;
+    }
+
+    private ArrayList<Horse> getParticipantHorses(Simulation simulation) throws NotFoundException, PersistenceException {
+        ArrayList<Horse>horses=new ArrayList<>();
+
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            horses.add(horseDao.findOneById(simulation.getSimulationParticipants().get(i).getHorseId()));
+        }
+
+        return horses;
     }
 }
