@@ -7,6 +7,7 @@ import at.ac.tuwien.sepm.assignment.individual.persistence.ISimulationDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.service.ISimulationService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
+import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimulationService implements ISimulationService {
 
-
+    private static float luckRangeMax=1.05f;
+    private static float luckRangeMin=0.95f;
     private static final Logger LOGGER = LoggerFactory.getLogger(SimulationService.class);
     private final ISimulationDao simulationDao;
 
@@ -27,7 +29,7 @@ public class SimulationService implements ISimulationService {
     }
 
     @Override
-    public Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException {
+    public Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException {
 
         try {
             LOGGER.info("Validate data of simulation to be inserted");
@@ -40,7 +42,7 @@ public class SimulationService implements ISimulationService {
         }
     }
 
-    private void validateData(Simulation simulation) throws InvalidDataException {
+    private void validateData(Simulation simulation) throws InvalidDataException, OutofRangeException {
         if(simulation.getSimulationParticipants()==null){
             LOGGER.error("Participants missing.");
             throw new InvalidDataException("A simulation needs participants. Participants missing!");
@@ -64,6 +66,12 @@ public class SimulationService implements ISimulationService {
                 LOGGER.error("Luck factor of participant "+i+" missing.");
                 throw new InvalidDataException("Luck factor of participant "+i+" missing!");
             }
+            if(simPart.getLuckFactor()>luckRangeMax || simPart.getLuckFactor()<luckRangeMin){
+                LOGGER.error("Luck factor of participant "+i+" out of range.");
+                throw new OutofRangeException("Luck factor of participant "+i+" is out of range!");
+            }
+
+          
 
         }
     }
