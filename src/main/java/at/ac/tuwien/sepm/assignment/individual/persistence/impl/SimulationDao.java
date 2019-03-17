@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 
 @Repository
@@ -28,7 +27,7 @@ public class SimulationDao implements ISimulationDao {
     }
 
     @Override
-    public Integer insertOne(Simulation simulation) throws PersistenceException {
+    public Simulation insertOne(Simulation simulation) throws PersistenceException {
         LOGGER.info("Insert Simulation");
         Connection con=dbConnectionManager.getConnection();
         String sql = "INSERT INTO simulation(name,created) VALUES (?,?);";
@@ -53,10 +52,12 @@ public class SimulationDao implements ISimulationDao {
 
             for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
                 setValues(statement, key, simulation.getSimulationParticipants().get(i));
+                statement.executeUpdate();
+                statement.clearParameters();
             }
-            statement.executeUpdate();
 
-            return key;
+            return new Simulation(key, simulation.getName(),tmstmp.toLocalDateTime());
+
         } catch (SQLException e) {
             LOGGER.error("Problem while adding jockey to database", e);
             throw new PersistenceException("Could not add jockey to database", e);

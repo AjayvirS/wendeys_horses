@@ -1,6 +1,8 @@
 package at.ac.tuwien.sepm.assignment.individual.util.mapper;
 import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
+import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantCompleted;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationInputDto;
+import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationOutputDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,8 +11,17 @@ import java.util.ArrayList;
 public class SimulationMapper {
 
 
-    public SimulationInputDto entityToDto(Simulation simulation) {
-        return new SimulationInputDto(simulation.getName(), simulation.getSimulationParticipants());
+    public SimulationOutputDto entityToDto(Simulation simulation) {
+
+        SimulationParticipantCompleted[]simPartsComp= new SimulationParticipantCompleted[simulation.getSimulationParticipantsCompleted().size()];
+
+        for (int i = 0; i < simPartsComp.length; i++) {
+
+            simPartsComp[i]=simulation.getSimulationParticipantsCompleted().get(i);
+
+        }
+
+        return new SimulationOutputDto(simulation.getId(),simulation.getName(),simulation.getCreated(), simPartsComp);
     }
     public Simulation DtoToEntity(SimulationInputDto simulationInputDto){
         return new Simulation(simulationInputDto.getName(), simulationInputDto.getSimulationParticipants());

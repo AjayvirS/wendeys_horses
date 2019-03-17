@@ -14,12 +14,6 @@ public class Simulation {
 
     }
 
-    public Simulation(Integer id, String name, LocalDateTime created, ArrayList<SimulationParticipantCompleted> simulationParticipantsCompleted){
-        this.id=id;
-        this.name=name;
-        this.created=created;
-        this.simulationParticipantsCompleted=simulationParticipantsCompleted;
-    }
 
     public Simulation(String name, ArrayList<SimulationParticipant>simulationParticipants){
         this.simulationParticipants=simulationParticipants;
@@ -32,6 +26,13 @@ public class Simulation {
         this.created=created;
     }
 
+    public void setSimulationParticipantsCompleted(ArrayList<SimulationParticipantCompleted> simulationParticipantsCompleted) {
+        this.simulationParticipantsCompleted = simulationParticipantsCompleted;
+    }
+
+    public ArrayList<SimulationParticipantCompleted> getSimulationParticipantsCompleted() {
+        return simulationParticipantsCompleted;
+    }
 
     public Integer getId() {
         return id;
@@ -59,10 +60,6 @@ public class Simulation {
 
     public ArrayList<SimulationParticipant> getSimulationParticipants() {
         return simulationParticipants;
-    }
-
-    public void setSimulationParticipants(ArrayList<SimulationParticipant> simulationParticipants) {
-        this.simulationParticipants = simulationParticipants;
     }
 
     @Override

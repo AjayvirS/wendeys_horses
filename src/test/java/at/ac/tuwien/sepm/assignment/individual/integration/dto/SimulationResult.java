@@ -73,7 +73,7 @@ public class SimulationResult {
             "id=" + id +
             ", name='" + name + '\'' +
             ", created=" + created +
-            ", horseJockeyCombinations=" + horseJockeyCombinations +
+            ", SimulationParticipantCompleted=" + horseJockeyCombinations +
             '}';
     }
 

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationInputDto;
+import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationOutputDto;
 import at.ac.tuwien.sepm.assignment.individual.service.ISimulationService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
@@ -33,14 +34,14 @@ public class SimulationEndpoint {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
-    public SimulationInputDto insertOne(@RequestBody SimulationInputDto simulationInputDto) {
+    public SimulationOutputDto insertOne(@RequestBody SimulationInputDto simulationInputDto) {
         LOGGER.info("Insert simulation");
         try {
             return simulationMapper.entityToDto(simulationService.insertOne(simulationMapper.DtoToEntity(simulationInputDto)));
         } catch (OutofRangeException | NotFoundException | InvalidDataException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during inserting jockey: " + e.getMessage(), e);
         } catch (ServiceException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing simulation with", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing simulation", e);
         }
     }
 

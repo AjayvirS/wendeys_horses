@@ -38,7 +38,7 @@ public class SimulationInputDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Simulation)) return false;
+        if (!(o instanceof SimulationInputDto)) return false;
         SimulationInputDto simulationInputDto = (SimulationInputDto) o;
         return Objects.equals(name, simulationInputDto.name) &&
             Objects.equals(simulationParticipants, simulationInputDto.simulationParticipants);

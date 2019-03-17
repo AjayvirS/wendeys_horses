@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,14 +57,26 @@ public class SimulationService implements ISimulationService {
 
             ArrayList<SimulationParticipantCompleted>completeds= getCalculatedSimulation(horses, jockeys, luckFactors, simulation);
             Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantCompleted::getAvgSpeed));
+            Collections.reverse(completeds);
 
             LOGGER.info("Simulation data calculated and sorted by highest average Speed");
-            LOGGER.info("Setting rank of participants");
-            for (int i = 0; i < completeds.size(); i++) {
-                completeds.get(i).setRank(i);
+            LOGGER.info("Set rank of participants");
+            int tempRank=1;
+            completeds.get(0).setRank(tempRank);
+            for (int i = 1; i < completeds.size(); i++) {
+                if(completeds.get(i).getAvgSpeed()<completeds.get(i-1).getAvgSpeed()){
+                    tempRank++;
+                }
+
+                completeds.get(i).setRank(tempRank);
+                completeds.get(i-1).setId(i);
+
             }
+            completeds.get(completeds.size()-1).setId(completeds.size());
             LOGGER.info("Insert simulation with following data: " + "Name: "+simulation.getName()+", Participants: "+simulation.getSimulationParticipants());
-            simulationDao.insertOne(simulation);
+            Simulation compSim=simulationDao.insertOne(simulation);
+            compSim.setSimulationParticipantsCompleted(completeds);
+            return compSim;
 
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing jockey");
@@ -141,7 +152,7 @@ public class SimulationService implements ISimulationService {
         df.setRoundingMode(RoundingMode.UP);
         String horseName=null, jockeyName=null;
 
-        for (int i = 0; i < horses.size(); i++) {
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
 
             p_min=horses.get(i).getMinSpeed();
             p_max=horses.get(i).getMaxSpeed();
@@ -156,7 +167,7 @@ public class SimulationService implements ISimulationService {
             d=Double.valueOf(df.format(d));
             jockeyName=jockeys.get(i).getName();
             horseName=horses.get(i).getName();
-            completeds.add(new SimulationParticipantCompleted(null, null, g, d, k, p, horseName, jockeyName, null));
+            completeds.add(new SimulationParticipantCompleted(null, null,horseName,jockeyName, d, p, k, g));
         }
 
         return completeds;

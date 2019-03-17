@@ -2,31 +2,22 @@ package at.ac.tuwien.sepm.assignment.individual.entity;
 
 public class SimulationParticipantCompleted {
 
-    private Integer id, rank, simulationId, horseid, jockeyid;
-    private Float luckFactor;
-    private Double avgSpeed, jockeySkill, horseSpeed;
+    private Integer id, rank;
     private String horseName, jockeyName;
+    private Double avgSpeed, horseSpeed, skill;
+    private Float luckFactor;
 
-    public SimulationParticipantCompleted(Integer id, Integer rank, Float luckFactor, Double avgSpeed, Double jockeySkill, Double horseSpeed
-        , String horseName, String jockeyName, Integer simulationId) {
+
+    public SimulationParticipantCompleted(Integer id, Integer rank, String horseName, String jockeyName, Double avgSpeed, Double horseSpeed, Double skill, Float luckFactor
+        ) {
         this.id = id;
         this.rank=rank;
         this.luckFactor=luckFactor;
         this.avgSpeed=avgSpeed;
-        this.jockeySkill=jockeySkill;
+        this.skill = skill;
         this.jockeyName=jockeyName;
         this.horseSpeed=horseSpeed;
         this.horseName=horseName;
-        this.simulationId=simulationId;
-
-    }
-
-    public SimulationParticipantCompleted(Integer id, Float luckFactor, Integer horseid, Integer jockeyid, Integer simulationId){
-        this.id=id;
-        this.luckFactor=luckFactor;
-        this.horseid=horseid;
-        this.jockeyid=jockeyid;
-        this.simulationId=simulationId;
     }
 
 
@@ -62,12 +53,12 @@ public class SimulationParticipantCompleted {
         this.avgSpeed = avgSpeed;
     }
 
-    public Double getJockeySkill() {
-        return jockeySkill;
+    public Double getSkill() {
+        return skill;
     }
 
-    public void setJockeySkill(Double jockeySkill) {
-        this.jockeySkill = jockeySkill;
+    public void setSkill(Double skill) {
+        this.skill = skill;
     }
 
     public Double getHorseSpeed() {
@@ -92,13 +83,5 @@ public class SimulationParticipantCompleted {
 
     public void setJockeyName(String jockeyName) {
         this.jockeyName = jockeyName;
-    }
-
-    public Integer getSimulationId() {
-        return simulationId;
-    }
-
-    public void setSimulationId(Integer simulationId) {
-        this.simulationId = simulationId;
     }
 }
