@@ -67,22 +67,19 @@ public class SimulationService implements ISimulationService {
                 if(completeds.get(i).getAvgSpeed()<completeds.get(i-1).getAvgSpeed()){
                     tempRank++;
                 }
-
                 completeds.get(i).setRank(tempRank);
-                completeds.get(i-1).setId(i);
-
             }
-            completeds.get(completeds.size()-1).setId(completeds.size());
             LOGGER.info("Insert simulation with following data: " + "Name: "+simulation.getName()+", Participants: "+simulation.getSimulationParticipants());
-            Simulation compSim=simulationDao.insertOne(simulation);
+            Simulation compSim=simulationDao.insertOne(simulation, completeds);
             compSim.setSimulationParticipantsCompleted(completeds);
             return compSim;
-
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing jockey");
             throw new ServiceException(e.getMessage(), e);
         }
     }
+
+
 
     private void validateData(Simulation simulation) throws InvalidDataException, OutofRangeException {
         if(simulation.getSimulationParticipants()==null){
@@ -153,7 +150,6 @@ public class SimulationService implements ISimulationService {
         String horseName=null, jockeyName=null;
 
         for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
-
             p_min=horses.get(i).getMinSpeed();
             p_max=horses.get(i).getMaxSpeed();
             k=jockeys.get(i).getSkill();
