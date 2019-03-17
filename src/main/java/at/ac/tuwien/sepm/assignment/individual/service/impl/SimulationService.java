@@ -18,9 +18,12 @@ import org.springframework.stereotype.Service;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 @Service
 public class SimulationService implements ISimulationService {
@@ -100,14 +103,14 @@ public class SimulationService implements ISimulationService {
             }
 
             for (int j = 0; j < simulation.getSimulationParticipants().size(); j++) {
-                SimulationParticipant simPart2=simulation.getSimulationParticipants().get(i);
-                if(simPart.getJockeyId().equals(simPart2.getJockeyId())){
+                SimulationParticipant simPart2=simulation.getSimulationParticipants().get(j);
+                if(simPart.getJockeyId().equals(simPart2.getJockeyId()) && i!=j){
                     LOGGER.error("Duplicate jockey found.");
-                    throw new InvalidDataException("Jockey with id"+simPart.getJockeyId()+" can only take part once in this race!");
+                    throw new InvalidDataException("Jockey with id "+simPart.getJockeyId()+" can only take part once in this race!");
                 }
-                if(simPart.getHorseId().equals(simPart2.getHorseId())){
+                if(simPart.getHorseId().equals(simPart2.getHorseId()) && i!=j){
                     LOGGER.error("Duplicate horse found.");
-                    throw new InvalidDataException("Horse with id"+simPart.getJockeyId()+" can only take part once in this race!");
+                    throw new InvalidDataException("Horse with id "+simPart.getHorseId()+" can only take part once in this race!");
                 }
             }
 
@@ -126,10 +129,15 @@ public class SimulationService implements ISimulationService {
     }
 
     private ArrayList<SimulationParticipantCompleted> getCalculatedSimulation(ArrayList<Horse> horses, ArrayList<Jockey> jockeys, ArrayList<Float> luckFactors, Simulation simulation) {
-        double p_min, p_max, k, p, k2, d;
-        float g;
+        Double p_min, p_max, k, p, k2, d;
+        Float g;
         ArrayList<SimulationParticipantCompleted> completeds=new ArrayList<>();
-        DecimalFormat df = new DecimalFormat("#.####");
+
+        //according to oracle javadoc to prevent comma: use nf and change locale where dot is used as decimal point
+        //and cast to decimalformat
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        DecimalFormat df = (DecimalFormat)nf;
+        df.applyPattern("#.####");
         df.setRoundingMode(RoundingMode.UP);
         String horseName=null, jockeyName=null;
 
@@ -141,6 +149,7 @@ public class SimulationService implements ISimulationService {
             g=luckFactors.get(i);
             p=(g-0.95)*((p_max-p_min)/(1.05-0.95))+p_min;
             k2=1+((0.15*1/Math.PI)*Math.atan((1/5f)*k));
+            System.out.println(df.format(p));
             p=Double.valueOf(df.format(p));
             k2=Double.valueOf(df.format(k2));
             d=k2*p*g;

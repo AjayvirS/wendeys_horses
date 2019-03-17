@@ -36,9 +36,10 @@ public class JockeyEndpoint {
     public JockeyDto insertOne(@RequestBody JockeyDto jockeyDto) {
         try {
             return jockeyMapper.entityToDto(jockeyService.insertOne(jockeyMapper.dtoToEntity(jockeyDto)));
-
-        } catch (ServiceException | OutofRangeException | InvalidDataException e) {
+        } catch ( OutofRangeException | InvalidDataException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during inserting jockey: " + e.getMessage(), e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockey" , e);
         }
     }
 
@@ -73,7 +74,7 @@ public class JockeyEndpoint {
     @RequestMapping(method = RequestMethod.GET)
     public JockeyDto[] getAllorFiltered(JockeyDto jockeyDto) {
 
-        LOGGER.info("GET Horses Filtered: " + (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
+        LOGGER.info("GET ALL Jockeys"+(allNull(jockeyDto) ?"":"Filtered: ")+ (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
             (jockeyDto.getSkill() == null ? "" : ", Skill: " + jockeyDto.getSkill()));
         try {
             return jockeyMapper.entitiesToDto(jockeyService.getAllOrFiltered(jockeyMapper.dtoToEntity(jockeyDto)));
@@ -84,10 +85,14 @@ public class JockeyEndpoint {
         }
     }
 
+    private boolean allNull(JockeyDto jockeyDto) {
+        return (jockeyDto.getSkill()==null && jockeyDto.getName()==null);
+    }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public JockeyDto getOneById(@PathVariable("id") Integer id) {
-        LOGGER.info("GET Horse: " + BASE_URL + "/" + id);
+        LOGGER.info("GET Jockey: " + BASE_URL + "/" + id);
         try {
             return jockeyMapper.entityToDto(jockeyService.findOneById(id));
         } catch (ServiceException e) {

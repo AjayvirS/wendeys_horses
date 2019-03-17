@@ -48,8 +48,10 @@ public class HorseEndpoint {
         LOGGER.info("POST Horse: " + horseDto.toString());
         try {
             return horseMapper.entityToDto(horseService.insertOne(horseMapper.dtoToEntity(horseDto)));
-        } catch (ServiceException | OutofRangeException | InvalidDataException e) {
+        } catch (OutofRangeException | InvalidDataException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during inserting horse: " + e.getMessage(), e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing horse", e);
         }
     }
 
@@ -83,7 +85,7 @@ public class HorseEndpoint {
     @RequestMapping(method = RequestMethod.GET)
     public HorseDto[] getAllorFiltered(HorseDto horseDto) {
 
-        LOGGER.info("GET Horses Filtered: " + (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
+        LOGGER.info("GET ALL Horses"+(allNull(horseDto) ?"":"Filtered: ")+ (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
             (horseDto.getBreed() == null ? "" : ", Breed: " + horseDto.getBreed()) + (horseDto.getMinSpeed() == null ? "" : ", min. Speed: " + horseDto.getMinSpeed()) + (horseDto.getMaxSpeed() == null ? "" : "max. Speed: " + horseDto.getMaxSpeed()));
         try {
             return horseMapper.entitiesToDto(horseService.getAllOrFiltered(horseMapper.dtoToEntity(horseDto)));
@@ -92,6 +94,10 @@ public class HorseEndpoint {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horses: " + e.getMessage(), e);
         }
+    }
+
+    private boolean allNull(HorseDto horseDto) {
+        return (horseDto.getName()==null && horseDto.getBreed()==null && horseDto.getMinSpeed()==null && horseDto.getMaxSpeed()==null);
     }
 
 

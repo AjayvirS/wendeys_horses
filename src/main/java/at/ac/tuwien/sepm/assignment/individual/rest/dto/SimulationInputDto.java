@@ -6,15 +6,15 @@ import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipant;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class SimulationDto {
+public class SimulationInputDto {
     private String name;
     private ArrayList<SimulationParticipant> simulationParticipants;
 
-    public SimulationDto(){
+    public SimulationInputDto(){
 
     }
 
-    public SimulationDto(String name, ArrayList<SimulationParticipant> simulationParticipants){
+    public SimulationInputDto(String name, ArrayList<SimulationParticipant> simulationParticipants){
         this.name=name;
         this.simulationParticipants=simulationParticipants;
     }
@@ -39,9 +39,9 @@ public class SimulationDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Simulation)) return false;
-        SimulationDto simulationDto = (SimulationDto) o;
-        return Objects.equals(name, simulationDto.name) &&
-            Objects.equals(simulationParticipants, simulationDto.simulationParticipants);
+        SimulationInputDto simulationInputDto = (SimulationInputDto) o;
+        return Objects.equals(name, simulationInputDto.name) &&
+            Objects.equals(simulationParticipants, simulationInputDto.simulationParticipants);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SimulationDto {
 
     @Override
     public String toString() {
-        return "SimulationDto{"+
+        return "SimulationInputDto{"+
             "name='" + name + '\'' +
             ", Simulation Participants=" + simulationParticipants.toString() +
             '}';
