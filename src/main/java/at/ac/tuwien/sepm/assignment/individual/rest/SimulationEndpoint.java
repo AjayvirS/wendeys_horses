@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationInputDto;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationOutputDto;
 import at.ac.tuwien.sepm.assignment.individual.service.ISimulationService;
@@ -49,7 +50,9 @@ public class SimulationEndpoint {
     @RequestMapping(method =RequestMethod.GET, value="/{id}")
     public SimulationOutputDto getOneById(@PathVariable Integer id){
         LOGGER.info("GET Simulation: " + BASE_URL + "/" + id);
-        return simulationMapper.entityToDto(simulationService.getOneById(id));
+        try {
+            return simulationMapper.entityToDto(simulationService.getOneById(id));
+        }
     }
 
 

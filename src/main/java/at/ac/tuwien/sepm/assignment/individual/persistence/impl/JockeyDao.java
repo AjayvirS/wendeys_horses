@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
@@ -233,10 +232,11 @@ public class JockeyDao implements IJockeyDao {
 
         } catch (SQLException e) {
             LOGGER.error("Could not insert into jockeyhistory table", e);
-            throw new PersistenceException("Could not add horse to database", e);
+            throw new PersistenceException("Could not add jockey to database", e);
         }
 
     }
+
 
 
 

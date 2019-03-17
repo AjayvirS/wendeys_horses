@@ -19,4 +19,6 @@ public interface ISimulationDao {
      * @throws NotFoundException will be thrown if a participant (horse or jockey) is not found.
      */
     Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantCompleted> completeds) throws PersistenceException, NotFoundException;
+
+    Simulation getOneById(Integer id) throws PersistenceException, NotFoundException;
 }

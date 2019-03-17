@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.*;
+import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.ISimulationDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class SimulationDao implements ISimulationDao {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JockeyDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Simulation.class);
     private final DBConnectionManager dbConnectionManager;
 
     @Autowired
@@ -68,8 +69,35 @@ public class SimulationDao implements ISimulationDao {
             return new Simulation(key, simulation.getName(),tmstmp.toLocalDateTime());
 
         } catch (SQLException e) {
-            LOGGER.error("Problem while adding jockey to database", e);
-            throw new PersistenceException("Could not add jockey to database", e);
+            LOGGER.error("Problem while adding simulation to database", e);
+            throw new PersistenceException("Could not add simulation to database", e);
+        }
+    }
+
+    @Override
+    public Simulation getOneById(Integer id) throws PersistenceException, NotFoundException {
+        LOGGER.info("Get simulation with id " + id);
+        Connection con= dbConnectionManager.getConnection();
+        String sql = "SELECT * FROM simulation WHERE id=?";
+        Simulation simulation = null;
+        try {
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                simulation = dbResultToSimulation(result);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            LOGGER.error("Problem while executing SQL SELECT statement for reading simulation with id " + id, e);
+            throw new PersistenceException("Error while accessing database", e);
+        }
+
+        if (simulation != null) {
+            return simulation;
+        } else {
+            LOGGER.error("Could not find simulation with id "+id);
+            throw new NotFoundException("Could not find simulation with id " + id);
         }
     }
 

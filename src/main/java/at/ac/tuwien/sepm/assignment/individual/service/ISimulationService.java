@@ -18,5 +18,5 @@ public interface ISimulationService {
      */
     Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException, NotFoundException;
 
-    Simulation getOneById(Integer id);
+    Simulation getOneById(Integer id) throws NotFoundException, PersistenceException, ServiceException;
 }
