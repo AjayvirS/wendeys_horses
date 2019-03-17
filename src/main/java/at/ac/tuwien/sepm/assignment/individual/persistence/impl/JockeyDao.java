@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
+import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
@@ -72,6 +73,8 @@ public class JockeyDao implements IJockeyDao {
             //throws NotFoundException
             dbJockey = findOneById(id);
 
+            insertOneHistory(dbJockey);
+
             statement = con.prepareStatement(sql);
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
             statement.setString(1, jockey.getName() == null ? dbJockey.getName() : jockey.getName());
@@ -136,6 +139,9 @@ public class JockeyDao implements IJockeyDao {
 
         String sql="DELETE FROM jockey WHERE id=?";
         try{
+            Jockey dbJockey=findOneById(id);
+            insertOneHistoryWhenDeleted(dbJockey);
+
             PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
             statement.setInt(1,id);
             int checkZero=statement.executeUpdate();
@@ -187,6 +193,48 @@ public class JockeyDao implements IJockeyDao {
             LOGGER.error("Could not find jockey/s with following optional parameters: "+jockey.printOptionals());
             throw new NotFoundException("Could not find jockeys with optional parameters: "+jockey.printOptionals());
         } else return filteredList;
+
+    }
+
+
+    private void insertOneHistoryWhenDeleted(Jockey dbJockey) throws PersistenceException {
+        LOGGER.info("Check if jockey with id " + dbJockey.getId() + " exists: insert into jockeyhistory if no, else do nothing");
+        String sql = "SELECT * FROM jockeyhistory WHERE jockeyId=?";
+        try {
+            PreparedStatement ps = dbConnectionManager.getConnection().prepareStatement(sql);
+            ps.setInt(1, dbJockey.getId());
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                insertOneHistory(dbJockey);
+            } else {
+                LOGGER.info("Latest updated jockey already exists in jockeyhistory, no need to re-insert!");
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Could not insert into jockeyhistory table");
+            throw new PersistenceException("Could not add jockey to database", e);
+        }
+
+    }
+
+    private void insertOneHistory(Jockey dbJockey) throws PersistenceException {
+        PreparedStatement statement;
+        LOGGER.info("Insert into jockeyHistory with "+dbJockey.getId());
+        String sqlHistory="INSERT INTO jockeyhistory(jockeyid, name, skill, updated) VALUES (?,?,?,?)";
+        try {
+
+            statement = dbConnectionManager.getConnection().prepareStatement(sqlHistory);
+            statement.setInt(1,dbJockey.getId());
+            statement.setString(2, dbJockey.getName());
+            statement.setDouble(3, dbJockey.getSkill());
+            statement.setTimestamp(4, Timestamp.valueOf(dbJockey.getUpdated()));
+            statement.executeUpdate();
+            statement.close();
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not insert into jockeyhistory table", e);
+            throw new PersistenceException("Could not add horse to database", e);
+        }
 
     }
 

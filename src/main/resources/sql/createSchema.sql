@@ -30,12 +30,27 @@ CREATE TABLE IF NOT EXISTS simulation (
 
 CREATE TABLE IF NOT EXISTS  hj_combination (
   id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-  rank          BIGINT          NOT NULL,
-  horse_Name    VARCHAR(255)    NOT NULL,
-  jockey_Name   VARCHAR(255)    NOT NULL,
-  avg_Speed     DOUBLE          NOT NULL,
-  horse_Speed   DOUBLE          NOT NULL,
-  jockey_Skill  DOUBLE          NOT NULL,
   luckFactor    DOUBLE          NOT NULL,
   simulationID  BIGINT          NOT NULL
-)
+);
+
+--primary key= id+updated, since they can never be the same (time is always different for the same horse id)
+CREATE TABLE IF NOT EXISTS horseHistory(
+  id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+  horseId   BIGINT,
+  name      VARCHAR(255) NOT NULL,
+  breed     TEXT,
+  min_speed DOUBLE       NOT NULL,
+  max_speed DOUBLE       NOT NULL,
+  updated   DATETIME     NOT NULL,
+);
+
+CREATE TABLE IF NOT EXISTS jockeyHistory (
+  id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+  jockeyId  BIGINT,
+  name      VARCHAR(255) NOT NULL,
+  skill     DOUBLE       NOT NULL,
+  updated   DATETIME     NOT NULL,
+);
+
+

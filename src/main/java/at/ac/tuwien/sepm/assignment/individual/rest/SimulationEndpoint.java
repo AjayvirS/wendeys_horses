@@ -1,4 +1,5 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
+import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationDto;
 import at.ac.tuwien.sepm.assignment.individual.service.ISimulationService;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
@@ -36,6 +37,12 @@ public class SimulationEndpoint {
         try {
             return simulationMapper.entityToDto(simulationService.insertOne(simulationMapper.DtoToEntity(simulationDto)));
         } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (OutofRangeException e) {
+            e.printStackTrace();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+        } catch (NotFoundException e) {
             e.printStackTrace();
         }
         return null;

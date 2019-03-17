@@ -53,7 +53,6 @@ public class SimulationDao implements ISimulationDao {
                 simPartsComp.get(i).setSimulationId(key);
 
             }
-            statement.close();
             //@TODO
             /*
                 insert method has simulation participants completed;
@@ -61,6 +60,17 @@ public class SimulationDao implements ISimulationDao {
                 reset this statement or use new statement to insert data into hj_combination
                 simpartsComp.simId=key
              */
+            statement.clearParameters();
+            statement=dbConnectionManager.getConnection().prepareStatement(sql2);
+            Integer tempRank=1;
+            for (int i = 0; i < simPartsComp.size()-1; i++) {
+
+                setValues(simPartsComp.get(i), statement, tempRank);
+
+
+            }
+
+
 
 
             return null;
@@ -70,6 +80,19 @@ public class SimulationDao implements ISimulationDao {
         }
     }
 
+    private void setValues(SimulationParticipantCompleted participant, PreparedStatement statement, Integer rank) throws SQLException {
+
+        statement.setInt(1, rank);
+        statement.setString(2, participant.getHorseName());
+        statement.setString(3, participant.getJockeyName());
+        statement.setDouble(4, participant.getAvgSpeed());
+        statement.setDouble(5, participant.getHorseSpeed());
+        statement.setDouble(6, participant.getJockeySkill());
+        statement.setDouble(7, participant.getLuckFactor());
+
+
+
+    }
 
 
     private static Simulation dbResultToSimulation(ResultSet result) throws SQLException {
