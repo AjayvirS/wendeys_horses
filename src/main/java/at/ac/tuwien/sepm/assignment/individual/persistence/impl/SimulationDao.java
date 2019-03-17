@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.*;
-import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.ISimulationDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
@@ -29,17 +28,17 @@ public class SimulationDao implements ISimulationDao {
     }
 
     @Override
-    public Simulation insertOne(ArrayList<SimulationParticipantCompleted> simPartsComp, Simulation simulation) throws PersistenceException {
+    public Integer insertOne(Simulation simulation) throws PersistenceException {
         LOGGER.info("Insert Simulation");
+        Connection con=dbConnectionManager.getConnection();
         String sql = "INSERT INTO simulation(name,created) VALUES (?,?);";
-        String sql2="INSERT INTO hj_combination(rank, horse_name, jockey_name, avg_speed, horse_speed, jockey_skill, luckfactor, simulationid) " +
-            "VALUES (?,?,?,?,?,?,?,?)";
+        String sql2="INSERT INTO hj_combination(luckfactor, horseid, jockeyid, simulationid) VALUES (?,?,?,?)";
 
 
         try {
 
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
-            PreparedStatement statement = dbConnectionManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, simulation.getName());
             statement.setTimestamp(2, tmstmp);
             statement.executeUpdate();
@@ -49,49 +48,27 @@ public class SimulationDao implements ISimulationDao {
                 key = rs.getInt(1);
             }
 
-            for (int i = 0; i < simPartsComp.size(); i++) {
-                simPartsComp.get(i).setSimulationId(key);
-
-            }
-            //@TODO
-            /*
-                insert method has simulation participants completed;
-                need to insert every participant into table hj_combination;
-                reset this statement or use new statement to insert data into hj_combination
-                simpartsComp.simId=key
-             */
             statement.clearParameters();
-            statement=dbConnectionManager.getConnection().prepareStatement(sql2);
-            Integer tempRank=1;
-            for (int i = 0; i < simPartsComp.size()-1; i++) {
+            statement=con.prepareStatement(sql2);
 
-                setValues(simPartsComp.get(i), statement, tempRank);
-
-
+            for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+                setValues(statement, key, simulation.getSimulationParticipants().get(i));
             }
+            statement.executeUpdate();
 
-
-
-
-            return null;
+            return key;
         } catch (SQLException e) {
             LOGGER.error("Problem while adding jockey to database", e);
             throw new PersistenceException("Could not add jockey to database", e);
         }
     }
 
-    private void setValues(SimulationParticipantCompleted participant, PreparedStatement statement, Integer rank) throws SQLException {
+    private void setValues( PreparedStatement statement, Integer key, SimulationParticipant participant) throws SQLException {
 
-        statement.setInt(1, rank);
-        statement.setString(2, participant.getHorseName());
-        statement.setString(3, participant.getJockeyName());
-        statement.setDouble(4, participant.getAvgSpeed());
-        statement.setDouble(5, participant.getHorseSpeed());
-        statement.setDouble(6, participant.getJockeySkill());
-        statement.setDouble(7, participant.getLuckFactor());
-
-
-
+        statement.setFloat(1, participant.getLuckFactor());
+        statement.setInt(2, participant.getHorseId());
+        statement.setInt(3, participant.getJockeyId());
+        statement.setDouble(4,key);
     }
 
 

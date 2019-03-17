@@ -2,7 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.entity;
 
 public class SimulationParticipantCompleted {
 
-    private Integer id, rank, simulationId;
+    private Integer id, rank, simulationId, horseid, jockeyid;
     private Float luckFactor;
     private Double avgSpeed, jockeySkill, horseSpeed;
     private String horseName, jockeyName;
@@ -19,6 +19,14 @@ public class SimulationParticipantCompleted {
         this.horseName=horseName;
         this.simulationId=simulationId;
 
+    }
+
+    public SimulationParticipantCompleted(Integer id, Float luckFactor, Integer horseid, Integer jockeyid, Integer simulationId){
+        this.id=id;
+        this.luckFactor=luckFactor;
+        this.horseid=horseid;
+        this.jockeyid=jockeyid;
+        this.simulationId=simulationId;
     }
 
 

@@ -65,7 +65,7 @@ public class SimulationService implements ISimulationService {
                 completeds.get(i).setRank(i);
             }
             LOGGER.info("Insert simulation with following data: " + "Name: "+simulation.getName()+", Participants: "+simulation.getSimulationParticipants());
-            return simulationDao.insertOne(completeds, simulation);
+            simulationDao.insertOne(simulation);
 
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing jockey");
@@ -156,7 +156,7 @@ public class SimulationService implements ISimulationService {
             d=Double.valueOf(df.format(d));
             jockeyName=jockeys.get(i).getName();
             horseName=horses.get(i).getName();
-            completeds.add(new SimulationParticipantCompleted(null, null, g, d, k, p, horseName, jockeyName, simulation.getId()));
+            completeds.add(new SimulationParticipantCompleted(null, null, g, d, k, p, horseName, jockeyName, null));
         }
 
         return completeds;

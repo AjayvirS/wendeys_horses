@@ -8,5 +8,5 @@ import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.Persistenc
 import java.util.ArrayList;
 
 public interface ISimulationDao {
-    Simulation insertOne(ArrayList<SimulationParticipantCompleted> arrayList, Simulation simulation) throws PersistenceException, NotFoundException;
+    Integer insertOne(Simulation simulation) throws PersistenceException, NotFoundException;
 }

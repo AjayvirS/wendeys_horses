@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS simulation (
 
 CREATE TABLE IF NOT EXISTS  hj_combination (
   id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-  luckFactor    DOUBLE          NOT NULL,
+  luckFactor    FLOAT          NOT NULL,
   horseId       BIGINT          NOT NULL,
   jockeyId      BIGINT          NOT NULL,
   simulationID  BIGINT          NOT NULL
