@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Base64;
+
 @RestController
 @RequestMapping("/api/v1/horses")
 public class HorseEndpoint {
@@ -27,6 +29,8 @@ public class HorseEndpoint {
     public HorseEndpoint(IHorseService horseService, HorseMapper horseMapper) {
         this.horseService = horseService;
         this.horseMapper = horseMapper;
+        LOGGER.debug("Defined Endpoint");
+
     }
 
 
@@ -45,7 +49,7 @@ public class HorseEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public HorseDto insertOne(@RequestBody HorseDto horseDto) {
-        LOGGER.info("POST Horse: " + horseDto.toString());
+        LOGGER.info("POST "+ BASE_URL+", Horse: " + horseDto.toString());
         try {
             return horseMapper.entityToDto(horseService.insertOne(horseMapper.dtoToEntity(horseDto)));
         } catch (OutofRangeException | InvalidDataException e) {
@@ -57,7 +61,7 @@ public class HorseEndpoint {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public HorseDto updateOneById(@PathVariable("id") Integer id, @RequestBody HorseDto horseDto) {
-        LOGGER.info("PUT Horse: " + (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
+        LOGGER.info("PUT "+BASE_URL+", Horse: " + (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
             (horseDto.getBreed() == null ? "" : ", Breed: " + horseDto.getBreed()) + (horseDto.getMinSpeed() == null ? "" : ", min. Speed: " + horseDto.getMinSpeed()) + (horseDto.getMaxSpeed() == null ? "" : "max. Speed: " + horseDto.getMaxSpeed()));
         try {
             return horseMapper.entityToDto(horseService.updateOneById(id, horseMapper.dtoToEntity(horseDto)));
@@ -85,7 +89,7 @@ public class HorseEndpoint {
     @RequestMapping(method = RequestMethod.GET)
     public HorseDto[] getAllorFiltered(HorseDto horseDto) {
 
-        LOGGER.info("GET ALL Horses"+(allNull(horseDto) ?"":"Filtered: ")+ (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
+        LOGGER.info("GET ALL "+BASE_URL+(allNull(horseDto) ?"":"Filtered: ")+ (horseDto.getName() == null ? "" : "Name: " + horseDto.getName()) +
             (horseDto.getBreed() == null ? "" : ", Breed: " + horseDto.getBreed()) + (horseDto.getMinSpeed() == null ? "" : ", min. Speed: " + horseDto.getMinSpeed()) + (horseDto.getMaxSpeed() == null ? "" : "max. Speed: " + horseDto.getMaxSpeed()));
         try {
             return horseMapper.entitiesToDto(horseService.getAllOrFiltered(horseMapper.dtoToEntity(horseDto)));

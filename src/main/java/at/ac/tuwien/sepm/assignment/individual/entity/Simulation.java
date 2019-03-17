@@ -14,7 +14,6 @@ public class Simulation {
 
     }
 
-
     public Simulation(String name, ArrayList<SimulationParticipant>simulationParticipants){
         this.simulationParticipants=simulationParticipants;
         this.name=name;

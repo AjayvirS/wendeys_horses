@@ -28,12 +28,15 @@ public class JockeyEndpoint {
     public JockeyEndpoint(IJockeyService jockeyService, JockeyMapper jockeyMapper) {
         this.jockeyService = jockeyService;
         this.jockeyMapper = jockeyMapper;
+        LOGGER.debug("Defined Endpoint");
     }
 
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public JockeyDto insertOne(@RequestBody JockeyDto jockeyDto) {
+        LOGGER.info("POST "+ BASE_URL+", Jockey: " + jockeyDto.toString());
+
         try {
             return jockeyMapper.entityToDto(jockeyService.insertOne(jockeyMapper.dtoToEntity(jockeyDto)));
         } catch ( OutofRangeException | InvalidDataException e) {
@@ -45,7 +48,7 @@ public class JockeyEndpoint {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public JockeyDto updateOneById(@PathVariable("id") Integer id, @RequestBody JockeyDto jockeyDto) {
-        LOGGER.info("PUT Jockey: " + (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
+        LOGGER.info("PUT "+BASE_URL+", Horse: " + (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
             (jockeyDto.getSkill() == null ? "" : ", Skill: " + jockeyDto.getSkill()));
         try {
             return jockeyMapper.entityToDto(jockeyService.updateOneById(id, jockeyMapper.dtoToEntity(jockeyDto)));
@@ -74,7 +77,7 @@ public class JockeyEndpoint {
     @RequestMapping(method = RequestMethod.GET)
     public JockeyDto[] getAllorFiltered(JockeyDto jockeyDto) {
 
-        LOGGER.info("GET ALL Jockeys"+(allNull(jockeyDto) ?"":"Filtered: ")+ (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
+        LOGGER.info("GET ALL "+BASE_URL+(allNull(jockeyDto) ?":":"Filtered: ")+ (jockeyDto.getName() == null ? "" : "Name: " + jockeyDto.getName()) +
             (jockeyDto.getSkill() == null ? "" : ", Skill: " + jockeyDto.getSkill()));
         try {
             return jockeyMapper.entitiesToDto(jockeyService.getAllOrFiltered(jockeyMapper.dtoToEntity(jockeyDto)));

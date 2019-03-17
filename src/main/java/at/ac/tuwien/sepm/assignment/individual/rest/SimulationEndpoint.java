@@ -29,13 +29,14 @@ public class SimulationEndpoint {
     public SimulationEndpoint(ISimulationService simulationService, SimulationMapper simulationMapper){
         this.simulationService=simulationService;
         this.simulationMapper=simulationMapper;
+        LOGGER.info("Defined Endpoint");
     }
 
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST)
     public SimulationOutputDto insertOne(@RequestBody SimulationInputDto simulationInputDto) {
-        LOGGER.info("Insert simulation");
+        LOGGER.info("POST simulation: "+BASE_URL);
         try {
             return simulationMapper.entityToDto(simulationService.insertOne(simulationMapper.DtoToEntity(simulationInputDto)));
         } catch (OutofRangeException | NotFoundException | InvalidDataException e) {
@@ -44,5 +45,13 @@ public class SimulationEndpoint {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing simulation", e);
         }
     }
+
+    @RequestMapping(method =RequestMethod.GET, value="/{id}")
+    public SimulationOutputDto getOneById(@PathVariable Integer id){
+        LOGGER.info("GET Simulation: " + BASE_URL + "/" + id);
+        return simulationMapper.entityToDto(simulationService.getOneById(id));
+    }
+
+
 
 }

@@ -79,6 +79,10 @@ public class SimulationService implements ISimulationService {
         }
     }
 
+    @Override
+    public Simulation getOneById(Integer id) {
+        return null;
+    }
 
 
     private void validateData(Simulation simulation) throws InvalidDataException, OutofRangeException {
