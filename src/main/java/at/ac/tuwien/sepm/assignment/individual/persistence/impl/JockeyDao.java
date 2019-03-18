@@ -191,8 +191,8 @@ public class JockeyDao implements IJockeyDao {
 
         if(filteredList.isEmpty()){
             LOGGER.error("Could not find jockey/s with following optional parameters: "+jockey.printOptionals());
-            throw new NotFoundException("Could not find jockeys with optional parameters: "+jockey.printOptionals());
-        } else return filteredList;
+        }
+        return filteredList;
 
     }
 
