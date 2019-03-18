@@ -7,15 +7,15 @@ public class Simulation {
     private Integer id;
     private String name;
     private LocalDateTime created;
-    private ArrayList<SimulationParticipant> simulationParticipants;
-    private ArrayList<SimulationParticipantCompleted> simulationParticipantsCompleted;
+    private ArrayList<SimulationParticipantInput> simulationParticipantInputs;
+    private ArrayList<SimulationParticipantOutput> simulationParticipantsCompleted;
 
     public Simulation(){
 
     }
 
-    public Simulation(String name, ArrayList<SimulationParticipant>simulationParticipants){
-        this.simulationParticipants=simulationParticipants;
+    public Simulation(String name, ArrayList<SimulationParticipantInput> simulationParticipantInputs){
+        this.simulationParticipantInputs = simulationParticipantInputs;
         this.name=name;
     }
 
@@ -25,11 +25,11 @@ public class Simulation {
         this.created=created;
     }
 
-    public void setSimulationParticipantsCompleted(ArrayList<SimulationParticipantCompleted> simulationParticipantsCompleted) {
+    public void setSimulationParticipantsCompleted(ArrayList<SimulationParticipantOutput> simulationParticipantsCompleted) {
         this.simulationParticipantsCompleted = simulationParticipantsCompleted;
     }
 
-    public ArrayList<SimulationParticipantCompleted> getSimulationParticipantsCompleted() {
+    public ArrayList<SimulationParticipantOutput> getSimulationParticipantsCompleted() {
         return simulationParticipantsCompleted;
     }
 
@@ -57,8 +57,12 @@ public class Simulation {
         this.created = created;
     }
 
-    public ArrayList<SimulationParticipant> getSimulationParticipants() {
-        return simulationParticipants;
+    public ArrayList<SimulationParticipantInput> getSimulationParticipantInputs() {
+        return simulationParticipantInputs;
+    }
+
+    public void setSimulationParticipantInputs(ArrayList<SimulationParticipantInput> simulationParticipantInputs) {
+        this.simulationParticipantInputs = simulationParticipantInputs;
     }
 
     @Override
@@ -83,7 +87,7 @@ public class Simulation {
             "id=" + id +
             ", name='" + name + '\'' +
             ", created=" + created +
-            "Simulation Participants: "+simulationParticipants.toString()+
+            "Simulation Participants: "+ simulationParticipantInputs.toString()+
             '}';
     }
 }

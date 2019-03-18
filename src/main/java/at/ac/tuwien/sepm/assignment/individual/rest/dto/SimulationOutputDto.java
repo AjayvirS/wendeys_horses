@@ -1,6 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.rest.dto;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantCompleted;
+import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutput;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -11,11 +11,11 @@ public class SimulationOutputDto{
     private Integer id;
     private String name;
     private LocalDateTime created;
-    private SimulationParticipantCompleted[] horseJockeyCombinations;
+    private SimulationParticipantOutput[] horseJockeyCombinations;
     public SimulationOutputDto(){
 
     }
-    public SimulationOutputDto(Integer id, String name, LocalDateTime created, SimulationParticipantCompleted[] horseJockeyCombinations){
+    public SimulationOutputDto(Integer id, String name, LocalDateTime created, SimulationParticipantOutput[] horseJockeyCombinations){
         this.horseJockeyCombinations = horseJockeyCombinations;
         this.id=id;
         this.name=name;
@@ -46,11 +46,11 @@ public class SimulationOutputDto{
         this.created = created;
     }
 
-    public SimulationParticipantCompleted[] getHorseJockeyCombinations() {
+    public SimulationParticipantOutput[] getHorseJockeyCombinations() {
         return horseJockeyCombinations;
     }
 
-    public void setHorseJockeyCombinations(SimulationParticipantCompleted[] horseJockeyCombinations) {
+    public void setHorseJockeyCombinations(SimulationParticipantOutput[] horseJockeyCombinations) {
         this.horseJockeyCombinations = horseJockeyCombinations;
     }
 

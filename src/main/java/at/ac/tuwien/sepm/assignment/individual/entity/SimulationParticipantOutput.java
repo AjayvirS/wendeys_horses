@@ -1,6 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 
-public class SimulationParticipantCompleted {
+public class SimulationParticipantOutput {
 
     private Integer id, rank;
     private String horseName, jockeyName;
@@ -8,7 +8,7 @@ public class SimulationParticipantCompleted {
     private Float luckFactor;
 
 
-    public SimulationParticipantCompleted(Integer id, Integer rank, String horseName, String jockeyName, Double avgSpeed, Double horseSpeed, Double skill, Float luckFactor
+    public SimulationParticipantOutput(Integer id, Integer rank, String horseName, String jockeyName, Double avgSpeed, Double horseSpeed, Double skill, Float luckFactor
         ) {
         this.id = id;
         this.rank=rank;

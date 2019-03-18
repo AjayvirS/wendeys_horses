@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutput;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Repository
@@ -265,6 +267,50 @@ public class HorseDao implements IHorseDao {
             throw new NotFoundException("Could not find horses with optional parameters: "+horse.printOptionals());
         } else return filteredList;
 
+    }
+
+
+    public HashMap<Integer, Horse> getCorrectHorsesForSimulation(LocalDateTime created, Integer[]horseIDs) throws PersistenceException, NotFoundException {
+        LOGGER.info("Get correct version of participant horses");
+        //this makes a union of horses and horsehistory and partitions them by id of the horses
+        //then it proceeds to get the most recently updated horse right before the created date
+        HashMap<Integer, Horse> horsesById= new HashMap<>();
+        Connection con=dbConnectionManager.getConnection();
+
+        String sql="SELECT horseid,name,breed,min_speed,max_speed FROM (\n" +
+            "   SELECT temp.*,\n" +
+            "   ROW_NUMBER() OVER (PARTITION BY horseid ORDER BY updated desc) AS num\n" +
+            "   FROM(\n" +
+            "   select horseid, name, breed, min_speed, max_speed, updated from horsehistory\n" +
+            "   UNION\n" +
+            "   select id, name, breed, min_speed, max_speed, updated from horse\n" +
+            "   ) AS temp\n" +
+            "   WHERE updated<=? AND horseid IN ? \n" +
+            ")\n" +
+            "WHERE num = 1;";
+        try {
+            Array horseIDIn = con.createArrayOf("INTEGER", horseIDs);
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setTimestamp(1, Timestamp.valueOf(created));
+            stmt.setArray(2,horseIDIn);
+            ResultSet rs=stmt.executeQuery();
+
+            while(rs.next()){
+                horsesById.put(rs.getInt(1), new Horse(null,rs.getString(2),
+                    rs.getString(3), rs.getDouble(4),rs.getDouble(5), null, null) );
+            }
+
+            if(horsesById.isEmpty()){
+                LOGGER.info("Could not find participants horses");
+                throw new NotFoundException("Could not find one or more participant horses");
+            }
+
+            return horsesById;
+
+        } catch (SQLException e) {
+            LOGGER.error("Problem while executing SQL SELECT statement");
+            throw new PersistenceException("Error while accessing database");
+        }
     }
 
 

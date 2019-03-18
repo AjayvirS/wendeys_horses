@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
+import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Repository
@@ -235,6 +237,49 @@ public class JockeyDao implements IJockeyDao {
             throw new PersistenceException("Could not add jockey to database", e);
         }
 
+    }
+
+    public HashMap<Integer, Jockey> getCorrectJockeysForSimulation(LocalDateTime created, Integer[]jockeyIDs) throws PersistenceException, NotFoundException {
+        LOGGER.info("Get correct version of participant jockeys");
+        //this makes a union of horses and horsehistory and partitions them by id of the horses
+        //then it proceeds to get the most recently updated horse right before the created date
+        HashMap<Integer, Jockey> jockeysByID= new HashMap<>();
+        Connection con=dbConnectionManager.getConnection();
+
+        String sql="SELECT jockeyid,name,skill FROM (\n" +
+            "   SELECT temp.*,\n" +
+            "   ROW_NUMBER() OVER (PARTITION BY jockeyid ORDER BY updated desc) AS num\n" +
+            "   FROM(\n" +
+            "   select jockeyid, name, skill, updated from jockeyhistory\n" +
+            "   UNION\n" +
+            "   select id, name, skill, updated from jockey\n" +
+            "   ) AS temp\n" +
+            "   WHERE updated<=? AND jockeyid IN ? \n" +
+            ")\n" +
+            "WHERE num = 1;";
+        try {
+            Array jockeyIDIn = con.createArrayOf("INTEGER", jockeyIDs);
+            PreparedStatement stmt=con.prepareStatement(sql);
+            stmt.setTimestamp(1, Timestamp.valueOf(created));
+            stmt.setArray(2,jockeyIDIn);
+            ResultSet rs=stmt.executeQuery();
+
+            while(rs.next()){
+                jockeysByID.put(rs.getInt(1), new Jockey(null,rs.getString(2),
+                    rs.getDouble(3), null, null) );
+            }
+
+            if(jockeysByID.isEmpty()){
+                LOGGER.info("Could not find participants jockeys");
+                throw new NotFoundException("Could not find participant one or more jockeys");
+            }
+
+            return jockeysByID;
+
+        } catch (SQLException e) {
+            LOGGER.error("Problem while executing SQL SELECT statement");
+            throw new PersistenceException("Error while accessing database");
+        }
     }
 
 

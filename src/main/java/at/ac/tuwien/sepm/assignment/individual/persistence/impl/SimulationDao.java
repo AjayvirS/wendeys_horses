@@ -29,7 +29,7 @@ public class SimulationDao implements ISimulationDao {
     }
 
     @Override
-    public Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantCompleted> completeds) throws PersistenceException {
+    public Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantOutput> completeds) throws PersistenceException {
         LOGGER.info("Insert Simulation");
         Connection con=dbConnectionManager.getConnection();
         String sql = "INSERT INTO simulation(name,created) VALUES (?,?);";
@@ -53,8 +53,8 @@ public class SimulationDao implements ISimulationDao {
             statement.clearParameters();
             statement=con.prepareStatement(sql2);
 
-            for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
-                setValues(statement, key, simulation.getSimulationParticipants().get(i));
+            for (int i = 0; i < simulation.getSimulationParticipantInputs().size(); i++) {
+                setValues(statement, key, simulation.getSimulationParticipantInputs().get(i));
                 statement.executeUpdate();
                 statement.clearParameters();
             }
@@ -79,7 +79,9 @@ public class SimulationDao implements ISimulationDao {
         LOGGER.info("Get simulation with id " + id);
         Connection con= dbConnectionManager.getConnection();
         String sql = "SELECT * FROM simulation WHERE id=?";
+        String sql2="SELECT * FROM hj_combination WHERE simulationID=?";
         Simulation simulation = null;
+        ArrayList<SimulationParticipantInput> simparts= new ArrayList<>();
         try {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, id);
@@ -87,6 +89,17 @@ public class SimulationDao implements ISimulationDao {
             while (result.next()) {
                 simulation = dbResultToSimulation(result);
             }
+            statement.clearParameters();
+
+            statement=con.prepareStatement(sql2);
+            statement.setInt(1, id);
+            result=statement.executeQuery();
+
+            while(result.next()){
+                simparts.add(new SimulationParticipantInput(result.getInt("id"), result.getInt("horseid"),
+                    result.getInt("jockeyid"), result.getFloat("luckFactor")));
+            }
+
             statement.close();
         } catch (SQLException e) {
             LOGGER.error("Problem while executing SQL SELECT statement for reading simulation with id " + id, e);
@@ -94,6 +107,7 @@ public class SimulationDao implements ISimulationDao {
         }
 
         if (simulation != null) {
+            simulation.setSimulationParticipantInputs(simparts);
             return simulation;
         } else {
             LOGGER.error("Could not find simulation with id "+id);
@@ -101,7 +115,7 @@ public class SimulationDao implements ISimulationDao {
         }
     }
 
-    private void setValues( PreparedStatement statement, Integer key, SimulationParticipant participant) throws SQLException {
+    private void setValues( PreparedStatement statement, Integer key, SimulationParticipantInput participant) throws SQLException {
 
         statement.setFloat(1, participant.getLuckFactor());
         statement.setInt(2, participant.getHorseId());

@@ -1,7 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
-import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantCompleted;
+import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutput;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 
@@ -18,7 +18,7 @@ public interface ISimulationDao {
      * @throws PersistenceException will be thrown if something goes wrong during the database access.
      * @throws NotFoundException will be thrown if a participant (horse or jockey) is not found.
      */
-    Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantCompleted> completeds) throws PersistenceException, NotFoundException;
+    Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantOutput> completeds) throws PersistenceException, NotFoundException;
 
     Simulation getOneById(Integer id) throws PersistenceException, NotFoundException;
 }
