@@ -34,7 +34,7 @@ public class SimulationDao implements ISimulationDao {
         Connection con=dbConnectionManager.getConnection();
         String sql = "INSERT INTO simulation(name,created) VALUES (?,?);";
         String sql2="INSERT INTO hj_combination(luckfactor, horseid, jockeyid, simulationid) VALUES (?,?,?,?)";
-        String sql3= "SELECT id from hj_combination";
+        String sql3= "SELECT id from hj_combination WHERE simulationid=?";
 
 
         try {
@@ -42,7 +42,7 @@ public class SimulationDao implements ISimulationDao {
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
             PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, simulation.getName());
-            statement.setTimestamp(2, tmstmp);
+            statement.setTimestamp(2, Timestamp.valueOf(simulation.getCreated()));
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             int key = 1;
@@ -58,15 +58,17 @@ public class SimulationDao implements ISimulationDao {
                 statement.executeUpdate();
                 statement.clearParameters();
             }
+            simulation.setId(key);
             statement.clearParameters();
             statement=con.prepareStatement(sql3);
+            statement.setInt(1, simulation.getId());
             rs=statement.executeQuery();
             int i=0;
             while(rs.next()){
                 completeds.get(i).setId(rs.getInt("id"));
                 i++;
             }
-            return new Simulation(key, simulation.getName(),tmstmp.toLocalDateTime());
+            return simulation;
 
         } catch (SQLException e) {
             LOGGER.error("Problem while adding simulation to database", e);

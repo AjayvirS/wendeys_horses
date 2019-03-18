@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -47,11 +48,22 @@ public class SimulationService implements ISimulationService {
             LOGGER.info("Validate data of simulation to be inserted");
             validateData(simulation);
             LOGGER.info("Prepare Simulation and calculate values based on horse speed, luck and skill");
+            simulation.setCreated(LocalDateTime.now());
 
-            ArrayList<SimulationParticipantOutput>completeds=getSimulation(simulation);
+            Object[]objs=prepareIDs(simulation);
+            ArrayList<SimulationParticipantOutput> completeds = getCalculatedData((HashMap<Integer, Horse>) objs[0],
+                (HashMap<Integer, Jockey>) objs[1], simulation);
+
+
             LOGGER.info("Insert simulation with following data: " + "Name: " + simulation.getName() + ", Participants: " + simulation.getSimulationParticipants());
             Simulation compSim = simulationDao.insertOne(simulation, completeds);
+
+
+            sortByRank(completeds);
+
             compSim.setSimulationParticipantsCompleted(completeds);
+
+
             return compSim;
         } catch (PersistenceException e) {
             LOGGER.error("Problem while processing simulation");
@@ -59,10 +71,25 @@ public class SimulationService implements ISimulationService {
         }
     }
 
+    private void sortByRank(ArrayList<SimulationParticipantOutput> completeds) {
+        Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
+        Collections.reverse(completeds);
+        LOGGER.info("Simulation data calculated and sorted by highest average Speed");
+        LOGGER.info("Set rank of participants");
+        int tempRank = 1;
+        completeds.get(0).setRank(tempRank);
+        for (int i = 1; i < completeds.size(); i++) {
+            if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
+                tempRank++;
+            }
+            completeds.get(i).setRank(tempRank);
+        }
+    }
+
     private Object[] prepareIDs(Simulation simulation) throws PersistenceException, NotFoundException {
 
-        HashMap<Integer,Horse>horseByIDs= new HashMap<>();
-        HashMap<Integer,Jockey>jockeyByIDs= new HashMap<>();
+        HashMap<Integer,Horse>horseByIDs;
+        HashMap<Integer,Jockey>jockeyByIDs;
         Integer[]horseIDs=new Integer[simulation.getSimulationParticipants().size()];
         Integer[]jockeyIDs=new Integer[simulation.getSimulationParticipants().size()];
         for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
@@ -84,8 +111,6 @@ public class SimulationService implements ISimulationService {
 
         try {
             simulation = simulationDao.getOneById(id);
-
-            getSimulation(simulation);
             ArrayList<SimulationParticipantOutput> completeds= getSimulation(simulation);
             simulation.setSimulationParticipantsCompleted(completeds);
             return simulation;
@@ -99,21 +124,10 @@ public class SimulationService implements ISimulationService {
 
     private ArrayList<SimulationParticipantOutput> getSimulation(Simulation simulation) throws PersistenceException, NotFoundException {
         Object[]objs=prepareIDs(simulation);
-        ArrayList<SimulationParticipantOutput> completeds = getCalculatedSimulation((HashMap<Integer, Horse>) objs[0],
+        ArrayList<SimulationParticipantOutput> completeds = getCalculatedData((HashMap<Integer, Horse>) objs[0],
             (HashMap<Integer, Jockey>) objs[1], simulation);
 
-        Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
-        Collections.reverse(completeds);
-        LOGGER.info("Simulation data calculated and sorted by highest average Speed");
-        LOGGER.info("Set rank of participants");
-        int tempRank = 1;
-        completeds.get(0).setRank(tempRank);
-        for (int i = 1; i < completeds.size(); i++) {
-            if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
-                tempRank++;
-            }
-            completeds.get(i).setRank(tempRank);
-        }
+        sortByRank(completeds);
 
         return completeds;
     }
@@ -166,7 +180,7 @@ public class SimulationService implements ISimulationService {
     }
 
 
-    private ArrayList<SimulationParticipantOutput> getCalculatedSimulation
+    private ArrayList<SimulationParticipantOutput> getCalculatedData
         (HashMap<Integer,Horse> horses, HashMap<Integer,Jockey>jockeys, Simulation simulation) {
         Double p_min, p_max, k, p, k2, d;
         Float g;

@@ -279,31 +279,27 @@ public class HorseDao implements IHorseDao {
 
 
 
-        String sql="SELECT TOP ?  tt.*\n" +
+        String sql="SELECT *\n" +
             "FROM (\n" +
-            "   SELECT horseid, name, breed, min_speed, max_speed, updated FROM horsehistory\n" +
+            "SELECT horseid, name, breed, min_speed, max_speed, updated FROM horsehistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse\n" +
-            "   ) as tt\n" +
-            "INNER JOIN (SELECT horseid, MAX(updated) AS updated FROM \n" +
-            "(\n" +
-            "   SELECT horseid, name, breed, min_speed, max_speed, updated from horsehistory\n" +
+            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse GROUP BY id\n" +
+            "   ) AS t\n" +
+            "WHERE updated = (\n" +
+            "    SELECT MAX(updated)\n" +
+            "    FROM (\n" +
+            "SELECT horseid, name, breed, min_speed, max_speed, updated FROM horsehistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse\n" +
-            ")\n" +
-            "GROUP BY horseid) AS grouptt\n" +
-            "ON tt.horseid=grouptt.horseid AND tt.updated<? AND tt.horseid IN (SELECT * from TABLE(x INT=?))\n" +
-            "ORDER by tt.updated DESC";
+            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse GROUP BY id\n" +
+            "   ) \n" +
+            "    WHERE horseid=t.horseid\n" +
+            "        AND updated <= ? AND t.horseid IN (SELECT * from TABLE(x INT=?)))";
 
         try {
             Array horseIDIn = con.createArrayOf("BIGINT", horseIDs);
-
-            System.out.println(horseIDIn);
-
             PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setInt(1, horseIDs.length);
-            stmt.setTimestamp(2, Timestamp.valueOf(created));
-            stmt.setArray(3,horseIDIn);
+            stmt.setTimestamp(1, Timestamp.valueOf(created));
+            stmt.setArray(2,horseIDIn);
             ResultSet rs=stmt.executeQuery();
 
             while(rs.next()){

@@ -24,7 +24,7 @@ public class SimulationMapper {
         return new SimulationOutputDto(simulation.getId(),simulation.getName(),simulation.getCreated(), simPartsComp);
     }
     public Simulation DtoToEntity(SimulationInputDto simulationInputDto){
-        return new Simulation(simulationInputDto.getName(), simulationInputDto.getSimulationParticipantInputs());
+        return new Simulation(simulationInputDto.getName(), simulationInputDto.getSimulationParticipants());
     }
     public SimulationInputDto[] entitiesToDto(ArrayList<Simulation> simulations){
         SimulationInputDto[] simulationInputDtos = new SimulationInputDto[simulations.size()];

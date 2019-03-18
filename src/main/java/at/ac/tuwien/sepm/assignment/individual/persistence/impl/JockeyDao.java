@@ -245,27 +245,27 @@ public class JockeyDao implements IJockeyDao {
         HashMap<Integer, Jockey> jockeysByID= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
 
-        String sql="SELECT TOP ?  tt.*\n" +
+        String sql="SELECT *\n" +
             "FROM (\n" +
-            "   SELECT jockeyid, name, skill, updated FROM jockeyhistory\n" +
+            "SELECT jockeyid, name, skill, updated FROM jockeyhistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, skill,updated FROM jockey\n" +
-            "   ) as tt\n" +
-            "INNER JOIN (SELECT jockeyid, MAX(updated) AS updated FROM \n" +
-            "(\n" +
-            "   SELECT jockeyid, name, skill, updated from jockeyhistory\n" +
+            "   SELECT id, name, skill, updated FROM jockey GROUP BY id\n" +
+            "   ) AS t\n" +
+            "WHERE updated = (\n" +
+            "    SELECT MAX(updated)\n" +
+            "    FROM (\n" +
+            "SELECT jockeyid, name, skill,updated FROM jockeyhistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, skill, updated FROM jockey\n" +
-            ")\n" +
-            "GROUP BY jockeyid) AS grouptt\n" +
-            "ON tt.jockeyid=grouptt.jockeyid AND tt.updated<? AND tt.jockeyid IN (SELECT * from TABLE(x INT=?))\n" +
-            "ORDER by tt.updated DESC";
+            "   SELECT id, name, skill, updated FROM jockey GROUP BY id\n" +
+            "   ) \n" +
+            "    WHERE jockeyid=t.jockeyid\n" +
+            "        AND updated <= ? AND t.jockeyid IN (SELECT * from TABLE(x INT=?)))";
+
         try {
             Array jockeyIDIn = con.createArrayOf("BIGINT", jockeyIDs);
             PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setInt(1, jockeyIDs.length);
-            stmt.setTimestamp(2, Timestamp.valueOf(created));
-            stmt.setObject(3,jockeyIDIn);
+            stmt.setTimestamp(1, Timestamp.valueOf(created));
+            stmt.setObject(2,jockeyIDIn);
             ResultSet rs=stmt.executeQuery();
 
             while(rs.next()){
