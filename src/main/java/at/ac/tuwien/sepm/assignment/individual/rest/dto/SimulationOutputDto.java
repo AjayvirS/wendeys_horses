@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.rest.dto;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutput;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ public class SimulationOutputDto{
         this.name=name;
         this.created=created;
     }
+
 
     public Integer getId() {
         return id;

@@ -52,6 +52,10 @@ public class SimulationParticipant {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "{Horse ID: "+horseId+", Jockey ID: "+jockeyId+", Luck factor: "+luckFactor+"}";

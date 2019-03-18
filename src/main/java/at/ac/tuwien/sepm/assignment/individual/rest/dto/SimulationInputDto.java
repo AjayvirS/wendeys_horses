@@ -26,11 +26,11 @@ public class SimulationInputDto {
         this.name = name;
     }
 
-    public ArrayList<SimulationParticipant> getSimulationParticipantInputs() {
+    public ArrayList<SimulationParticipant> getSimulationParticipants() {
         return simulationParticipants;
     }
 
-    public void setSimulationParticipantInputs(ArrayList<SimulationParticipant> simulationParticipants) {
+    public void setSimulationParticipants(ArrayList<SimulationParticipant> simulationParticipants) {
         this.simulationParticipants = simulationParticipants;
     }
 
