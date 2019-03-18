@@ -7,6 +7,8 @@ import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataExc
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.OutofRangeException;
 import at.ac.tuwien.sepm.assignment.individual.service.exceptions.ServiceException;
 
+import java.util.ArrayList;
+
 public interface ISimulationService {
 
     /**
@@ -19,4 +21,6 @@ public interface ISimulationService {
     Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException, NotFoundException;
 
     Simulation getOneById(Integer id) throws NotFoundException, ServiceException;
+
+    ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws NotFoundException, ServiceException;
 }

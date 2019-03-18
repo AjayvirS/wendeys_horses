@@ -50,7 +50,7 @@ public class SimulationEndpoint {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public SimulationOutputDto getOneById(@PathVariable Integer id) {
-        LOGGER.info("GET Simulation: " + BASE_URL + "/" + id);
+        LOGGER.info("GET Simulation Result: " + BASE_URL + "/" + id);
         try {
             return simulationMapper.entityToDto(simulationService.getOneById(id));
         } catch (ServiceException e) {
@@ -58,6 +58,21 @@ public class SimulationEndpoint {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during inserting simulation: " + e.getMessage(), e);
         }
+    }
+
+    @RequestMapping(method=RequestMethod.GET)
+    SimulationOutputDto[] getAllOrFiltered(SimulationInputDto simulationInputDto){
+        LOGGER.info("GET ALL"+BASE_URL+(simulationInputDto.getName()==null?"":"Filtered: "+simulationInputDto.getName()));
+
+        try {
+            return simulationMapper.entitiesToDto(simulationService.getAllOrFiltered(simulationMapper.dtoToEntity(simulationInputDto)));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading simulations: " + e.getMessage(), e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                "Error during processing simulation with following optionals " + simulationMapper.dtoToEntity(simulationInputDto).getName());
+        }
+
     }
 
 

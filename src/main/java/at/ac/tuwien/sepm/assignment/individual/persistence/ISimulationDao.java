@@ -21,4 +21,6 @@ public interface ISimulationDao {
     Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantOutput> completeds) throws PersistenceException, NotFoundException;
 
     Simulation getOneById(Integer id) throws PersistenceException, NotFoundException;
+
+    ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws PersistenceException, NotFoundException;
 }

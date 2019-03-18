@@ -122,6 +122,18 @@ public class SimulationService implements ISimulationService {
 
     }
 
+
+    @Override
+    public ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws NotFoundException, ServiceException {
+        LOGGER.info("Get simulation/s with following optional parameter: "+simulation.getName()==null?"":simulation.getName());
+        try {
+            return simulationDao.getAllOrFiltered(simulation);
+        } catch (PersistenceException e) {
+            LOGGER.error("Error while processing simulation with following optional parameters: "+simulation.getName());
+            throw new ServiceException(e.getMessage(), e);
+        }
+    }
+
     private ArrayList<SimulationParticipantOutput> getSimulation(Simulation simulation) throws PersistenceException, NotFoundException {
         Object[]objs=prepareIDs(simulation);
         ArrayList<SimulationParticipantOutput> completeds = getCalculatedData((HashMap<Integer, Horse>) objs[0],

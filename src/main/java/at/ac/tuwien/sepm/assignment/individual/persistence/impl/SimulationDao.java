@@ -117,6 +117,38 @@ public class SimulationDao implements ISimulationDao {
         }
     }
 
+    @Override
+    public ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws PersistenceException, NotFoundException {
+        LOGGER.info("Get simulation/s with following optional parameter: "+simulation.getName()==null?"":simulation.getName());
+        ArrayList<Simulation> filteredList= new ArrayList<>();
+        String sql="SELECT * FROM simulation WHERE name LIKE ?";
+
+        try {
+            PreparedStatement statement=dbConnectionManager.getConnection().prepareStatement(sql);
+            if(simulation.getName()==null){
+                statement.setString(1,"%");
+            } else statement.setString(1, "%"+simulation.getName()+"%");
+
+            ResultSet rs=statement.executeQuery();
+
+            while(rs.next()){
+                filteredList.add(dbResultToSimulation(rs));
+            }
+            statement.close();
+
+        } catch (SQLException e) {
+            LOGGER.error("Problem while executing SQL SELECT statement");
+            throw new PersistenceException("Error while accessing database");
+        }
+
+        if(filteredList.isEmpty()){
+            LOGGER.error("Could not find simulation/s with following optional parameters: "+simulation.getName());
+            throw new NotFoundException("Could not find simulation/s with optional parameters: "+simulation.getName());
+        } else return filteredList;
+
+
+    }
+
     private void setValues( PreparedStatement statement, Integer key, SimulationParticipant participant) throws SQLException {
 
         statement.setFloat(1, participant.getLuckFactor());
@@ -132,6 +164,9 @@ public class SimulationDao implements ISimulationDao {
             result.getString("name"),
             result.getTimestamp("created").toLocalDateTime());
     }
+
+
+
 
 
 }
