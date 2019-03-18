@@ -264,8 +264,8 @@ public class HorseDao implements IHorseDao {
 
         if(filteredList.isEmpty()){
             LOGGER.error("Could not find horse/s with following optional parameters: "+horse.printOptionals());
-            throw new NotFoundException("Could not find horses with optional parameters: "+horse.printOptionals());
-        } else return filteredList;
+        }
+        return filteredList;
 
     }
 
