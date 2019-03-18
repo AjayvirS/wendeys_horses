@@ -41,31 +41,15 @@ public class SimulationService implements ISimulationService {
 
     @Override
     public Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException, NotFoundException {
-        LOGGER.info("Post Simulation with name: "+simulation.getName()+ " and participants: "+simulation.getSimulationParticipantInputs());
-
+        LOGGER.info("Post Simulation with name: "+simulation.getName()+ " and participants: "+simulation.getSimulationParticipants());
 
         try {
             LOGGER.info("Validate data of simulation to be inserted");
             validateData(simulation);
             LOGGER.info("Prepare Simulation and calculate values based on horse speed, luck and skill");
-            HashMap<Integer,Horse>horses= new HashMap<>();
-            HashMap<Integer,Jockey>jockeys=new HashMap<>();
-            prepareIDs(simulation, horses, jockeys);
-            ArrayList<SimulationParticipantOutput> completeds = getCalculatedSimulation(horses, jockeys, simulation);
-            Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
-            Collections.reverse(completeds);
 
-            LOGGER.info("Simulation data calculated and sorted by highest average Speed");
-            LOGGER.info("Set rank of participants");
-            int tempRank = 1;
-            completeds.get(0).setRank(tempRank);
-            for (int i = 1; i < completeds.size(); i++) {
-                if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
-                    tempRank++;
-                }
-                completeds.get(i).setRank(tempRank);
-            }
-            LOGGER.info("Insert simulation with following data: " + "Name: " + simulation.getName() + ", Participants: " + simulation.getSimulationParticipantInputs());
+            ArrayList<SimulationParticipantOutput>completeds=getSimulation(simulation);
+            LOGGER.info("Insert simulation with following data: " + "Name: " + simulation.getName() + ", Participants: " + simulation.getSimulationParticipants());
             Simulation compSim = simulationDao.insertOne(simulation, completeds);
             compSim.setSimulationParticipantsCompleted(completeds);
             return compSim;
@@ -75,11 +59,14 @@ public class SimulationService implements ISimulationService {
         }
     }
 
-    private void prepareIDs(Simulation simulation, HashMap<Integer,Horse>horseByIDs, HashMap<Integer,Jockey>jockeyByIDs) throws PersistenceException, NotFoundException {
-        Integer[]horseIDs=new Integer[simulation.getSimulationParticipantInputs().size()];
-        Integer[]jockeyIDs=new Integer[simulation.getSimulationParticipantInputs().size()];
-        for (int i = 0; i < simulation.getSimulationParticipantInputs().size(); i++) {
-            ArrayList<SimulationParticipantInput> tempArr=simulation.getSimulationParticipantInputs();
+    private Object[] prepareIDs(Simulation simulation) throws PersistenceException, NotFoundException {
+
+        HashMap<Integer,Horse>horseByIDs= new HashMap<>();
+        HashMap<Integer,Jockey>jockeyByIDs= new HashMap<>();
+        Integer[]horseIDs=new Integer[simulation.getSimulationParticipants().size()];
+        Integer[]jockeyIDs=new Integer[simulation.getSimulationParticipants().size()];
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            ArrayList<SimulationParticipant> tempArr=simulation.getSimulationParticipants();
 
             horseIDs[i]=tempArr.get(i).getHorseId();
             jockeyIDs[i]=tempArr.get(i).getJockeyId();
@@ -87,6 +74,7 @@ public class SimulationService implements ISimulationService {
         }
         horseByIDs=((HorseDao)horseDao).getCorrectHorsesForSimulation(simulation.getCreated(), horseIDs);
         jockeyByIDs=((JockeyDao)jockeyDao).getCorrectJockeysForSimulation(simulation.getCreated(), jockeyIDs);
+        return new Object[]{horseByIDs, jockeyByIDs};
     }
 
     @Override
@@ -96,23 +84,9 @@ public class SimulationService implements ISimulationService {
 
         try {
             simulation = simulationDao.getOneById(id);
-            HashMap<Integer,Horse>horses= new HashMap<>();
-            HashMap<Integer,Jockey>jockeys=new HashMap<>();
-            prepareIDs(simulation, horses, jockeys);
-            ArrayList<SimulationParticipantOutput> completeds = getCalculatedSimulation(horses, jockeys, simulation);
-            Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
-            Collections.reverse(completeds);
 
-            LOGGER.info("Simulation data calculated and sorted by highest average Speed");
-            LOGGER.info("Set rank of participants");
-            int tempRank = 1;
-            completeds.get(0).setRank(tempRank);
-            for (int i = 1; i < completeds.size(); i++) {
-                if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
-                    tempRank++;
-                }
-                completeds.get(i).setRank(tempRank);
-            }
+            getSimulation(simulation);
+            ArrayList<SimulationParticipantOutput> completeds= getSimulation(simulation);
             simulation.setSimulationParticipantsCompleted(completeds);
             return simulation;
 
@@ -123,9 +97,30 @@ public class SimulationService implements ISimulationService {
 
     }
 
+    private ArrayList<SimulationParticipantOutput> getSimulation(Simulation simulation) throws PersistenceException, NotFoundException {
+        Object[]objs=prepareIDs(simulation);
+        ArrayList<SimulationParticipantOutput> completeds = getCalculatedSimulation((HashMap<Integer, Horse>) objs[0],
+            (HashMap<Integer, Jockey>) objs[1], simulation);
+
+        Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
+        Collections.reverse(completeds);
+        LOGGER.info("Simulation data calculated and sorted by highest average Speed");
+        LOGGER.info("Set rank of participants");
+        int tempRank = 1;
+        completeds.get(0).setRank(tempRank);
+        for (int i = 1; i < completeds.size(); i++) {
+            if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
+                tempRank++;
+            }
+            completeds.get(i).setRank(tempRank);
+        }
+
+        return completeds;
+    }
+
 
     private void validateData(Simulation simulation) throws InvalidDataException, OutofRangeException {
-        if (simulation.getSimulationParticipantInputs() == null) {
+        if (simulation.getSimulationParticipants() == null) {
             LOGGER.error("Participants missing.");
             throw new InvalidDataException("A simulation needs participants. Participants missing!");
         }
@@ -134,8 +129,8 @@ public class SimulationService implements ISimulationService {
             throw new InvalidDataException("Name must be set!");
         }
 
-        for (int i = 0; i < simulation.getSimulationParticipantInputs().size(); i++) {
-            SimulationParticipantInput simPart = simulation.getSimulationParticipantInputs().get(i);
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            SimulationParticipant simPart = simulation.getSimulationParticipants().get(i);
             if (simPart.getHorseId() == null) {
                 LOGGER.error("Horse id of participant" + i + "missing.");
                 throw new InvalidDataException("Horse id of participant" + i + " missing!");
@@ -155,8 +150,8 @@ public class SimulationService implements ISimulationService {
                 throw new OutofRangeException("Luck factor of participant " + i + " is out of range!");
             }
 
-            for (int j = 0; j < simulation.getSimulationParticipantInputs().size(); j++) {
-                SimulationParticipantInput simPart2 = simulation.getSimulationParticipantInputs().get(j);
+            for (int j = 0; j < simulation.getSimulationParticipants().size(); j++) {
+                SimulationParticipant simPart2 = simulation.getSimulationParticipants().get(j);
                 if (simPart.getJockeyId().equals(simPart2.getJockeyId()) && i != j) {
                     LOGGER.error("Duplicate jockey found.");
                     throw new InvalidDataException("Jockey with id " + simPart.getJockeyId() + " can only take part once in this race!");
@@ -185,8 +180,8 @@ public class SimulationService implements ISimulationService {
         df.setRoundingMode(RoundingMode.UP);
         String horseName = null, jockeyName = null;
 
-        for (int i = 0; i < simulation.getSimulationParticipantInputs().size(); i++) {
-            SimulationParticipantInput simpart=simulation.getSimulationParticipantInputs().get(i);
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            SimulationParticipant simpart=simulation.getSimulationParticipants().get(i);
             p_min=horses.get(simpart.getHorseId()).getMinSpeed();
             p_max=horses.get(simpart.getHorseId()).getMaxSpeed();
             k=jockeys.get(simpart.getJockeyId()).getSkill();
@@ -199,7 +194,7 @@ public class SimulationService implements ISimulationService {
             d = Double.valueOf(df.format(d));
             jockeyName=jockeys.get(simpart.getJockeyId()).getName();
             horseName=horses.get(simpart.getHorseId()).getName();
-            completeds.add(new SimulationParticipantOutput(null,null,horseName,jockeyName,d,p,k,g));
+            completeds.add(new SimulationParticipantOutput(simpart.getId(),null,horseName,jockeyName,d,p,k,g));
         }
 
         return completeds;

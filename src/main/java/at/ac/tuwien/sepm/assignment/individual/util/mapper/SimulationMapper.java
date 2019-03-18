@@ -30,7 +30,7 @@ public class SimulationMapper {
         SimulationInputDto[] simulationInputDtos = new SimulationInputDto[simulations.size()];
 
         for (int i = 0; i < simulations.size(); i++) {
-            simulationInputDtos[i]= new SimulationInputDto(simulations.get(i).getName(), simulations.get(i).getSimulationParticipantInputs());
+            simulationInputDtos[i]= new SimulationInputDto(simulations.get(i).getName(), simulations.get(i).getSimulationParticipants());
         }
         return simulationInputDtos;
     }

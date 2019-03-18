@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Simulation {
-    private Integer id;
+
     private String name;
+    private ArrayList<SimulationParticipant> simulationParticipants;
+
+    private Integer id;
     private LocalDateTime created;
-    private ArrayList<SimulationParticipantInput> simulationParticipantInputs;
     private ArrayList<SimulationParticipantOutput> simulationParticipantsCompleted;
 
     public Simulation(){
 
     }
 
-    public Simulation(String name, ArrayList<SimulationParticipantInput> simulationParticipantInputs){
-        this.simulationParticipantInputs = simulationParticipantInputs;
+    public Simulation(String name, ArrayList<SimulationParticipant> simulationParticipants){
+        this.simulationParticipants = simulationParticipants;
         this.name=name;
     }
 
@@ -57,12 +59,12 @@ public class Simulation {
         this.created = created;
     }
 
-    public ArrayList<SimulationParticipantInput> getSimulationParticipantInputs() {
-        return simulationParticipantInputs;
+    public ArrayList<SimulationParticipant> getSimulationParticipants() {
+        return simulationParticipants;
     }
 
-    public void setSimulationParticipantInputs(ArrayList<SimulationParticipantInput> simulationParticipantInputs) {
-        this.simulationParticipantInputs = simulationParticipantInputs;
+    public void setSimulationParticipants(ArrayList<SimulationParticipant> simulationParticipants) {
+        this.simulationParticipants = simulationParticipants;
     }
 
     @Override
@@ -87,7 +89,7 @@ public class Simulation {
             "id=" + id +
             ", name='" + name + '\'' +
             ", created=" + created +
-            "Simulation Participants: "+ simulationParticipantInputs.toString()+
+            "Simulation Participants: "+ simulationParticipants.toString()+
             '}';
     }
 }

@@ -1,20 +1,23 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 
-public class SimulationParticipantInput {
+public class SimulationParticipant {
 
-    private Integer id, horseId, jockeyId;
+    private Integer horseId, jockeyId;
     private Float luckFactor;
+    private  Integer id;
 
-    public SimulationParticipantInput(){
-
-    }
-    public SimulationParticipantInput(Integer horseId, Integer jockeyId, Float luckFactor){
+    public SimulationParticipant(Integer horseId, Integer jockeyId, Float luckFactor){
         this.horseId=horseId;
         this.jockeyId=jockeyId;
         this.luckFactor=luckFactor;
     }
 
-    public SimulationParticipantInput(Integer id, Integer horseId, Integer jockeyId, Float luckFactor){
+    public SimulationParticipant(){
+
+    }
+
+
+    public SimulationParticipant(Integer id, Integer horseId, Integer jockeyId, Float luckFactor){
         this.id=id;
         this.horseId=horseId;
         this.jockeyId=jockeyId;
@@ -43,6 +46,10 @@ public class SimulationParticipantInput {
 
     public void setJockeyId(Integer jockeyId) {
         this.jockeyId = jockeyId;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     @Override

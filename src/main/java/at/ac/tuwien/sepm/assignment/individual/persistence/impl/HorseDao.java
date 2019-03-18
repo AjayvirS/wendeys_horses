@@ -259,7 +259,7 @@ public class HorseDao implements IHorseDao {
             statement.close();
         } catch (SQLException e) {
             LOGGER.error("Problem while executing SQL SELECT statement");
-            throw new PersistenceException("Error while accessing database");
+            throw new PersistenceException("Error while accessing database", e);
         }
 
         if(filteredList.isEmpty()){
@@ -277,22 +277,33 @@ public class HorseDao implements IHorseDao {
         HashMap<Integer, Horse> horsesById= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
 
-        String sql="SELECT horseid,name,breed,min_speed,max_speed FROM (\n" +
-            "   SELECT temp.*,\n" +
-            "   ROW_NUMBER() OVER (PARTITION BY horseid ORDER BY updated desc) AS num\n" +
-            "   FROM(\n" +
-            "   select horseid, name, breed, min_speed, max_speed, updated from horsehistory\n" +
+
+
+        String sql="SELECT TOP ?  tt.*\n" +
+            "FROM (\n" +
+            "   SELECT horseid, name, breed, min_speed, max_speed, updated FROM horsehistory\n" +
             "   UNION\n" +
-            "   select id, name, breed, min_speed, max_speed, updated from horse\n" +
-            "   ) AS temp\n" +
-            "   WHERE updated<=? AND horseid IN ? \n" +
+            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse\n" +
+            "   ) as tt\n" +
+            "INNER JOIN (SELECT horseid, MAX(updated) AS updated FROM \n" +
+            "(\n" +
+            "   SELECT horseid, name, breed, min_speed, max_speed, updated from horsehistory\n" +
+            "   UNION\n" +
+            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse\n" +
             ")\n" +
-            "WHERE num = 1;";
+            "GROUP BY horseid) AS grouptt\n" +
+            "ON tt.horseid=grouptt.horseid AND tt.updated<? AND tt.horseid IN (SELECT * from TABLE(x INT=?))\n" +
+            "ORDER by tt.updated DESC";
+
         try {
-            Array horseIDIn = con.createArrayOf("INTEGER", horseIDs);
+            Array horseIDIn = con.createArrayOf("BIGINT", horseIDs);
+
+            System.out.println(horseIDIn);
+
             PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setTimestamp(1, Timestamp.valueOf(created));
-            stmt.setArray(2,horseIDIn);
+            stmt.setInt(1, horseIDs.length);
+            stmt.setTimestamp(2, Timestamp.valueOf(created));
+            stmt.setArray(3,horseIDIn);
             ResultSet rs=stmt.executeQuery();
 
             while(rs.next()){
@@ -308,8 +319,8 @@ public class HorseDao implements IHorseDao {
             return horsesById;
 
         } catch (SQLException e) {
-            LOGGER.error("Problem while executing SQL SELECT statement");
-            throw new PersistenceException("Error while accessing database");
+            LOGGER.error("Problem while executing SQL SELECT statement", e);
+            throw new PersistenceException("Error while accessing database", e);
         }
     }
 

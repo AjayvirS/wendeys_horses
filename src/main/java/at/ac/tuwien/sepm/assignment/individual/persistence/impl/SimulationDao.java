@@ -53,8 +53,8 @@ public class SimulationDao implements ISimulationDao {
             statement.clearParameters();
             statement=con.prepareStatement(sql2);
 
-            for (int i = 0; i < simulation.getSimulationParticipantInputs().size(); i++) {
-                setValues(statement, key, simulation.getSimulationParticipantInputs().get(i));
+            for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+                setValues(statement, key, simulation.getSimulationParticipants().get(i));
                 statement.executeUpdate();
                 statement.clearParameters();
             }
@@ -81,7 +81,7 @@ public class SimulationDao implements ISimulationDao {
         String sql = "SELECT * FROM simulation WHERE id=?";
         String sql2="SELECT * FROM hj_combination WHERE simulationID=?";
         Simulation simulation = null;
-        ArrayList<SimulationParticipantInput> simparts= new ArrayList<>();
+        ArrayList<SimulationParticipant> simparts= new ArrayList<>();
         try {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, id);
@@ -96,7 +96,7 @@ public class SimulationDao implements ISimulationDao {
             result=statement.executeQuery();
 
             while(result.next()){
-                simparts.add(new SimulationParticipantInput(result.getInt("id"), result.getInt("horseid"),
+                simparts.add(new SimulationParticipant(result.getInt("id"), result.getInt("horseid"),
                     result.getInt("jockeyid"), result.getFloat("luckFactor")));
             }
 
@@ -107,7 +107,7 @@ public class SimulationDao implements ISimulationDao {
         }
 
         if (simulation != null) {
-            simulation.setSimulationParticipantInputs(simparts);
+            simulation.setSimulationParticipants(simparts);
             return simulation;
         } else {
             LOGGER.error("Could not find simulation with id "+id);
@@ -115,7 +115,7 @@ public class SimulationDao implements ISimulationDao {
         }
     }
 
-    private void setValues( PreparedStatement statement, Integer key, SimulationParticipantInput participant) throws SQLException {
+    private void setValues( PreparedStatement statement, Integer key, SimulationParticipant participant) throws SQLException {
 
         statement.setFloat(1, participant.getLuckFactor());
         statement.setInt(2, participant.getHorseId());

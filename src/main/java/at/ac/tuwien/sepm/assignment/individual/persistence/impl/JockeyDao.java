@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
@@ -246,22 +245,27 @@ public class JockeyDao implements IJockeyDao {
         HashMap<Integer, Jockey> jockeysByID= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
 
-        String sql="SELECT jockeyid,name,skill FROM (\n" +
-            "   SELECT temp.*,\n" +
-            "   ROW_NUMBER() OVER (PARTITION BY jockeyid ORDER BY updated desc) AS num\n" +
-            "   FROM(\n" +
-            "   select jockeyid, name, skill, updated from jockeyhistory\n" +
+        String sql="SELECT TOP ?  tt.*\n" +
+            "FROM (\n" +
+            "   SELECT jockeyid, name, skill, updated FROM jockeyhistory\n" +
             "   UNION\n" +
-            "   select id, name, skill, updated from jockey\n" +
-            "   ) AS temp\n" +
-            "   WHERE updated<=? AND jockeyid IN ? \n" +
+            "   SELECT id, name, skill,updated FROM jockey\n" +
+            "   ) as tt\n" +
+            "INNER JOIN (SELECT jockeyid, MAX(updated) AS updated FROM \n" +
+            "(\n" +
+            "   SELECT jockeyid, name, skill, updated from jockeyhistory\n" +
+            "   UNION\n" +
+            "   SELECT id, name, skill, updated FROM jockey\n" +
             ")\n" +
-            "WHERE num = 1;";
+            "GROUP BY jockeyid) AS grouptt\n" +
+            "ON tt.jockeyid=grouptt.jockeyid AND tt.updated<? AND tt.jockeyid IN (SELECT * from TABLE(x INT=?))\n" +
+            "ORDER by tt.updated DESC";
         try {
-            Array jockeyIDIn = con.createArrayOf("INTEGER", jockeyIDs);
+            Array jockeyIDIn = con.createArrayOf("BIGINT", jockeyIDs);
             PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setTimestamp(1, Timestamp.valueOf(created));
-            stmt.setArray(2,jockeyIDIn);
+            stmt.setInt(1, jockeyIDs.length);
+            stmt.setTimestamp(2, Timestamp.valueOf(created));
+            stmt.setObject(3,jockeyIDIn);
             ResultSet rs=stmt.executeQuery();
 
             while(rs.next()){
@@ -277,8 +281,8 @@ public class JockeyDao implements IJockeyDao {
             return jockeysByID;
 
         } catch (SQLException e) {
-            LOGGER.error("Problem while executing SQL SELECT statement");
-            throw new PersistenceException("Error while accessing database");
+            LOGGER.error("Problem while executing SQL SELECT statement", e);
+            throw new PersistenceException("Error while accessing database", e);
         }
     }
 

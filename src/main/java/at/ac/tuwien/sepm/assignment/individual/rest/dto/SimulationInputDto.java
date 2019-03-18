@@ -1,21 +1,21 @@
 package at.ac.tuwien.sepm.assignment.individual.rest.dto;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantInput;
+import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipant;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class SimulationInputDto {
     private String name;
-    private ArrayList<SimulationParticipantInput> simulationParticipantInputs;
+    private ArrayList<SimulationParticipant> simulationParticipants;
 
     public SimulationInputDto(){
 
     }
 
-    public SimulationInputDto(String name, ArrayList<SimulationParticipantInput> simulationParticipantInputs){
+    public SimulationInputDto(String name, ArrayList<SimulationParticipant> simulationParticipants){
         this.name=name;
-        this.simulationParticipantInputs = simulationParticipantInputs;
+        this.simulationParticipants = simulationParticipants;
     }
 
     public String getName() {
@@ -26,12 +26,12 @@ public class SimulationInputDto {
         this.name = name;
     }
 
-    public ArrayList<SimulationParticipantInput> getSimulationParticipantInputs() {
-        return simulationParticipantInputs;
+    public ArrayList<SimulationParticipant> getSimulationParticipantInputs() {
+        return simulationParticipants;
     }
 
-    public void setSimulationParticipantInputs(ArrayList<SimulationParticipantInput> simulationParticipantInputs) {
-        this.simulationParticipantInputs = simulationParticipantInputs;
+    public void setSimulationParticipantInputs(ArrayList<SimulationParticipant> simulationParticipants) {
+        this.simulationParticipants = simulationParticipants;
     }
 
     @Override
@@ -40,20 +40,20 @@ public class SimulationInputDto {
         if (!(o instanceof SimulationInputDto)) return false;
         SimulationInputDto simulationInputDto = (SimulationInputDto) o;
         return Objects.equals(name, simulationInputDto.name) &&
-            Objects.equals(simulationParticipantInputs, simulationInputDto.simulationParticipantInputs);
+            Objects.equals(simulationParticipants, simulationInputDto.simulationParticipants);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, simulationParticipantInputs);
+        return Objects.hash(name, simulationParticipants);
     }
 
     @Override
     public String toString() {
         return "SimulationInputDto{"+
             "name='" + name + '\'' +
-            ", Simulation Participants=" + simulationParticipantInputs.toString() +
+            ", Simulation Participants=" + simulationParticipants.toString() +
             '}';
     }
 }
