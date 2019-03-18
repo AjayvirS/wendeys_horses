@@ -143,8 +143,8 @@ public class SimulationDao implements ISimulationDao {
 
         if(filteredList.isEmpty()){
             LOGGER.error("Could not find simulation/s with following optional parameters: "+simulation.getName());
-            throw new NotFoundException("Could not find simulation/s with optional parameters: "+simulation.getName());
-        } else return filteredList;
+        }
+        return filteredList;
 
 
     }
