@@ -116,13 +116,13 @@ public class HorseDao implements IHorseDao {
             dbHorse = findOneById(id);
 
 
-            if(horse.getMinSpeed()!=null){
+            if(horse.getMinSpeed()!=null && horse.getMaxSpeed()==null){
                 if(dbHorse.getMaxSpeed()<horse.getMinSpeed()){
                     LOGGER.error("Maximum speed is smaller than minimum speed");
                     throw new InvalidDataException("Input min speed is larger than max speed present in database!");
                 }
             }
-            if(horse.getMaxSpeed()!=null){
+            if(horse.getMaxSpeed()!=null && horse.getMinSpeed()==null){
                 if(dbHorse.getMinSpeed()>horse.getMaxSpeed()){
                     throw new InvalidDataException("Input max speed is smaller than min speed present in database!");
                 }
