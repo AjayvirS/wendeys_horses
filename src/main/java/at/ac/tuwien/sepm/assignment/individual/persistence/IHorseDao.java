@@ -47,7 +47,6 @@ public interface IHorseDao {
      * @param horse filters records by name, breed, minSpeed, maxSpeed [OPTIONAL]
      * @return A list of filtered records of horses as ArrayList
      * @throws PersistenceException will be thrown if something goes wrong during the database access
-     * @throws NotFoundException will be thrown if list returned is empty
      */
-    ArrayList getAllOrFiltered(Horse horse) throws PersistenceException, NotFoundException;
+    ArrayList getAllOrFiltered(Horse horse) throws PersistenceException;
 }

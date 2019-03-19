@@ -164,7 +164,7 @@ public class JockeyDao implements IJockeyDao {
 
 
     @Override
-    public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws PersistenceException, NotFoundException {
+    public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws PersistenceException {
         LOGGER.info("Get jockey/s with following optional parameters: "+jockey.printOptionals());
         ArrayList<Jockey> filteredList= new ArrayList<>();
         String sql="SELECT * FROM jockey WHERE name LIKE ? AND skill>=?";
@@ -196,7 +196,10 @@ public class JockeyDao implements IJockeyDao {
 
     }
 
-
+    /*
+        whenever the deleteOneById method is called, this one is gets called as well
+        to insert deleted jockey in a history table for simulation purposes
+     */
     private void insertOneHistoryWhenDeleted(Jockey dbJockey) throws PersistenceException {
         LOGGER.info("Check if jockey with id " + dbJockey.getId() + " exists: insert into jockeyhistory if no, else do nothing");
         String sql = "SELECT * FROM jockeyhistory WHERE jockeyId=?";
@@ -217,6 +220,10 @@ public class JockeyDao implements IJockeyDao {
 
     }
 
+    /*
+       whenever the updateOneById method is called, this one is gets called as well
+       to insert deleted jockey in a history table for simulation purposes
+    */
     private void insertOneHistory(Jockey dbJockey) throws PersistenceException {
         PreparedStatement statement;
         LOGGER.info("Insert into jockeyHistory with "+dbJockey.getId());
@@ -238,6 +245,11 @@ public class JockeyDao implements IJockeyDao {
 
     }
 
+    /*
+        is used by simulationservice to get the correct version of jockeys for the simulation
+        uses date to get the closest jockeys to CREATED date of simulation
+        uses jockeyIDs of jockeys who participated in the simulation
+     */
     public HashMap<Integer, Jockey> getCorrectJockeysForSimulation(LocalDateTime created, Integer[]jockeyIDs) throws PersistenceException, NotFoundException {
         LOGGER.info("Get correct version of participant jockeys");
         //this makes a union of horses and horsehistory and partitions them by id of the horses

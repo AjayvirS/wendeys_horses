@@ -1,0 +1,117 @@
+14:08:22.853 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on t205-254.demo.tuwien.ac.at with PID 63686 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+14:08:22.857 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+14:08:22.858 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+14:08:24.339 | DEBUG |                            HorseEndpoint: Defined Endpoint
+14:08:24.342 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+14:08:24.346 | INFO  |                       SimulationEndpoint: Defined Endpoint
+14:08:24.701 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.281 seconds (JVM running for 3.205)
+14:13:14.846 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Joe', breed='Haflinger', minSpeed=40.1, maxSpeed=60.0, created=null, updated=null}
+14:13:14.846 | INFO  |                             HorseService: Validate data of horse to be inserted
+14:13:14.854 | INFO  |                             HorseService: Insert Horse with following data: Name: Joe, Breed: Haflinger, min. Speed: 40.1max. Speed: 60.0
+14:13:14.855 | INFO  |                                 HorseDao: Insert horse
+14:13:14.862 | INFO  |                      DBConnectionManager: Get database connection
+14:13:14.862 | INFO  |                      DBConnectionManager: Establish database connection
+14:14:14.961 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='John', skill=76.5, created=null, updated=null}
+14:14:14.961 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+14:14:14.962 | INFO  |                            JockeyService: Insert jockey with following data: Name: John, Skill: 76.5
+14:14:14.962 | INFO  |                                JockeyDao: Insert Jockey
+14:14:14.962 | INFO  |                      DBConnectionManager: Get database connection
+14:16:02.535 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Mark', skill=57.5, created=null, updated=null}
+14:16:02.535 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+14:16:02.535 | INFO  |                            JockeyService: Insert jockey with following data: Name: Mark, Skill: 57.5
+14:16:02.536 | INFO  |                                JockeyDao: Insert Jockey
+14:16:02.536 | INFO  |                      DBConnectionManager: Get database connection
+14:17:17.633 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+14:17:17.642 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 0.95}, {Horse ID: 2, Jockey ID: 2, Luck factor: 1.05}]
+14:17:17.643 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+14:17:17.643 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+14:17:17.643 | INFO  |                                 HorseDao: Get correct version of participant horses
+14:17:17.643 | INFO  |                      DBConnectionManager: Get database connection
+14:17:17.685 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+14:17:17.685 | INFO  |                      DBConnectionManager: Get database connection
+14:18:26.177 | INFO  |                      DBConnectionManager: Close database connection
+16:00:16.683 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on t205-254.demo.tuwien.ac.at with PID 63882 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+16:00:16.688 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+16:00:16.690 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+16:00:18.184 | DEBUG |                            HorseEndpoint: Defined Endpoint
+16:00:18.187 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+16:00:18.191 | INFO  |                       SimulationEndpoint: Defined Endpoint
+16:00:18.541 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.307 seconds (JVM running for 3.331)
+16:00:34.203 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+16:00:34.217 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 0.95}, {Horse ID: 2, Jockey ID: 2, Luck factor: 1.05}]
+16:00:34.217 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+16:00:34.217 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+16:00:34.231 | INFO  |                                 HorseDao: Get correct version of participant horses
+16:00:34.232 | INFO  |                      DBConnectionManager: Get database connection
+16:00:34.232 | INFO  |                      DBConnectionManager: Establish database connection
+16:00:34.476 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+16:00:34.476 | INFO  |                      DBConnectionManager: Get database connection
+16:00:34.482 | INFO  |                        SimulationService: Insert simulation with following data: Name: Simulation 1, Participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 0.95}, {Horse ID: 2, Jockey ID: 2, Luck factor: 1.05}]
+16:00:34.482 | INFO  |                               Simulation: Insert Simulation
+16:00:34.482 | INFO  |                      DBConnectionManager: Get database connection
+16:00:34.490 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+16:00:34.490 | INFO  |                        SimulationService: Set rank of participants
+16:01:18.844 | INFO  |                       SimulationEndpoint: GET Simulation Result: /api/v1/simulations/1
+16:01:18.845 | INFO  |                        SimulationService: Get Simulation with id 1
+16:01:18.845 | INFO  |                               Simulation: Get simulation with id 1
+16:01:18.845 | INFO  |                      DBConnectionManager: Get database connection
+16:01:18.850 | INFO  |                                 HorseDao: Get correct version of participant horses
+16:01:18.850 | INFO  |                      DBConnectionManager: Get database connection
+16:01:18.857 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+16:01:18.858 | INFO  |                      DBConnectionManager: Get database connection
+16:01:18.865 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+16:01:18.865 | INFO  |                        SimulationService: Set rank of participants
+16:01:52.945 | INFO  |                       SimulationEndpoint: GET ALL/api/v1/simulationsFiltered: Simulation 1
+16:01:52.946 | INFO  |                        SimulationService: Get simulation/s with following optional parameter: Simulation 1
+16:01:52.946 | INFO  |                               Simulation: Simulation 1
+16:01:52.946 | INFO  |                      DBConnectionManager: Get database connection
+16:02:02.731 | INFO  |                       SimulationEndpoint: GET ALL/api/v1/simulations
+16:02:02.731 | INFO  |                        SimulationService: Get simulation/s with following optional parameter: 
+16:02:02.731 | INFO  |                               Simulation: null
+16:02:02.731 | INFO  |                      DBConnectionManager: Get database connection
+16:05:38.390 | INFO  |                            HorseEndpoint: GET Horse: /api/v1/horses/1
+16:05:38.391 | INFO  |                             HorseService: Get horse with id 1
+16:05:38.391 | INFO  |                                 HorseDao: Get horse with id 1
+16:05:38.391 | INFO  |                      DBConnectionManager: Get database connection
+16:06:02.457 | INFO  |                            HorseEndpoint: PUT /api/v1/horses, Horse: , min. Speed: 54.4max. Speed: 56.2
+16:06:02.459 | INFO  |                             HorseService: Validate of horse to be updated
+16:06:02.459 | INFO  |                             HorseService: Update horse with id 1
+16:06:02.459 | INFO  |                      DBConnectionManager: Get database connection
+16:06:02.460 | INFO  |                                 HorseDao: Update horse with id 1
+16:06:02.460 | INFO  |                                 HorseDao: Get horse with id 1
+16:06:02.460 | INFO  |                      DBConnectionManager: Get database connection
+16:06:02.460 | ERROR |                                 HorseDao: Maximum speed is smaller than minimum speed
+16:07:22.917 | INFO  |                      DBConnectionManager: Close database connection
+16:11:59.757 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on t205-254.demo.tuwien.ac.at with PID 63944 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+16:11:59.760 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+16:11:59.760 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+16:12:01.174 | DEBUG |                            HorseEndpoint: Defined Endpoint
+16:12:01.181 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+16:12:01.187 | INFO  |                       SimulationEndpoint: Defined Endpoint
+16:12:01.657 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.406 seconds (JVM running for 3.427)
+16:12:28.453 | INFO  |                            HorseEndpoint: PUT /api/v1/horses, Horse: , min. Speed: 54.4max. Speed: 56.2
+16:12:28.461 | INFO  |                             HorseService: Validate of horse to be updated
+16:12:28.461 | INFO  |                             HorseService: Update horse with id 1
+16:12:28.461 | INFO  |                      DBConnectionManager: Get database connection
+16:12:28.462 | INFO  |                      DBConnectionManager: Establish database connection
+16:12:28.731 | INFO  |                                 HorseDao: Update horse with id 1
+16:12:28.732 | INFO  |                                 HorseDao: Get horse with id 1
+16:12:28.733 | INFO  |                      DBConnectionManager: Get database connection
+16:12:28.786 | INFO  |                                 HorseDao: Insert into horsehistory with 1
+16:12:28.804 | INFO  |                                 HorseDao: Get horse with id 1
+16:12:28.805 | INFO  |                      DBConnectionManager: Get database connection
+16:13:34.042 | INFO  |                       SimulationEndpoint: GET Simulation Result: /api/v1/simulations/1
+16:13:34.042 | INFO  |                        SimulationService: Get Simulation with id 1
+16:13:34.042 | INFO  |                               Simulation: Get simulation with id 1
+16:13:34.043 | INFO  |                      DBConnectionManager: Get database connection
+16:13:34.045 | INFO  |                                 HorseDao: Get correct version of participant horses
+16:13:34.045 | INFO  |                      DBConnectionManager: Get database connection
+16:13:34.088 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+16:13:34.088 | INFO  |                      DBConnectionManager: Get database connection
+16:13:34.096 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+16:13:34.097 | INFO  |                        SimulationService: Set rank of participants
+16:14:35.340 | INFO  |                            HorseEndpoint: GET Horse: /api/v1/horses/1
+16:14:35.341 | INFO  |                             HorseService: Get horse with id 1
+16:14:35.341 | INFO  |                                 HorseDao: Get horse with id 1
+16:14:35.341 | INFO  |                      DBConnectionManager: Get database connection
+16:15:07.733 | INFO  |                      DBConnectionManager: Close database connection

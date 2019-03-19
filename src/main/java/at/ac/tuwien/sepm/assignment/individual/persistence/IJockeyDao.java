@@ -46,7 +46,6 @@ public interface IJockeyDao {
      * @param jockey to filter records by name and/or skill [OPTIONAL]
      * @return A list of filtered records of jockeys as ArrayList
      * @throws PersistenceException will be thrown if something goes wrong during the database access
-     * @throws NotFoundException will be thrown if list returned is empty
      */
-    ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws PersistenceException, NotFoundException;
+    ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws PersistenceException;
 }

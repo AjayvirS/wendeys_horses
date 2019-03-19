@@ -20,7 +20,21 @@ public interface ISimulationDao {
      */
     Simulation insertOne(Simulation simulation, ArrayList<SimulationParticipantOutput> completeds) throws PersistenceException, NotFoundException;
 
+
+    /**
+     *
+     * @param id of the simulation to get
+     * @return simulation containing simulation data and horse/jockey id combinations
+     * @throws PersistenceException if anything goes wrong during database access
+     * @throws NotFoundException if simulation is not found
+     */
     Simulation getOneById(Integer id) throws PersistenceException, NotFoundException;
 
-    ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws PersistenceException, NotFoundException;
+    /**
+     *
+     * @param simulation containing optional parameters to search simulation by
+     * @return list of simulation matching optional parameters
+     * @throws PersistenceException if something goes wrong during database access
+     */
+    ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws PersistenceException;
 }

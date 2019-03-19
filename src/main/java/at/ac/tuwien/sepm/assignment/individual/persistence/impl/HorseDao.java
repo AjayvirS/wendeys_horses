@@ -156,30 +156,6 @@ public class HorseDao implements IHorseDao {
 
     }
 
-    private void insertOneHistory(Horse dbHorse, Connection dbConnection) throws PersistenceException {
-        PreparedStatement statement;
-        LOGGER.info("Insert into horsehistory with "+dbHorse.getId());
-        String sqlHistory="INSERT INTO horsehistory(horseId, name, breed, min_speed, max_speed, updated) VALUES (?,?,?,?,?,?)";
-        try {
-
-            statement = dbConnection.prepareStatement(sqlHistory);
-            statement.setInt(1,dbHorse.getId());
-            statement.setString(2, dbHorse.getName());
-            statement.setString(3, dbHorse.getBreed());
-            statement.setDouble(4, dbHorse.getMinSpeed());
-            statement.setDouble(5, dbHorse.getMaxSpeed());
-            statement.setTimestamp(6, Timestamp.valueOf(dbHorse.getUpdated()));
-            statement.executeUpdate();
-            statement.close();
-
-        } catch (SQLException e) {
-            LOGGER.error("Could not insert into horsehistory table", e);
-            throw new PersistenceException("Could not add horse to database", e);
-        }
-
-    }
-
-
     @Override
     public void deleteOneById(Integer id) throws PersistenceException, NotFoundException{
         Connection dbConnection=dbConnectionManager.getConnection();
@@ -210,28 +186,9 @@ public class HorseDao implements IHorseDao {
 
     }
 
-    private void insertOneHistoryWhenDeleted(Horse dbHorse, Connection dbConnection) throws PersistenceException {
-        LOGGER.info("Check if horse with id "+dbHorse.getId()+ " exists: insert into horsehistory if no, else do nothing");
-        String sql="SELECT * FROM horsehistory WHERE horseId=?";
-        try {
-            PreparedStatement ps = dbConnectionManager.getConnection().prepareStatement(sql);
-            ps.setInt(1, dbHorse.getId());
-            ResultSet rs=ps.executeQuery();
-
-            if(!rs.next()){
-                insertOneHistory(dbHorse, dbConnection);
-            }
-            else{
-                LOGGER.info("Latest updated horse already exists in horsehistory, no need to re-insert!");
-            }
-        }catch(SQLException e){
-            LOGGER.error("Could not insert into horsehistory table");
-            throw new PersistenceException("Could not add horse to database", e);
-        }
-    }
 
     @Override
-    public ArrayList<Horse> getAllOrFiltered(Horse horse) throws PersistenceException, NotFoundException {
+    public ArrayList<Horse> getAllOrFiltered(Horse horse) throws PersistenceException {
         LOGGER.info("Get horse/s with optional parameters: "+horse.printOptionals());
         ArrayList<Horse> filteredList= new ArrayList<>();
         String sql="SELECT * FROM horse WHERE name LIKE ? AND COALESCE(horse.breed,'') LIKE ? AND min_speed>=? AND max_speed<=?";
@@ -270,6 +227,64 @@ public class HorseDao implements IHorseDao {
     }
 
 
+    /*
+       whenever the updateOneById method is called, this one is gets called as well
+       to insert deleted horse in a history table for simulation purposes
+    */
+    private void insertOneHistory(Horse dbHorse, Connection dbConnection) throws PersistenceException {
+        PreparedStatement statement;
+        LOGGER.info("Insert into horsehistory with "+dbHorse.getId());
+        String sqlHistory="INSERT INTO horsehistory(horseId, name, breed, min_speed, max_speed, updated) VALUES (?,?,?,?,?,?)";
+        try {
+
+            statement = dbConnection.prepareStatement(sqlHistory);
+            statement.setInt(1,dbHorse.getId());
+            statement.setString(2, dbHorse.getName());
+            statement.setString(3, dbHorse.getBreed());
+            statement.setDouble(4, dbHorse.getMinSpeed());
+            statement.setDouble(5, dbHorse.getMaxSpeed());
+            statement.setTimestamp(6, Timestamp.valueOf(dbHorse.getUpdated()));
+            statement.executeUpdate();
+            statement.close();
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not insert into horsehistory table", e);
+            throw new PersistenceException("Could not add horse to database", e);
+        }
+
+    }
+
+
+    /*
+        whenever the deleteOneById method is called, this one is gets called as well
+        to insert deleted horse in a history table for simulation purposes
+     */
+    private void insertOneHistoryWhenDeleted(Horse dbHorse, Connection dbConnection) throws PersistenceException {
+        LOGGER.info("Check if horse with id "+dbHorse.getId()+ " exists: insert into horsehistory if no, else do nothing");
+        String sql="SELECT * FROM horsehistory WHERE horseId=?";
+        try {
+            PreparedStatement ps = dbConnectionManager.getConnection().prepareStatement(sql);
+            ps.setInt(1, dbHorse.getId());
+            ResultSet rs=ps.executeQuery();
+
+            if(!rs.next()){
+                insertOneHistory(dbHorse, dbConnection);
+            }
+            else{
+                LOGGER.info("Latest updated horse already exists in horsehistory, no need to re-insert!");
+            }
+        }catch(SQLException e){
+            LOGGER.error("Could not insert into horsehistory table");
+            throw new PersistenceException("Could not add horse to database", e);
+        }
+    }
+
+
+    /*
+        is used by simulationservice to get the correct version of horses for the simulation
+        uses date to get the closest horses to CREATED date of simulation
+        uses horseIDs of horses who participated in the simulation
+     */
     public HashMap<Integer, Horse> getCorrectHorsesForSimulation(LocalDateTime created, Integer[]horseIDs) throws PersistenceException, NotFoundException {
         LOGGER.info("Get correct version of participant horses");
         //this makes a union of horses and horsehistory and partitions them by id of the horses

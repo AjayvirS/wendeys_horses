@@ -88,13 +88,14 @@ public class JockeyService implements IJockeyService {
         }
     }
 
+
+    //below methods validate input data and only send it to persistence layer if input is valid
     private void invalidJockeyUpdateData(Jockey jockey) throws InvalidDataException {
         if(jockey.getName()!=null && jockey.getName().isBlank()){
             LOGGER.error("Name cannot be empty");
             throw new InvalidDataException("Name cannot be empty.");
         }
     }
-
     private void invalidJockeyInputData(Jockey jockey) throws InvalidDataException {
         if(jockey.getName().isBlank()){
             throw new InvalidDataException("Name must be set.");

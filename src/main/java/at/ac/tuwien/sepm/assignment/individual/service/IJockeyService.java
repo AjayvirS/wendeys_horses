@@ -44,9 +44,8 @@ public interface IJockeyService {
     /**
      * @param jockey to filter records by name and/or skill[OPTIONAL]
      * @return A list of filtered records of jockey as ArrayList.
-     * @throws NotFoundException will be thrown if list returned is empty.
      */
-    ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws ServiceException, NotFoundException;
+    ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws ServiceException;
 
     /**
      * @param id of the jockey to find.

@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -70,21 +69,62 @@ public class SimulationService implements ISimulationService {
         }
     }
 
-    private void sortByRank(ArrayList<SimulationParticipantOutput> completeds) {
-        Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
-        Collections.reverse(completeds);
-        LOGGER.info("Simulation data calculated and sorted by highest average Speed");
-        LOGGER.info("Set rank of participants");
-        int tempRank = 1;
-        completeds.get(0).setRank(tempRank);
-        for (int i = 1; i < completeds.size(); i++) {
-            if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
-                tempRank++;
-            }
-            completeds.get(i).setRank(tempRank);
+
+
+    @Override
+    public Simulation getOneById(Integer id) throws NotFoundException, ServiceException {
+        LOGGER.info("Get Simulation with id " + id);
+        Simulation simulation;
+
+        try {
+            simulation = simulationDao.getOneById(id);
+            ArrayList<SimulationParticipantOutput> completeds = completeSimulation(simulation);
+            simulation.setSimulationParticipantsCompleted(completeds);
+            return simulation;
+
+        } catch (PersistenceException e) {
+            LOGGER.error("Problem while processing simulation");
+            throw new ServiceException(e.getMessage(), e);
+        }
+
+    }
+
+
+    @Override
+    public ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws ServiceException {
+        LOGGER.info("Get simulation/s with following optional parameter: " + (simulation.getName() == null ? "" : simulation.getName()));
+        try {
+            return simulationDao.getAllOrFiltered(simulation);
+        } catch (PersistenceException e) {
+            LOGGER.error("Error while processing simulation with following optional parameters: " + simulation.getName());
+            throw new ServiceException(e.getMessage(), e);
         }
     }
 
+
+    /**
+     *
+     * @param simulation for filling simulation with participants and calculating values of completed race participants
+     * @return list of values of horse/jockey combinations and respective calculated values
+     * @throws PersistenceException if something goes wrong with database access, caught by parent method
+     * @throws NotFoundException if simulation with id is not found
+     */
+    private ArrayList<SimulationParticipantOutput> completeSimulation(Simulation simulation) throws PersistenceException, NotFoundException {
+        DataHolder objs = getCorrectHorsesAndJockeys(simulation);
+        ArrayList<SimulationParticipantOutput> completeds = calculateData(objs.getHorsesByID(), objs.getJockeysByID(), simulation);
+        sortByRank(completeds);
+
+        return completeds;
+    }
+
+
+    /**
+     *
+     * @param simulation containing ids of horses and jockeys to get
+     * @return Dcorrect version of horses and jockeys packed in dataholder object if changes were made to horse/jockey after simulation
+     * @throws PersistenceException if something goes wrong with database access, caught by parent method
+     * @throws NotFoundException if s
+     */
     private DataHolder getCorrectHorsesAndJockeys(Simulation simulation) throws PersistenceException, NotFoundException {
 
         HashMap<Integer, Horse> horseByIDs;
@@ -104,47 +144,68 @@ public class SimulationService implements ISimulationService {
 
     }
 
-    @Override
-    public Simulation getOneById(Integer id) throws NotFoundException, ServiceException {
-        LOGGER.info("Get Simulation with id " + id);
-        Simulation simulation;
 
-        try {
-            simulation = simulationDao.getOneById(id);
-            ArrayList<SimulationParticipantOutput> completeds = getSimulation(simulation);
-            simulation.setSimulationParticipantsCompleted(completeds);
-            return simulation;
-
-        } catch (PersistenceException e) {
-            LOGGER.error("Problem while processing simulation");
-            throw new ServiceException(e.getMessage(), e);
-        }
-
-    }
-
-
-    @Override
-    public ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws NotFoundException, ServiceException {
-        LOGGER.info("Get simulation/s with following optional parameter: " + (simulation.getName() == null ? "" : simulation.getName()));
-        try {
-            return simulationDao.getAllOrFiltered(simulation);
-        } catch (PersistenceException e) {
-            LOGGER.error("Error while processing simulation with following optional parameters: " + simulation.getName());
-            throw new ServiceException(e.getMessage(), e);
+    /*
+        gets list of participants with NULL field for ranks
+        orders them by avgSpeed descending and gives them a rank
+     */
+    private void sortByRank(ArrayList<SimulationParticipantOutput> completeds) {
+        Collections.sort(completeds, Comparator.comparingDouble(SimulationParticipantOutput::getAvgSpeed));
+        Collections.reverse(completeds);
+        LOGGER.info("Simulation data calculated and sorted by highest average Speed");
+        LOGGER.info("Set rank of participants");
+        int tempRank = 1;
+        completeds.get(0).setRank(tempRank);
+        for (int i = 1; i < completeds.size(); i++) {
+            if (completeds.get(i).getAvgSpeed() < completeds.get(i - 1).getAvgSpeed()) {
+                tempRank++;
+            }
+            completeds.get(i).setRank(tempRank);
         }
     }
 
-    private ArrayList<SimulationParticipantOutput> getSimulation(Simulation simulation) throws PersistenceException, NotFoundException {
-        DataHolder objs = getCorrectHorsesAndJockeys(simulation);
-        ArrayList<SimulationParticipantOutput> completeds = calculateData(objs.getHorsesByID(), objs.getJockeysByID(), simulation);
 
+    /*
+        Calculates data by taking the horsejockey combinations of IDs retrieved by simulationservice.getSimulationById
+        and uses them as key for hashmap of horses and jockeys to calculate other values using the correct
+        combination of horses and jockeys
+     */
+    private ArrayList<SimulationParticipantOutput> calculateData
+        (HashMap<Integer, Horse> horses, HashMap<Integer, Jockey> jockeys, Simulation simulation) {
+        Double p_min, p_max, k, p, k2, d;
+        Float g;
+        ArrayList<SimulationParticipantOutput> completeds = new ArrayList<>();
 
-        sortByRank(completeds);
+        //according to oracle javadoc to prevent comma: use nf and change locale where dot is used as decimal point
+        //and cast to decimalformat
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        DecimalFormat df = (DecimalFormat) nf;
+        df.applyPattern("#.####");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        String horseName = null, jockeyName = null;
+
+        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
+            SimulationParticipant simpart = simulation.getSimulationParticipants().get(i);
+            p_min = horses.get(simpart.getHorseId()).getMinSpeed();
+            p_max = horses.get(simpart.getHorseId()).getMaxSpeed();
+            k = jockeys.get(simpart.getJockeyId()).getSkill();
+            g = simpart.getLuckFactor();
+            p = (g - 0.95) * ((p_max - p_min) / (1.05 - 0.95)) + p_min;
+            k2 = 1 + (0.15 * 1 / Math.PI * Math.atan((1 / 5f) * k));
+            p = Double.valueOf(df.format(p));
+            k2 = Double.valueOf(df.format(k2));
+            d = k2 * p * g;
+            d = Double.valueOf(df.format(d));
+            jockeyName = jockeys.get(simpart.getJockeyId()).getName();
+            horseName = horses.get(simpart.getHorseId()).getName();
+            completeds.add(new SimulationParticipantOutput(simpart.getId(), null, horseName, jockeyName, d, p, k2, g));
+        }
 
         return completeds;
+
     }
 
-
+    //below method validates input data and only send it to persistence layer if input is valid
     private void validateData(Simulation simulation) throws InvalidDataException, OutofRangeException {
         float luckRangeMax = 1.05f;
         float luckRangeMin = 0.95f;
@@ -193,43 +254,9 @@ public class SimulationService implements ISimulationService {
         }
     }
 
-
-    private ArrayList<SimulationParticipantOutput> calculateData
-        (HashMap<Integer, Horse> horses, HashMap<Integer, Jockey> jockeys, Simulation simulation) {
-        Double p_min, p_max, k, p, k2, d;
-        Float g;
-        ArrayList<SimulationParticipantOutput> completeds = new ArrayList<>();
-
-        //according to oracle javadoc to prevent comma: use nf and change locale where dot is used as decimal point
-        //and cast to decimalformat
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-        DecimalFormat df = (DecimalFormat) nf;
-        df.applyPattern("#.####");
-        df.setRoundingMode(RoundingMode.HALF_UP);
-        String horseName = null, jockeyName = null;
-
-        for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
-            SimulationParticipant simpart = simulation.getSimulationParticipants().get(i);
-            p_min = horses.get(simpart.getHorseId()).getMinSpeed();
-            p_max = horses.get(simpart.getHorseId()).getMaxSpeed();
-            k = jockeys.get(simpart.getJockeyId()).getSkill();
-            g = simpart.getLuckFactor();
-            p = (g - 0.95) * ((p_max - p_min) / (1.05 - 0.95)) + p_min;
-            k2 = 1 + (0.15 * 1 / Math.PI * Math.atan((1 / 5f) * k));
-            p = Double.valueOf(df.format(p));
-            k2 = Double.valueOf(df.format(k2));
-            d = k2 * p * g;
-            d = Double.valueOf(df.format(d));
-            jockeyName = jockeys.get(simpart.getJockeyId()).getName();
-            horseName = horses.get(simpart.getHorseId()).getName();
-            completeds.add(new SimulationParticipantOutput(simpart.getId(), null, horseName, jockeyName, d, p, k2, g));
-        }
-
-        return completeds;
-
-    }
-
-
+    /**
+     * Inner class: Holds HashMap of jockeys and horses by ID as key for retrieving the correct horse/jockey combination
+     */
     class DataHolder{
         private HashMap<Integer, Jockey> jockeysByID;
         private HashMap<Integer, Horse> horsesByID;

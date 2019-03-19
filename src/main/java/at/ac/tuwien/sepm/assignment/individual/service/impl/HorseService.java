@@ -86,24 +86,10 @@ public class HorseService implements IHorseService {
         }
     }
 
-    private boolean isSpeedOutOfRange(Horse horse) {
 
-        if (horse.getMinSpeed() != null && horse.getMaxSpeed() != null) {
-            return (horse.getMinSpeed() < 40.0 || horse.getMaxSpeed() > 60);
-        } else if (horse.getMinSpeed() != null) {
-            return horse.getMinSpeed() < 40.0;
-        } else if (horse.getMaxSpeed() != null) {
-            return horse.getMaxSpeed() > 60.0;
-        } else return false;
 
-    }
 
-    private boolean isMaxSmallerMin(Horse horse) {
-        if (horse.getMinSpeed() != null && horse.getMaxSpeed() != null) {
-            return horse.getMinSpeed() > horse.getMaxSpeed();
-        } else return false;
-    }
-
+    //below methods validate input data and only send it to persistence layer if input is valid
     private void invalidHorseInputData(Horse horse) throws OutofRangeException, InvalidDataException {
         if (isSpeedOutOfRange(horse)) {
             LOGGER.error("Speed is out of range.");
@@ -124,7 +110,6 @@ public class HorseService implements IHorseService {
             throw new InvalidDataException("Maximum speed needs to be smaller or equal to minimum speed!");
         }
     }
-
     private void invalidHorseUpdateData(Horse horse) throws InvalidDataException, OutofRangeException {
 
         if(isSpeedOutOfRange(horse)){
@@ -136,5 +121,21 @@ public class HorseService implements IHorseService {
             LOGGER.error("Name cannot be empty");
             throw new InvalidDataException("Name cannot be empty!");
         }
+    }
+    private boolean isSpeedOutOfRange(Horse horse) {
+
+        if (horse.getMinSpeed() != null && horse.getMaxSpeed() != null) {
+            return (horse.getMinSpeed() < 40.0 || horse.getMaxSpeed() > 60);
+        } else if (horse.getMinSpeed() != null) {
+            return horse.getMinSpeed() < 40.0;
+        } else if (horse.getMaxSpeed() != null) {
+            return horse.getMaxSpeed() > 60.0;
+        } else return false;
+
+    }
+    private boolean isMaxSmallerMin(Horse horse) {
+        if (horse.getMinSpeed() != null && horse.getMaxSpeed() != null) {
+            return horse.getMinSpeed() > horse.getMaxSpeed();
+        } else return false;
     }
 }

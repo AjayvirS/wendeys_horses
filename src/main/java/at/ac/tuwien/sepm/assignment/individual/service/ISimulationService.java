@@ -20,7 +20,21 @@ public interface ISimulationService {
      */
     Simulation insertOne(Simulation simulation) throws ServiceException, InvalidDataException, OutofRangeException, NotFoundException;
 
+
+    /**
+     *
+     * @param id of simulation to get
+     * @return simulation containing simulation data AND calculated participants data
+     * @throws ServiceException if something goes wrong during database access
+     * @throws NotFoundException if simulation not found
+     */
     Simulation getOneById(Integer id) throws NotFoundException, ServiceException;
 
-    ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws NotFoundException, ServiceException;
+    /**
+     *
+     * @param simulation containing optional parameters to search simulation by
+     * @return list of simulation matching optional parameters
+     * @throws ServiceException if something goes wrong during database access
+     */
+    ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws ServiceException;
 }
