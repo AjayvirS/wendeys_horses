@@ -4,13 +4,24 @@
     <timestamp key="day" datePattern="yyyy-MM-dd"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} | %-5level | %40logger{0}: %msg%n</pattern>
         </encoder>
     </appender>
 
+    <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>wendys-rennpferde-%d{yyyy-MM-dd}.log</fileNamePattern>
+            </rollingPolicy>
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} | %-5level | %40logger{0}: %msg%n</pattern>
+            </encoder>
+    </appender>
+
     <logger name="at.ac.tuwien.sepm.assignment.individual" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FileAppender"/>
     </logger>
 
     <root level="WARN">
