@@ -233,7 +233,7 @@ public class SimulationService implements ISimulationService {
     class DataHolder{
         private HashMap<Integer, Jockey> jockeysByID;
         private HashMap<Integer, Horse> horsesByID;
-        public DataHolder(HashMap<Integer, Horse> horsessByID, HashMap<Integer, Jockey> jockeysByID){
+        public DataHolder(HashMap<Integer, Horse> horsesByID, HashMap<Integer, Jockey> jockeysByID){
             this.horsesByID=horsesByID;
             this.jockeysByID=jockeysByID;
 
