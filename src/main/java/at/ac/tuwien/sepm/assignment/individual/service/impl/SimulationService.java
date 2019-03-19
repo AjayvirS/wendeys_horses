@@ -125,7 +125,7 @@ public class SimulationService implements ISimulationService {
 
     @Override
     public ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws NotFoundException, ServiceException {
-        LOGGER.info("Get simulation/s with following optional parameter: "+simulation.getName()==null?"":simulation.getName());
+        LOGGER.info("Get simulation/s with following optional parameter: "+(simulation.getName()==null?"":simulation.getName()));
         try {
             return simulationDao.getAllOrFiltered(simulation);
         } catch (PersistenceException e) {
@@ -203,7 +203,7 @@ public class SimulationService implements ISimulationService {
         NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
         DecimalFormat df = (DecimalFormat) nf;
         df.applyPattern("#.####");
-        df.setRoundingMode(RoundingMode.UP);
+        df.setRoundingMode(RoundingMode.HALF_UP);
         String horseName = null, jockeyName = null;
 
         for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
@@ -213,14 +213,14 @@ public class SimulationService implements ISimulationService {
             k=jockeys.get(simpart.getJockeyId()).getSkill();
             g=simpart.getLuckFactor();
             p = (g - 0.95) * ((p_max - p_min) / (1.05 - 0.95)) + p_min;
-            k2 = 1 + ((0.15 * 1 / Math.PI) * Math.atan((1 / 5f) * k));
+            k2 = 1 + (0.15 * 1 / Math.PI * Math.atan((1 / 5f) * k));
             p = Double.valueOf(df.format(p));
             k2 = Double.valueOf(df.format(k2));
             d = k2 * p * g;
             d = Double.valueOf(df.format(d));
             jockeyName=jockeys.get(simpart.getJockeyId()).getName();
             horseName=horses.get(simpart.getHorseId()).getName();
-            completeds.add(new SimulationParticipantOutput(simpart.getId(),null,horseName,jockeyName,d,p,k,g));
+            completeds.add(new SimulationParticipantOutput(simpart.getId(),null,horseName,jockeyName,d,p,k2,g));
         }
 
         return completeds;
