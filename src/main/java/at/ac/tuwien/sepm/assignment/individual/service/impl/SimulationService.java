@@ -222,21 +222,21 @@ public class SimulationService implements ISimulationService {
         for (int i = 0; i < simulation.getSimulationParticipants().size(); i++) {
             SimulationParticipant simPart = simulation.getSimulationParticipants().get(i);
             if (simPart.getHorseId() == null) {
-                LOGGER.error("Horse id of participant" + i + "missing.");
-                throw new InvalidDataException("Horse id of participant" + i + " missing!");
+                LOGGER.error("Horse id of participant missing.");
+                throw new InvalidDataException("Horse id of participant missing!");
             }
             if (simPart.getJockeyId() == null) {
-                LOGGER.error("Jockey id of participant" + i + "missing.");
-                throw new InvalidDataException("Jockey id of participant" + i + " missing!");
+                LOGGER.error("Jockey id of participant missing.");
+                throw new InvalidDataException("Jockey id of participant missing!");
             }
             if (simPart.getLuckFactor() == null) {
-                LOGGER.error("Luck factor of participant " + i + " missing.");
-                throw new InvalidDataException("Luck factor of participant " + i + " missing!");
+                LOGGER.error("Luck factor of participant missing.");
+                throw new InvalidDataException("Luck factor of participant missing!");
             }
 
             if (simPart.getLuckFactor() > luckRangeMax || simPart.getLuckFactor() < luckRangeMin) {
-                LOGGER.error("Luck factor of participant " + i + " out of range.");
-                throw new OutofRangeException("Luck factor of participant " + i + " is out of range!");
+                LOGGER.error("Luck factor of participant out of range.");
+                throw new OutofRangeException("Luck factor of participant is out of range!");
             }
 
             for (int j = 0; j < simulation.getSimulationParticipants().size(); j++) {
