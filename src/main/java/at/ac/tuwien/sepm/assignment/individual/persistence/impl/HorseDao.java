@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
-import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutput;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
@@ -129,7 +128,7 @@ public class HorseDao implements IHorseDao {
             }
 
             //add horse to history table before updating
-            insertOneHistory(dbHorse, con);
+            insertOneHistoryWhenUpdated(dbHorse, con);
 
 
             statement = con.prepareStatement(sql);
@@ -231,7 +230,7 @@ public class HorseDao implements IHorseDao {
        whenever the updateOneById method is called, this one is gets called as well
        to insert deleted horse in a history table for simulation purposes
     */
-    private void insertOneHistory(Horse dbHorse, Connection dbConnection) throws PersistenceException {
+    private void insertOneHistoryWhenUpdated(Horse dbHorse, Connection dbConnection) throws PersistenceException {
         PreparedStatement statement;
         LOGGER.info("Insert into horsehistory with "+dbHorse.getId());
         String sqlHistory="INSERT INTO horsehistory(horseId, name, breed, min_speed, max_speed, updated) VALUES (?,?,?,?,?,?)";
@@ -268,7 +267,27 @@ public class HorseDao implements IHorseDao {
             ResultSet rs=ps.executeQuery();
 
             if(!rs.next()){
-                insertOneHistory(dbHorse, dbConnection);
+                PreparedStatement statement;
+                LOGGER.info("Insert into horsehistory with "+dbHorse.getId());
+                String sqlHistory="INSERT INTO horsehistory(horseId, name, breed, min_speed, max_speed, updated, deleted) VALUES (?,?,?,?,?,?,?)";
+                try {
+
+                    statement = dbConnection.prepareStatement(sqlHistory);
+                    statement.setInt(1,dbHorse.getId());
+                    statement.setString(2, dbHorse.getName());
+                    statement.setString(3, dbHorse.getBreed());
+                    statement.setDouble(4, dbHorse.getMinSpeed());
+                    statement.setDouble(5, dbHorse.getMaxSpeed());
+                    statement.setTimestamp(6, Timestamp.valueOf(dbHorse.getUpdated()));
+                    statement.setBoolean(7, true);
+
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException e) {
+                    LOGGER.error("Could not insert into horsehistory table", e);
+                    throw new PersistenceException("Could not add horse to database", e);
+                }
             }
             else{
                 LOGGER.info("Latest updated horse already exists in horsehistory, no need to re-insert!");
@@ -296,19 +315,19 @@ public class HorseDao implements IHorseDao {
 
         String sql="SELECT *\n" +
             "FROM (\n" +
-            "SELECT horseid, name, breed, min_speed, max_speed, updated FROM horsehistory\n" +
+            "SELECT horseid, name, breed, min_speed, max_speed, updated, deleted FROM horsehistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse GROUP BY id\n" +
+            "   SELECT id, name, breed, min_speed, max_speed, updated, false AS deleted FROM horse GROUP BY id\n" +
             "   ) AS t\n" +
             "WHERE updated = (\n" +
             "    SELECT MAX(updated)\n" +
             "    FROM (\n" +
-            "SELECT horseid, name, breed, min_speed, max_speed, updated FROM horsehistory\n" +
+            "SELECT horseid, name, breed, min_speed, max_speed, updated, deleted FROM horsehistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, breed, min_speed, max_speed, updated FROM horse GROUP BY id\n" +
+            "   SELECT id, name, breed, min_speed, max_speed, updated, false AS deleted FROM horse GROUP BY id\n" +
             "   ) \n" +
             "    WHERE horseid=t.horseid\n" +
-            "        AND updated <= ? AND t.horseid IN (SELECT * from TABLE(x INT=?)))";
+            "        AND updated <= ? AND deleted=false AND t.horseid IN (SELECT * from TABLE(x INT=?)))";
 
         try {
             Array horseIDIn = con.createArrayOf("BIGINT", horseIDs);

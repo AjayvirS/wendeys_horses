@@ -359,3 +359,78 @@
 16:21:13.582 | INFO  |                               Simulation: null
 16:21:13.582 | INFO  |                      DBConnectionManager: Get database connection
 16:21:20.138 | INFO  |                      DBConnectionManager: Close database connection
+16:58:11.837 | ERROR |               SchemaAndTestDataGenerator: Attention! Check if there is any other open database connection, before you proceed.
+16:58:11.841 | INFO  |               SchemaAndTestDataGenerator: Database schema is deployed and test data is successfully imported!
+16:59:11.530 | INFO  |               SchemaAndTestDataGenerator: Database schema is deployed and test data is successfully imported!
+17:16:05.467 | ERROR |               SchemaAndTestDataGenerator: Attention! Check if there is any other open database connection, before you proceed.
+17:16:05.472 | INFO  |               SchemaAndTestDataGenerator: Database schema is deployed and test data is successfully imported!
+17:17:25.119 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on Ajayvirs-MacBook-Pro.local with PID 67909 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+17:17:25.121 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+17:17:25.122 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+17:17:26.421 | DEBUG |                            HorseEndpoint: Defined Endpoint
+17:17:26.425 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+17:17:26.429 | INFO  |                       SimulationEndpoint: Defined Endpoint
+17:17:26.808 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.057 seconds (JVM running for 8.082)
+17:17:31.681 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Brendon', skill=19.6, created=null, updated=null}
+17:17:31.682 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+17:17:31.683 | INFO  |                            JockeyService: Insert jockey with following data: Name: Brendon, Skill: 19.6
+17:17:31.683 | INFO  |                                JockeyDao: Insert Jockey
+17:17:31.690 | INFO  |                      DBConnectionManager: Get database connection
+17:17:31.690 | INFO  |                      DBConnectionManager: Establish database connection
+17:17:36.873 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Ricky', skill=19.6, created=null, updated=null}
+17:17:36.873 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+17:17:36.873 | INFO  |                            JockeyService: Insert jockey with following data: Name: Ricky, Skill: 19.6
+17:17:36.874 | INFO  |                                JockeyDao: Insert Jockey
+17:17:36.874 | INFO  |                      DBConnectionManager: Get database connection
+17:17:42.225 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Ricky', skill=19.6, created=null, updated=null}
+17:17:42.227 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+17:17:42.227 | INFO  |                            JockeyService: Insert jockey with following data: Name: Ricky, Skill: 19.6
+17:17:42.227 | INFO  |                                JockeyDao: Insert Jockey
+17:17:42.227 | INFO  |                      DBConnectionManager: Get database connection
+17:17:57.075 | INFO  |                           JockeyEndpoint: GET ALL /api/v1/jockeys:
+17:17:57.075 | INFO  |                            JockeyService: Get jockey/s with following optional parameters: 
+17:17:57.076 | INFO  |                                JockeyDao: Get jockey/s with following optional parameters: 
+17:17:57.076 | INFO  |                      DBConnectionManager: Get database connection
+17:18:07.979 | INFO  |                           JockeyEndpoint: DELETE /api/v1/jockeys/3
+17:18:07.979 | INFO  |                            JockeyService: Delete jockey with id 3
+17:18:07.979 | INFO  |                                JockeyDao: Delete jockey with id 3
+17:18:07.980 | INFO  |                                JockeyDao: Get jockey with id 3
+17:18:07.980 | INFO  |                      DBConnectionManager: Get database connection
+17:18:07.981 | INFO  |                                JockeyDao: Check if jockey with id 3 exists: insert into jockeyhistory if no, else do nothing
+17:18:07.981 | INFO  |                      DBConnectionManager: Get database connection
+17:18:07.982 | INFO  |                                JockeyDao: Insert into jockeyHistory with 3
+17:18:07.982 | INFO  |                      DBConnectionManager: Get database connection
+17:18:07.984 | INFO  |                      DBConnectionManager: Get database connection
+17:18:43.901 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+17:18:43.907 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 0.96}]
+17:18:43.908 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+17:18:43.908 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+17:18:43.908 | INFO  |                                 HorseDao: Get correct version of participant horses
+17:18:43.908 | INFO  |                      DBConnectionManager: Get database connection
+17:18:43.940 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+17:18:43.940 | INFO  |                      DBConnectionManager: Get database connection
+17:18:43.946 | INFO  |                        SimulationService: Insert simulation with following data: Name: Simulation 1, Participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 0.96}]
+17:18:43.946 | INFO  |                               Simulation: Insert Simulation
+17:18:43.946 | INFO  |                      DBConnectionManager: Get database connection
+17:18:43.950 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+17:18:43.950 | INFO  |                        SimulationService: Set rank of participants
+17:19:16.809 | INFO  |                           JockeyEndpoint: DELETE /api/v1/jockeys/1
+17:19:16.809 | INFO  |                            JockeyService: Delete jockey with id 1
+17:19:16.809 | INFO  |                                JockeyDao: Delete jockey with id 1
+17:19:16.809 | INFO  |                                JockeyDao: Get jockey with id 1
+17:19:16.809 | INFO  |                      DBConnectionManager: Get database connection
+17:19:16.810 | INFO  |                                JockeyDao: Check if jockey with id 1 exists: insert into jockeyhistory if no, else do nothing
+17:19:16.810 | INFO  |                      DBConnectionManager: Get database connection
+17:19:16.811 | INFO  |                                JockeyDao: Insert into jockeyHistory with 1
+17:19:16.811 | INFO  |                      DBConnectionManager: Get database connection
+17:19:16.813 | INFO  |                      DBConnectionManager: Get database connection
+17:19:31.907 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+17:19:31.908 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 0.96}]
+17:19:31.909 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+17:19:31.909 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+17:19:31.910 | INFO  |                                 HorseDao: Get correct version of participant horses
+17:19:31.910 | INFO  |                      DBConnectionManager: Get database connection
+17:19:31.918 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+17:19:31.925 | INFO  |                      DBConnectionManager: Get database connection
+17:19:31.934 | INFO  |                                JockeyDao: Could not find participants jockeys
+17:20:50.904 | INFO  |                      DBConnectionManager: Close database connection

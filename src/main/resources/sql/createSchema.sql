@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS horseHistory(
   min_speed DOUBLE       NOT NULL,
   max_speed DOUBLE       NOT NULL,
   updated   DATETIME     NOT NULL,
+  deleted   BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS jockeyHistory (
@@ -53,6 +54,7 @@ CREATE TABLE IF NOT EXISTS jockeyHistory (
   name      VARCHAR(255) NOT NULL,
   skill     DOUBLE       NOT NULL,
   updated   DATETIME     NOT NULL,
+  deleted   BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
 

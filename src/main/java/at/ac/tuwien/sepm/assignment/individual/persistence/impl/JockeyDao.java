@@ -73,7 +73,7 @@ public class JockeyDao implements IJockeyDao {
             //throws NotFoundException
             dbJockey = findOneById(id);
 
-            insertOneHistory(dbJockey);
+            insertOneHistoryWhenUpdated(dbJockey);
 
             statement = con.prepareStatement(sql);
             Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
@@ -209,7 +209,27 @@ public class JockeyDao implements IJockeyDao {
             ResultSet rs = ps.executeQuery();
 
             if (!rs.next()) {
-                insertOneHistory(dbJockey);
+
+                PreparedStatement statement;
+                LOGGER.info("Insert into jockeyHistory with "+dbJockey.getId());
+                String sqlHistory="INSERT INTO jockeyhistory(jockeyid, name, skill, updated, deleted) VALUES (?,?,?,?,?)";
+                try {
+
+                    statement = dbConnectionManager.getConnection().prepareStatement(sqlHistory);
+                    statement.setInt(1,dbJockey.getId());
+                    statement.setString(2, dbJockey.getName());
+                    statement.setDouble(3, dbJockey.getSkill());
+                    statement.setTimestamp(4, Timestamp.valueOf(dbJockey.getUpdated()));
+                    statement.setBoolean(5, true);
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException e) {
+                    LOGGER.error("Could not insert into jockeyhistory table", e);
+                    throw new PersistenceException("Could not add jockey to database", e);
+                }
+
+
             } else {
                 LOGGER.info("Latest updated jockey already exists in jockeyhistory, no need to re-insert!");
             }
@@ -224,7 +244,7 @@ public class JockeyDao implements IJockeyDao {
        whenever the updateOneById method is called, this one is gets called as well
        to insert deleted jockey in a history table for simulation purposes
     */
-    private void insertOneHistory(Jockey dbJockey) throws PersistenceException {
+    private void insertOneHistoryWhenUpdated(Jockey dbJockey) throws PersistenceException {
         PreparedStatement statement;
         LOGGER.info("Insert into jockeyHistory with "+dbJockey.getId());
         String sqlHistory="INSERT INTO jockeyhistory(jockeyid, name, skill, updated) VALUES (?,?,?,?)";
@@ -259,19 +279,19 @@ public class JockeyDao implements IJockeyDao {
 
         String sql="SELECT *\n" +
             "FROM (\n" +
-            "SELECT jockeyid, name, skill, updated FROM jockeyhistory\n" +
+            "SELECT jockeyid, name, skill, updated, deleted FROM jockeyhistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, skill, updated FROM jockey GROUP BY id\n" +
+            "   SELECT id, name, skill, updated, false as deleted  FROM jockey GROUP BY id\n" +
             "   ) AS t\n" +
             "WHERE updated = (\n" +
             "    SELECT MAX(updated)\n" +
             "    FROM (\n" +
-            "SELECT jockeyid, name, skill,updated FROM jockeyhistory\n" +
+            "SELECT jockeyid, name, skill,updated, deleted FROM jockeyhistory\n" +
             "   UNION\n" +
-            "   SELECT id, name, skill, updated FROM jockey GROUP BY id\n" +
+            "   SELECT id, name, skill, updated, false as deleted FROM jockey GROUP BY id\n" +
             "   ) \n" +
             "    WHERE jockeyid=t.jockeyid\n" +
-            "        AND updated <= ? AND t.jockeyid IN (SELECT * from TABLE(x INT=?)))";
+            "        AND updated <= ? AND deleted=FALSE AND t.jockeyid IN (SELECT * from TABLE(x INT=?)))";
 
         try {
             Array jockeyIDIn = con.createArrayOf("BIGINT", jockeyIDs);
