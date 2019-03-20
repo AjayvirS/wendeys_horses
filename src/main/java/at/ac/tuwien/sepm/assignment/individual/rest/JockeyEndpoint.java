@@ -83,8 +83,6 @@ public class JockeyEndpoint {
             return jockeyMapper.entitiesToDto(jockeyService.getAllOrFiltered(jockeyMapper.dtoToEntity(jockeyDto)));
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error during processing jockeys with following optional " + jockeyMapper.dtoToEntity(jockeyDto).printOptionals());
-        } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading jockeys: " + e.getMessage(), e);
         }
     }
 

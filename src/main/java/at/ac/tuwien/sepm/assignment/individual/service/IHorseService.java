@@ -52,7 +52,6 @@ public interface IHorseService {
     /**
      * @param horse to filter records by name, breed, minSpeed, maxSpeed [OPTIONAL]
      * @return A list of filtered records of horses as ArrayList.
-     * @throws NotFoundException will be thrown if list returned is empty.
      */
-    ArrayList getAllOrFiltered(Horse horse) throws ServiceException, NotFoundException;
+    ArrayList getAllOrFiltered(Horse horse) throws ServiceException;
 }

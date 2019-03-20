@@ -1,0 +1,8 @@
+11:27:49.994 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on t196-062.demo.tuwien.ac.at with PID 67332 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+11:27:49.997 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+11:27:49.997 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+11:27:51.637 | DEBUG |                            HorseEndpoint: Defined Endpoint
+11:27:51.641 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+11:27:51.650 | INFO  |                       SimulationEndpoint: Defined Endpoint
+11:27:52.005 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.57 seconds (JVM running for 4.213)
+11:28:57.012 | INFO  |                      DBConnectionManager: Close database connection

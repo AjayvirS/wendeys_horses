@@ -33,7 +33,7 @@ public class SimulationService implements ISimulationService {
     private final IHorseDao horseDao;
 
     @Autowired
-    public SimulationService(ISimulationDao simulationDao, JockeyDao jockeyDao, HorseDao horseDao) {
+    public SimulationService(ISimulationDao simulationDao, IJockeyDao jockeyDao, IHorseDao horseDao) {
         this.simulationDao = simulationDao;
         this.horseDao = horseDao;
         this.jockeyDao = jockeyDao;

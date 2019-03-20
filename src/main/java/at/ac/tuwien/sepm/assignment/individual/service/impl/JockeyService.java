@@ -67,7 +67,7 @@ public class JockeyService implements IJockeyService {
     }
 
     @Override
-    public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws ServiceException, NotFoundException {
+    public ArrayList<Jockey> getAllOrFiltered(Jockey jockey) throws ServiceException {
         LOGGER.info("Get jockey/s with following optional parameters: " + jockey.printOptionals());
         try {
             return jockeyDao.getAllOrFiltered(jockey);

@@ -66,8 +66,6 @@ public class SimulationEndpoint {
 
         try {
             return simulationMapper.entitiesToDto(simulationService.getAllOrFiltered(simulationMapper.dtoToEntity(simulationInputDto)));
-        } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading simulations: " + e.getMessage(), e);
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                 "Error during processing simulation with following optionals " + simulationMapper.dtoToEntity(simulationInputDto).getName());
