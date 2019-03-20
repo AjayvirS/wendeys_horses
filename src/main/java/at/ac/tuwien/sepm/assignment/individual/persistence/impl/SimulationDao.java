@@ -119,7 +119,7 @@ public class SimulationDao implements ISimulationDao {
 
     @Override
     public ArrayList<Simulation> getAllOrFiltered(Simulation simulation) throws PersistenceException {
-        LOGGER.info("Get simulation/s with following optional parameter: "+simulation.getName()==null?"":simulation.getName());
+        LOGGER.info("Get simulation/s with following optional parameter: "+(simulation.getName()==null?"":simulation.getName()));
         ArrayList<Simulation> filteredList= new ArrayList<>();
         String sql="SELECT * FROM simulation WHERE name LIKE ?";
 
