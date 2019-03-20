@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
@@ -39,7 +38,6 @@ public class SimulationDao implements ISimulationDao {
 
         try {
 
-            Timestamp tmstmp = Timestamp.valueOf(LocalDateTime.now());
             PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, simulation.getName());
             statement.setTimestamp(2, Timestamp.valueOf(simulation.getCreated()));

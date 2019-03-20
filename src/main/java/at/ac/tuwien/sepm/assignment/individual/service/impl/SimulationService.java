@@ -51,7 +51,6 @@ public class SimulationService implements ISimulationService {
             simulation.setCreated(LocalDateTime.now());
 
             DataHolder objs = getCorrectHorsesAndJockeys(simulation);
-
             ArrayList<SimulationParticipantOutput> completeds = calculateData(objs.getHorsesByID(), objs.getJockeysByID(), simulation);
 
             LOGGER.info("Insert simulation with following data: " + "Name: " + simulation.getName() + ", Participants: " + simulation.getSimulationParticipants());
