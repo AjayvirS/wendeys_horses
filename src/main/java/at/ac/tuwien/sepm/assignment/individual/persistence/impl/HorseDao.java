@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -304,14 +306,13 @@ public class HorseDao implements IHorseDao {
         uses date to get the closest horses to CREATED date of simulation
         uses horseIDs of horses who participated in the simulation
      */
-    public HashMap<Integer, Horse> getCorrectHorsesForSimulation(LocalDateTime created, Integer[]horseIDs) throws PersistenceException, NotFoundException {
+    public HashMap<Integer, Horse> getCorrectHorsesForSimulation(Simulation sim, Integer[]horseIDs) throws PersistenceException, NotFoundException {
         LOGGER.info("Get correct version of participant horses");
         //this makes a union of horses and horsehistory and partitions them by id of the horses
         //then it proceeds to get the most recently updated horse right before the created date
         HashMap<Integer, Horse> horsesById= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
-
-
+        sim.setCreated(LocalDateTime.now());
 
         String sql="SELECT *\n" +
             "FROM (\n" +
@@ -332,7 +333,7 @@ public class HorseDao implements IHorseDao {
         try {
             Array horseIDIn = con.createArrayOf("BIGINT", horseIDs);
             PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setTimestamp(1, Timestamp.valueOf(created));
+            stmt.setTimestamp(1, Timestamp.valueOf(sim.getCreated()));
             stmt.setArray(2,horseIDIn);
             ResultSet rs=stmt.executeQuery();
 
@@ -341,11 +342,12 @@ public class HorseDao implements IHorseDao {
                     rs.getString(3), rs.getDouble(4),rs.getDouble(5), null, null) );
             }
 
-            if(horsesById.isEmpty()){
-                LOGGER.info("Could not find participants horses");
-                throw new NotFoundException("Could not find one or more participant horses");
+            ArrayList<Integer> missingHorsesIDs= new ArrayList<>(Arrays.asList(horseIDs));
+            missingHorsesIDs.removeAll(horsesById.keySet());
+            if(!missingHorsesIDs.isEmpty()){
+                LOGGER.info("Could not find participants horses: "+missingHorsesIDs.toString());
+                throw new NotFoundException("Following horses were not found: "+missingHorsesIDs.toString());
             }
-
             return horsesById;
 
         } catch (SQLException e) {

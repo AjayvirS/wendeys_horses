@@ -48,9 +48,8 @@ public class SimulationService implements ISimulationService {
             LOGGER.info("Validate data of simulation to be inserted");
             validateData(simulation);
             LOGGER.info("Prepare Simulation and calculate values based on horse speed, luck and skill");
-            simulation.setCreated(LocalDateTime.now());
-
             DataHolder objs = getCorrectHorsesAndJockeys(simulation);
+
             ArrayList<SimulationParticipantOutput> completeds = calculateData(objs.getHorsesByID(), objs.getJockeysByID(), simulation);
 
             LOGGER.info("Insert simulation with following data: " + "Name: " + simulation.getName() + ", Participants: " + simulation.getSimulationParticipants());
@@ -138,8 +137,8 @@ public class SimulationService implements ISimulationService {
             jockeyIDs[i] = tempArr.get(i).getJockeyId();
 
         }
-        horseByIDs = ((HorseDao) horseDao).getCorrectHorsesForSimulation(simulation.getCreated(), horseIDs);
-        jockeyByIDs = ((JockeyDao) jockeyDao).getCorrectJockeysForSimulation(simulation.getCreated(), jockeyIDs);
+        horseByIDs = ((HorseDao) horseDao).getCorrectHorsesForSimulation(simulation, horseIDs);
+        jockeyByIDs = ((JockeyDao) jockeyDao).getCorrectJockeysForSimulation(simulation, jockeyIDs);
         return new DataHolder(horseByIDs, jockeyByIDs);
 
     }

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
+import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -270,12 +272,13 @@ public class JockeyDao implements IJockeyDao {
         uses date to get the closest jockeys to CREATED date of simulation
         uses jockeyIDs of jockeys who participated in the simulation
      */
-    public HashMap<Integer, Jockey> getCorrectJockeysForSimulation(LocalDateTime created, Integer[]jockeyIDs) throws PersistenceException, NotFoundException {
+    public HashMap<Integer, Jockey> getCorrectJockeysForSimulation(Simulation sim, Integer[]jockeyIDs) throws PersistenceException, NotFoundException {
         LOGGER.info("Get correct version of participant jockeys");
         //this makes a union of horses and horsehistory and partitions them by id of the horses
         //then it proceeds to get the most recently updated horse right before the created date
         HashMap<Integer, Jockey> jockeysByID= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
+        sim.setCreated(LocalDateTime.now());
 
         String sql="SELECT *\n" +
             "FROM (\n" +
@@ -296,7 +299,7 @@ public class JockeyDao implements IJockeyDao {
         try {
             Array jockeyIDIn = con.createArrayOf("BIGINT", jockeyIDs);
             PreparedStatement stmt=con.prepareStatement(sql);
-            stmt.setTimestamp(1, Timestamp.valueOf(created));
+            stmt.setTimestamp(1, Timestamp.valueOf(sim.getCreated()));
             stmt.setObject(2,jockeyIDIn);
             ResultSet rs=stmt.executeQuery();
 
@@ -304,11 +307,15 @@ public class JockeyDao implements IJockeyDao {
                 jockeysByID.put(rs.getInt(1), new Jockey(null,rs.getString(2),
                     rs.getDouble(3), null, null) );
             }
+            ArrayList<Integer> missingJockeyIDs= new ArrayList<>(Arrays.asList(jockeyIDs));
 
-            if(jockeysByID.isEmpty()){
-                LOGGER.info("Could not find participants jockeys");
-                throw new NotFoundException("Could not find participant one or more jockeys");
+            missingJockeyIDs.removeAll(jockeysByID.keySet());
+
+            if(!missingJockeyIDs.isEmpty()){
+                LOGGER.info("Could not find participants jockeys: "+missingJockeyIDs.toString());
+                throw new NotFoundException("Following Jockeys were not found: "+missingJockeyIDs.toString());
             }
+
 
             return jockeysByID;
 
