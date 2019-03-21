@@ -124,7 +124,7 @@ public class SimulationServiceTest {
             assertEquals("Calculated Skill is always 1", expected, compParts.getSkill());
 
         }
-        
+
     }
 
 }

@@ -9,14 +9,11 @@ import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataExc
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,9 +41,9 @@ public class HorseDaoTest {
 
     @Test
     public void WhenInsertHorse_giveHorseByIdAndFindHorseById() throws PersistenceException{
-        horseDao.insertOne(new Horse(null, "Donald", "American", 50.0, 55.0, null, null));
-        //assertThat("", is(not(null)));
-
+        Horse testerObj = new Horse(null, "Donald", "American", 50.0, 55.0, null, null);
+        Horse expectedObj=horseDao.insertOne(testerObj);
+        assertEquals(testerObj,expectedObj);
     }
 
     @Test(expected= NotFoundException.class)

@@ -278,7 +278,6 @@ public class JockeyDao implements IJockeyDao {
         //then it proceeds to get the most recently updated horse right before the created date
         HashMap<Integer, Jockey> jockeysByID= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
-        sim.setCreated(LocalDateTime.now());
 
         String sql="SELECT *\n" +
             "FROM (\n" +

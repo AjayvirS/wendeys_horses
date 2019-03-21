@@ -36,12 +36,6 @@ public class JockeyDaoTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void givenNothing_whenUpdateJockey_thenNotFoundException()
-        throws PersistenceException, NotFoundException, InvalidDataException {
-        jockeyDao.updateOneById(1, new Jockey(null,null,50.5, null,null));
-    }
-
-    @Test(expected = NotFoundException.class)
     public void givenInsertDeleteFind_thenNotFoundException() throws PersistenceException, NotFoundException {
         jockeyDao.insertOne(new Jockey(null,"Tom", 76.4, null,null));
         jockeyDao.deleteOneById(1);

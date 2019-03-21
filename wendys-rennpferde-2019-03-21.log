@@ -1,0 +1,404 @@
+00:06:25.834 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on Ajayvirs-MacBook-Pro.local with PID 68937 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+00:06:25.836 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+00:06:25.836 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+00:06:27.079 | DEBUG |                            HorseEndpoint: Defined Endpoint
+00:06:27.082 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+00:06:27.086 | INFO  |                       SimulationEndpoint: Defined Endpoint
+00:06:27.418 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 1.962 seconds (JVM running for 7.958)
+00:06:34.954 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+00:06:34.961 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 2, Luck factor: 0.96}]
+00:06:34.961 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+00:06:34.961 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+00:06:34.961 | INFO  |                                 HorseDao: Get correct version of participant horses
+00:06:34.962 | INFO  |                      DBConnectionManager: Get database connection
+00:06:34.962 | INFO  |                      DBConnectionManager: Establish database connection
+00:06:35.141 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+00:06:35.141 | INFO  |                      DBConnectionManager: Get database connection
+00:06:35.146 | INFO  |                        SimulationService: Insert simulation with following data: Name: Simulation 1, Participants: [{Horse ID: 1, Jockey ID: 2, Luck factor: 0.96}]
+00:06:35.147 | INFO  |                               Simulation: Insert Simulation
+00:06:35.147 | INFO  |                      DBConnectionManager: Get database connection
+00:06:35.154 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+00:06:35.154 | INFO  |                        SimulationService: Set rank of participants
+00:09:35.995 | INFO  |                      DBConnectionManager: Close database connection
+00:12:37.209 | INFO  |                        SimulationDaoTest: Starting SimulationDaoTest on Ajayvirs-MacBook-Pro.local with PID 68965 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+00:12:37.213 | DEBUG |                        SimulationDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+00:12:37.213 | INFO  |                        SimulationDaoTest: The following profiles are active: test
+00:12:38.104 | DEBUG |                            HorseEndpoint: Defined Endpoint
+00:12:38.114 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+00:12:38.123 | INFO  |                       SimulationEndpoint: Defined Endpoint
+00:12:38.933 | INFO  |                        SimulationDaoTest: Started SimulationDaoTest in 7.438 seconds (JVM running for 9.132)
+00:12:39.387 | INFO  |                               Simulation: Insert Simulation
+00:12:39.387 | INFO  |                      DBConnectionManager: Get database connection
+00:12:39.387 | INFO  |                      DBConnectionManager: Establish database connection
+00:12:39.638 | INFO  |                      DBConnectionManager: Close database connection
+00:12:39.653 | INFO  |                      DBConnectionManager: Close database connection
+00:27:47.764 | INFO  |                    SimulationServiceTest: Starting SimulationServiceTest on Ajayvirs-MacBook-Pro.local with PID 69006 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+00:27:47.769 | DEBUG |                    SimulationServiceTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+00:27:47.769 | INFO  |                    SimulationServiceTest: The following profiles are active: test
+00:27:48.658 | DEBUG |                            HorseEndpoint: Defined Endpoint
+00:27:48.668 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+00:27:48.677 | INFO  |                       SimulationEndpoint: Defined Endpoint
+00:27:49.526 | INFO  |                    SimulationServiceTest: Started SimulationServiceTest in 7.457 seconds (JVM running for 9.222)
+00:27:49.958 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: null
+00:27:49.958 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+00:27:49.958 | ERROR |                        SimulationService: Participants missing.
+00:27:49.959 | INFO  |                      DBConnectionManager: Close database connection
+00:27:49.970 | INFO  |                      DBConnectionManager: Close database connection
+00:28:16.882 | INFO  |                    SimulationServiceTest: Starting SimulationServiceTest on Ajayvirs-MacBook-Pro.local with PID 69011 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+00:28:16.886 | DEBUG |                    SimulationServiceTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+00:28:16.886 | INFO  |                    SimulationServiceTest: The following profiles are active: test
+00:28:17.757 | DEBUG |                            HorseEndpoint: Defined Endpoint
+00:28:17.770 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+00:28:17.786 | INFO  |                       SimulationEndpoint: Defined Endpoint
+00:28:18.632 | INFO  |                    SimulationServiceTest: Started SimulationServiceTest in 7.409 seconds (JVM running for 9.039)
+00:28:19.082 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.06}]
+00:28:19.082 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+00:28:19.082 | ERROR |                        SimulationService: Luck factor of participant out of range.
+00:28:19.083 | INFO  |                      DBConnectionManager: Close database connection
+00:28:19.099 | INFO  |                      DBConnectionManager: Close database connection
+00:28:40.150 | INFO  |                    SimulationServiceTest: Starting SimulationServiceTest on Ajayvirs-MacBook-Pro.local with PID 69015 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+00:28:40.156 | DEBUG |                    SimulationServiceTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+00:28:40.156 | INFO  |                    SimulationServiceTest: The following profiles are active: test
+00:28:40.879 | DEBUG |                            HorseEndpoint: Defined Endpoint
+00:28:40.887 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+00:28:40.898 | INFO  |                       SimulationEndpoint: Defined Endpoint
+00:28:41.565 | INFO  |                    SimulationServiceTest: Started SimulationServiceTest in 7.153 seconds (JVM running for 8.827)
+00:28:41.982 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.06}]
+00:28:41.983 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+00:28:41.983 | ERROR |                        SimulationService: Luck factor of participant out of range.
+00:28:41.984 | INFO  |                      DBConnectionManager: Close database connection
+00:28:41.999 | INFO  |                      DBConnectionManager: Close database connection
+00:29:26.964 | INFO  |                    SimulationServiceTest: Starting SimulationServiceTest on Ajayvirs-MacBook-Pro.local with PID 69021 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+00:29:26.973 | DEBUG |                    SimulationServiceTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+00:29:26.973 | INFO  |                    SimulationServiceTest: The following profiles are active: test
+00:29:27.835 | DEBUG |                            HorseEndpoint: Defined Endpoint
+00:29:27.848 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+00:29:27.858 | INFO  |                       SimulationEndpoint: Defined Endpoint
+00:29:28.713 | INFO  |                    SimulationServiceTest: Started SimulationServiceTest in 7.338 seconds (JVM running for 8.82)
+00:29:29.101 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.06}]
+00:29:29.101 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+00:29:29.101 | ERROR |                        SimulationService: Luck factor of participant out of range.
+00:29:29.102 | INFO  |                      DBConnectionManager: Close database connection
+00:29:29.110 | INFO  |                      DBConnectionManager: Close database connection02:08:55.389 | INFO  |                             HorseDaoTest: Starting HorseDaoTest on Ajayvirs-MacBook-Pro.local with PID 69475 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+02:08:55.392 | DEBUG |                             HorseDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+02:08:55.393 | INFO  |                             HorseDaoTest: The following profiles are active: test
+02:08:56.286 | DEBUG |                            HorseEndpoint: Defined Endpoint
+02:08:56.300 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+02:08:56.318 | INFO  |                       SimulationEndpoint: Defined Endpoint
+02:08:57.174 | INFO  |                             HorseDaoTest: Started HorseDaoTest in 7.325 seconds (JVM running for 8.656)
+02:08:57.569 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.569 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.806 | INFO  |                                 HorseDao: Delete horse with id 1
+02:08:57.807 | INFO  |                                 HorseDao: Get horse with id 1
+02:08:57.807 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.824 | ERROR |                                 HorseDao: Could not find horse with id 1
+02:08:57.826 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.831 | INFO  |                                 HorseDao: Get horse with id 1
+02:08:57.831 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.831 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.840 | ERROR |                                 HorseDao: Could not find horse with id 1
+02:08:57.841 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.844 | INFO  |                                 HorseDao: Insert horse
+02:08:57.852 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.852 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.869 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.869 | INFO  |                                 HorseDao: Update horse with id 1
+02:08:57.869 | INFO  |                                 HorseDao: Get horse with id 1
+02:08:57.870 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.871 | ERROR |                                 HorseDao: Maximum speed is smaller than minimum speed
+02:08:57.871 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.873 | INFO  |                                 HorseDao: Insert horse
+02:08:57.874 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.874 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.881 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.899 | INFO  |                               Simulation: Get simulation with id 1
+02:08:57.899 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.900 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.913 | ERROR |                               Simulation: Could not find simulation with id 1
+02:08:57.914 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.918 | INFO  |                               Simulation: Insert Simulation
+02:08:57.920 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.921 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.932 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.936 | INFO  |                               Simulation: Insert Simulation
+02:08:57.936 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.936 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.946 | INFO  |                      DBConnectionManager: Close database connection
+02:08:57.961 | INFO  |                                JockeyDao: Insert Jockey
+02:08:57.961 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.962 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:57.978 | INFO  |                                JockeyDao: Delete jockey with id 1
+02:08:57.978 | INFO  |                                JockeyDao: Get jockey with id 1
+02:08:57.980 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.982 | INFO  |                                JockeyDao: Check if jockey with id 1 exists: insert into jockeyhistory if no, else do nothing
+02:08:57.982 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.984 | INFO  |                                JockeyDao: Insert into jockeyHistory with 1
+02:08:57.988 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.989 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.991 | INFO  |                                JockeyDao: Get jockey with id 1
+02:08:57.992 | INFO  |                      DBConnectionManager: Get database connection
+02:08:57.993 | ERROR |                                JockeyDao: Could not find jockey with id 1
+02:08:57.995 | INFO  |                      DBConnectionManager: Close database connection
+02:08:58.025 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:08:58.040 | INFO  |                             HorseService: Insert Horse with following data: Name: Don, Breed: American, min. Speed: 40.0max. Speed: 60.0
+02:08:58.043 | INFO  |                                 HorseDao: Insert horse
+02:08:58.043 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.047 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:58.055 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:08:58.056 | INFO  |                            JockeyService: Insert jockey with following data: Name: Marco, Skill: 55.0
+02:08:58.057 | INFO  |                                JockeyDao: Insert Jockey
+02:08:58.057 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.077 | INFO  |                        SimulationService: Post Simulation with name: SimulationTest and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.02}]
+02:08:58.077 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+02:08:58.079 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+02:08:58.079 | INFO  |                                 HorseDao: Get correct version of participant horses
+02:08:58.079 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.110 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+02:08:58.123 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.135 | INFO  |                        SimulationService: Insert simulation with following data: Name: SimulationTest, Participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.02}]
+02:08:58.135 | INFO  |                               Simulation: Insert Simulation
+02:08:58.136 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.138 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+02:08:58.138 | INFO  |                        SimulationService: Set rank of participants
+02:08:58.138 | INFO  |                      DBConnectionManager: Close database connection
+02:08:58.141 | INFO  |                        SimulationService: Post Simulation with name: Simulation1 and participants: null
+02:08:58.142 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+02:08:58.142 | ERROR |                        SimulationService: Participants missing.
+02:08:58.142 | INFO  |                      DBConnectionManager: Close database connection
+02:08:58.144 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:08:58.144 | INFO  |                             HorseService: Insert Horse with following data: Name: Don, Breed: American, min. Speed: 45.0max. Speed: 55.3
+02:08:58.145 | INFO  |                                 HorseDao: Insert horse
+02:08:58.145 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.146 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:58.156 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:08:58.156 | INFO  |                            JockeyService: Insert jockey with following data: Name: Marco, Skill: 0.0
+02:08:58.157 | INFO  |                                JockeyDao: Insert Jockey
+02:08:58.157 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.159 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:08:58.159 | INFO  |                             HorseService: Insert Horse with following data: Name: Dragon, Breed: Arabian, min. Speed: 48.21max. Speed: 52.33
+02:08:58.160 | INFO  |                                 HorseDao: Insert horse
+02:08:58.164 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.165 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:08:58.165 | INFO  |                            JockeyService: Insert jockey with following data: Name: Eric, Skill: 0.0
+02:08:58.165 | INFO  |                                JockeyDao: Insert Jockey
+02:08:58.165 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.166 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:08:58.166 | INFO  |                             HorseService: Insert Horse with following data: Name: Bullet, Breed: Arabian, min. Speed: 40.0max. Speed: 60.0
+02:08:58.166 | INFO  |                                 HorseDao: Insert horse
+02:08:58.166 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.167 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:08:58.167 | INFO  |                            JockeyService: Insert jockey with following data: Name: Marco, Skill: 0.0
+02:08:58.167 | INFO  |                                JockeyDao: Insert Jockey
+02:08:58.167 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.168 | INFO  |                        SimulationService: Post Simulation with name: SimulationTest and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.02}, {Horse ID: 2, Jockey ID: 2, Luck factor: 1.01}, {Horse ID: 3, Jockey ID: 3, Luck factor: 1.0}]
+02:08:58.168 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+02:08:58.168 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+02:08:58.168 | INFO  |                                 HorseDao: Get correct version of participant horses
+02:08:58.170 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.176 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+02:08:58.176 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.182 | INFO  |                        SimulationService: Insert simulation with following data: Name: SimulationTest, Participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.02}, {Horse ID: 2, Jockey ID: 2, Luck factor: 1.01}, {Horse ID: 3, Jockey ID: 3, Luck factor: 1.0}]
+02:08:58.182 | INFO  |                               Simulation: Insert Simulation
+02:08:58.182 | INFO  |                      DBConnectionManager: Get database connection
+02:08:58.183 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+02:08:58.183 | INFO  |                        SimulationService: Set rank of participants
+02:08:58.183 | INFO  |                      DBConnectionManager: Close database connection
+02:08:58.186 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.06}]
+02:08:58.186 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+02:08:58.186 | ERROR |                        SimulationService: Luck factor of participant out of range.
+02:08:58.187 | INFO  |                      DBConnectionManager: Close database connection
+02:08:58.257 | INFO  |                    JockeyIntegrationTest: Starting JockeyIntegrationTest on Ajayvirs-MacBook-Pro.local with PID 69475 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+02:08:58.257 | DEBUG |                    JockeyIntegrationTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+02:08:58.257 | INFO  |                    JockeyIntegrationTest: The following profiles are active: test
+02:08:59.171 | DEBUG |                            HorseEndpoint: Defined Endpoint
+02:08:59.179 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+02:08:59.185 | INFO  |                       SimulationEndpoint: Defined Endpoint
+02:08:59.616 | INFO  |                    JockeyIntegrationTest: Started JockeyIntegrationTest in 1.391 seconds (JVM running for 11.098)
+02:08:59.940 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey1', skill=-2000.0, created=null, updated=null}
+02:08:59.941 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:08:59.941 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey1, Skill: -2000.0
+02:08:59.941 | INFO  |                                JockeyDao: Insert Jockey
+02:08:59.942 | INFO  |                      DBConnectionManager: Get database connection
+02:08:59.942 | INFO  |                      DBConnectionManager: Establish database connection
+02:08:59.974 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey2', skill=33.33, created=null, updated=null}
+02:08:59.974 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:08:59.975 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey2, Skill: 33.33
+02:08:59.975 | INFO  |                                JockeyDao: Insert Jockey
+02:08:59.975 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.010 | INFO  |                           JockeyEndpoint: GET ALL /api/v1/jockeys:
+02:09:00.012 | INFO  |                            JockeyService: Get jockey/s with following optional parameters: 
+02:09:00.013 | INFO  |                                JockeyDao: Get jockey/s with following optional parameters: 
+02:09:00.013 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.037 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.044 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey1', skill=-2000.0, created=null, updated=null}
+02:09:00.045 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.045 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey1, Skill: -2000.0
+02:09:00.045 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.045 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.045 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.054 | INFO  |                           JockeyEndpoint: GET ALL /api/v1/jockeys:
+02:09:00.054 | INFO  |                            JockeyService: Get jockey/s with following optional parameters: 
+02:09:00.054 | INFO  |                                JockeyDao: Get jockey/s with following optional parameters: 
+02:09:00.054 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.057 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.069 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey1', skill=-2000.0, created=null, updated=null}
+02:09:00.069 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.069 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey1, Skill: -2000.0
+02:09:00.069 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.069 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.069 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.082 | INFO  |                           JockeyEndpoint: GET Jockey: /api/v1/jockeys/1
+02:09:00.083 | INFO  |                            JockeyService: Get jockey with id 1
+02:09:00.083 | INFO  |                                JockeyDao: Get jockey with id 1
+02:09:00.083 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.086 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.098 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey1', skill=-2000.0, created=null, updated=null}
+02:09:00.098 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.098 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey1, Skill: -2000.0
+02:09:00.098 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.098 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.099 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.105 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.116 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey1', skill=-2000.0, created=null, updated=null}
+02:09:00.116 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.116 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey1, Skill: -2000.0
+02:09:00.116 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.116 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.116 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.128 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey2', skill=33.33, created=null, updated=null}
+02:09:00.128 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.128 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey2, Skill: 33.33
+02:09:00.128 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.128 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.135 | INFO  |                           JockeyEndpoint: DELETE /api/v1/jockeys/1
+02:09:00.135 | INFO  |                            JockeyService: Delete jockey with id 1
+02:09:00.135 | INFO  |                                JockeyDao: Delete jockey with id 1
+02:09:00.135 | INFO  |                                JockeyDao: Get jockey with id 1
+02:09:00.135 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.136 | INFO  |                                JockeyDao: Check if jockey with id 1 exists: insert into jockeyhistory if no, else do nothing
+02:09:00.136 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.137 | INFO  |                                JockeyDao: Insert into jockeyHistory with 1
+02:09:00.137 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.138 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.142 | INFO  |                           JockeyEndpoint: GET ALL /api/v1/jockeys:
+02:09:00.142 | INFO  |                            JockeyService: Get jockey/s with following optional parameters: 
+02:09:00.142 | INFO  |                                JockeyDao: Get jockey/s with following optional parameters: 
+02:09:00.142 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.148 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.196 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse1', breed='null', minSpeed=40.0, maxSpeed=60.0, created=null, updated=null}
+02:09:00.196 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.196 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse1, min. Speed: 40.0max. Speed: 60.0
+02:09:00.196 | INFO  |                                 HorseDao: Insert horse
+02:09:00.196 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.196 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.209 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse2', breed='null', minSpeed=49.99, maxSpeed=50.0, created=null, updated=null}
+02:09:00.209 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.209 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse2, min. Speed: 49.99max. Speed: 50.0
+02:09:00.209 | INFO  |                                 HorseDao: Insert horse
+02:09:00.209 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.217 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse3', breed='null', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+02:09:00.217 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.217 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse3, min. Speed: 45.0max. Speed: 55.0
+02:09:00.218 | INFO  |                                 HorseDao: Insert horse
+02:09:00.218 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.226 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey1', skill=40.0, created=null, updated=null}
+02:09:00.226 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.226 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey1, Skill: 40.0
+02:09:00.226 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.226 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.234 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey2', skill=-1000.0, created=null, updated=null}
+02:09:00.234 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.234 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey2, Skill: -1000.0
+02:09:00.234 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.234 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.241 | INFO  |                           JockeyEndpoint: POST /api/v1/jockeys, Jockey: HorseDto{id=null, name='Jockey3', skill=0.0, created=null, updated=null}
+02:09:00.241 | INFO  |                            JockeyService: Validate data of jockey to be inserted
+02:09:00.241 | INFO  |                            JockeyService: Insert jockey with following data: Name: Jockey3, Skill: 0.0
+02:09:00.241 | INFO  |                                JockeyDao: Insert Jockey
+02:09:00.241 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.257 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+02:09:00.257 | INFO  |                        SimulationService: Post Simulation with name: Simulation1 and participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.0}, {Horse ID: 2, Jockey ID: 2, Luck factor: 0.95}, {Horse ID: 3, Jockey ID: 3, Luck factor: 1.05}]
+02:09:00.257 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+02:09:00.258 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+02:09:00.258 | INFO  |                                 HorseDao: Get correct version of participant horses
+02:09:00.258 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.263 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+02:09:00.263 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.268 | INFO  |                        SimulationService: Insert simulation with following data: Name: Simulation1, Participants: [{Horse ID: 1, Jockey ID: 1, Luck factor: 1.0}, {Horse ID: 2, Jockey ID: 2, Luck factor: 0.95}, {Horse ID: 3, Jockey ID: 3, Luck factor: 1.05}]
+02:09:00.269 | INFO  |                               Simulation: Insert Simulation
+02:09:00.269 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.270 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+02:09:00.270 | INFO  |                        SimulationService: Set rank of participants
+02:09:00.276 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.295 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse1', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+02:09:00.295 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.295 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse1, Breed: Breed1, min. Speed: 45.0max. Speed: 55.0
+02:09:00.295 | INFO  |                                 HorseDao: Insert horse
+02:09:00.295 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.295 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.306 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse2', breed='null', minSpeed=40.0, maxSpeed=60.0, created=null, updated=null}
+02:09:00.306 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.306 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse2, min. Speed: 40.0max. Speed: 60.0
+02:09:00.306 | INFO  |                                 HorseDao: Insert horse
+02:09:00.307 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.312 | INFO  |                            HorseEndpoint: DELETE /api/v1/horses/1
+02:09:00.312 | INFO  |                             HorseService: Delete horse with id 1
+02:09:00.312 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.313 | INFO  |                                 HorseDao: Delete horse with id 1
+02:09:00.313 | INFO  |                                 HorseDao: Get horse with id 1
+02:09:00.313 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.313 | INFO  |                                 HorseDao: Check if horse with id 1 exists: insert into horsehistory if no, else do nothing
+02:09:00.313 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.314 | INFO  |                                 HorseDao: Insert into horsehistory with 1
+02:09:00.330 | INFO  |                            HorseEndpoint: GET ALL /api/v1/horses
+02:09:00.331 | INFO  |                             HorseService: Get horse/s with following optional parameters: 
+02:09:00.331 | INFO  |                                 HorseDao: Get horse/s with optional parameters: 
+02:09:00.331 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.334 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.342 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse1', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+02:09:00.342 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.342 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse1, Breed: Breed1, min. Speed: 45.0max. Speed: 55.0
+02:09:00.342 | INFO  |                                 HorseDao: Insert horse
+02:09:00.342 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.343 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.353 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse2', breed='null', minSpeed=40.0, maxSpeed=60.0, created=null, updated=null}
+02:09:00.353 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.353 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse2, min. Speed: 40.0max. Speed: 60.0
+02:09:00.353 | INFO  |                                 HorseDao: Insert horse
+02:09:00.353 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.359 | INFO  |                            HorseEndpoint: GET ALL /api/v1/horses
+02:09:00.359 | INFO  |                             HorseService: Get horse/s with following optional parameters: 
+02:09:00.359 | INFO  |                                 HorseDao: Get horse/s with optional parameters: 
+02:09:00.359 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.362 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.369 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse1', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+02:09:00.369 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.369 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse1, Breed: Breed1, min. Speed: 45.0max. Speed: 55.0
+02:09:00.369 | INFO  |                                 HorseDao: Insert horse
+02:09:00.369 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.369 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.378 | INFO  |                            HorseEndpoint: GET Horse: /api/v1/horses/1
+02:09:00.378 | INFO  |                             HorseService: Get horse with id 1
+02:09:00.378 | INFO  |                                 HorseDao: Get horse with id 1
+02:09:00.379 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.381 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.392 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse1', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+02:09:00.392 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.392 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse1, Breed: Breed1, min. Speed: 45.0max. Speed: 55.0
+02:09:00.392 | INFO  |                                 HorseDao: Insert horse
+02:09:00.392 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.392 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.401 | INFO  |                            HorseEndpoint: GET ALL /api/v1/horses
+02:09:00.401 | INFO  |                             HorseService: Get horse/s with following optional parameters: 
+02:09:00.401 | INFO  |                                 HorseDao: Get horse/s with optional parameters: 
+02:09:00.401 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.404 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.411 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name='Horse1', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+02:09:00.411 | INFO  |                             HorseService: Validate data of horse to be inserted
+02:09:00.411 | INFO  |                             HorseService: Insert Horse with following data: Name: Horse1, Breed: Breed1, min. Speed: 45.0max. Speed: 55.0
+02:09:00.411 | INFO  |                                 HorseDao: Insert horse
+02:09:00.411 | INFO  |                      DBConnectionManager: Get database connection
+02:09:00.411 | INFO  |                      DBConnectionManager: Establish database connection
+02:09:00.418 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.426 | INFO  |                      DBConnectionManager: Close database connection
+02:09:00.426 | INFO  |                      DBConnectionManager: Close database connection
