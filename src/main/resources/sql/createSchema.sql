@@ -33,10 +33,9 @@ CREATE TABLE IF NOT EXISTS  hj_combination (
   luckFactor    FLOAT          NOT NULL,
   horseId       BIGINT          NOT NULL,
   jockeyId      BIGINT          NOT NULL,
-  simulationID  BIGINT          NOT NULL
+  simulationID  BIGINT          NOT NULL REFERENCES simulation(id)
 );
 
---primary key= id+updated, since they can never be the same (time is always different for the same horse id)
 CREATE TABLE IF NOT EXISTS horseHistory(
   id        BIGINT AUTO_INCREMENT PRIMARY KEY,
   horseId   BIGINT,

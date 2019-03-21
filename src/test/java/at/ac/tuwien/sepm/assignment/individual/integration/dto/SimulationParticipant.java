@@ -2,15 +2,15 @@ package at.ac.tuwien.sepm.assignment.individual.integration.dto;
 
 import java.util.Objects;
 
-public class SimulationParticipantTestDto {
+public class SimulationParticipant {
     private Integer horseId;
     private Integer jockeyId;
     private Double luckFactor;
 
-    public SimulationParticipantTestDto() {
+    public SimulationParticipant() {
     }
 
-    public SimulationParticipantTestDto(Integer horseId, Integer jockeyId, Double luckFactor) {
+    public SimulationParticipant(Integer horseId, Integer jockeyId, Double luckFactor) {
         this.horseId = horseId;
         this.jockeyId = jockeyId;
         this.luckFactor = luckFactor;
@@ -43,8 +43,8 @@ public class SimulationParticipantTestDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SimulationParticipantTestDto)) return false;
-        SimulationParticipantTestDto that = (SimulationParticipantTestDto) o;
+        if (!(o instanceof SimulationParticipant)) return false;
+        SimulationParticipant that = (SimulationParticipant) o;
         return Objects.equals(horseId, that.horseId) &&
             Objects.equals(jockeyId, that.jockeyId) &&
             Objects.equals(luckFactor, that.luckFactor);
@@ -58,7 +58,7 @@ public class SimulationParticipantTestDto {
 
     @Override
     public String toString() {
-        return "SimulationParticipantTestDto{" +
+        return "SimulationParticipant{" +
             "horseId=" + horseId +
             ", jockeyId=" + jockeyId +
             ", luckFactor=" + luckFactor +

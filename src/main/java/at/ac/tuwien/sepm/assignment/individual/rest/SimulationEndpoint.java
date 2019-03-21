@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.rest;
 
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationInputDto;
 import at.ac.tuwien.sepm.assignment.individual.rest.dto.SimulationOutputDto;
 import at.ac.tuwien.sepm.assignment.individual.service.ISimulationService;

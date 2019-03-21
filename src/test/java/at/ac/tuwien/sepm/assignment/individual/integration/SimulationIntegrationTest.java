@@ -43,10 +43,10 @@ public class SimulationIntegrationTest {
     private static final HorseTestDto HORSE_1 = new HorseTestDto("Horse1", 40.0, 60.0);
     private static final HorseTestDto HORSE_2 = new HorseTestDto("Horse2", 49.99, 50.0);
     private static final HorseTestDto HORSE_3 = new HorseTestDto("Horse3", 45.0, 55.0);
-    private static final SimulationParticipantTestDto SIMULATION_PARTICIPANT_1 = new SimulationParticipantTestDto(1, 1, 1.0);
-    private static final SimulationParticipantTestDto SIMULATION_PARTICIPANT_2 = new SimulationParticipantTestDto(2, 2, 0.95);
-    private static final SimulationParticipantTestDto SIMULATION_PARTICIPANT_3 = new SimulationParticipantTestDto(3, 3, 1.05);
-    private static final List<SimulationParticipantTestDto> SIMULATION_PARTICIPANTS = new ArrayList<>();
+    private static final SimulationParticipant SIMULATION_PARTICIPANT_1 = new SimulationParticipant(1, 1, 1.0);
+    private static final SimulationParticipant SIMULATION_PARTICIPANT_2 = new SimulationParticipant(2, 2, 0.95);
+    private static final SimulationParticipant SIMULATION_PARTICIPANT_3 = new SimulationParticipant(3, 3, 1.05);
+    private static final List<SimulationParticipant> SIMULATION_PARTICIPANTS = new ArrayList<>();
     private static final SimulationInputTestDto SIMULATION_INPUT = new SimulationInputTestDto("Simulation1", SIMULATION_PARTICIPANTS);
     private static final HorseJockeyCombinationTestDto HORSE_JOCKEY_COMBINATION_1 =
         new HorseJockeyCombinationTestDto(2, "Horse1", "Jockey1", 53.455, 50.0, 1.0691, 1.0);

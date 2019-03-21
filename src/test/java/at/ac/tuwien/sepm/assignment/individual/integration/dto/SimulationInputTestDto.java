@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class SimulationInputTestDto {
     private String name;
-    private List<SimulationParticipantTestDto> simulationParticipants;
+    private List<SimulationParticipant> simulationParticipants;
 
     public SimulationInputTestDto() {
     }
 
-    public SimulationInputTestDto(String name, List<SimulationParticipantTestDto> simulationParticipants) {
+    public SimulationInputTestDto(String name, List<SimulationParticipant> simulationParticipants) {
         this.name = name;
         this.simulationParticipants = simulationParticipants;
     }
@@ -23,11 +23,11 @@ public class SimulationInputTestDto {
         this.name = name;
     }
 
-    public List<SimulationParticipantTestDto> getSimulationParticipants() {
+    public List<SimulationParticipant> getSimulationParticipants() {
         return simulationParticipants;
     }
 
-    public void setSimulationParticipants(List<SimulationParticipantTestDto> simulationParticipants) {
+    public void setSimulationParticipants(List<SimulationParticipant> simulationParticipants) {
         this.simulationParticipants = simulationParticipants;
     }
 

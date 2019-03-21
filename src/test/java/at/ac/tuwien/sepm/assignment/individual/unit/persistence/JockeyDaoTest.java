@@ -1,17 +1,13 @@
 package at.ac.tuwien.sepm.assignment.individual.unit.persistence;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
-import at.ac.tuwien.sepm.assignment.individual.service.exceptions.InvalidDataException;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

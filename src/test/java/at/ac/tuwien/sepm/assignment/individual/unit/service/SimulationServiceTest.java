@@ -2,9 +2,6 @@ package at.ac.tuwien.sepm.assignment.individual.unit.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.*;
 import at.ac.tuwien.sepm.assignment.individual.exceptions.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.persistence.IHorseDao;
-import at.ac.tuwien.sepm.assignment.individual.persistence.IJockeyDao;
-import at.ac.tuwien.sepm.assignment.individual.persistence.ISimulationDao;
 import at.ac.tuwien.sepm.assignment.individual.persistence.exceptions.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionManager;
 import at.ac.tuwien.sepm.assignment.individual.service.IHorseService;
