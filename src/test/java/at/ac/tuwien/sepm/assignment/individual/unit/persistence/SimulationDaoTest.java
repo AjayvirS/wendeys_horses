@@ -1,6 +1,5 @@
 package at.ac.tuwien.sepm.assignment.individual.unit.persistence;
 
-import at.ac.tuwien.sepm.assignment.individual.entity.Jockey;
 import at.ac.tuwien.sepm.assignment.individual.entity.Simulation;
 import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipant;
 import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutput;
@@ -13,11 +12,11 @@ import at.ac.tuwien.sepm.assignment.individual.persistence.util.DBConnectionMana
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,17 +61,17 @@ public class SimulationDaoTest {
         simulationParticipantsCompleted.add(new SimulationParticipantOutput(3,3,"Cradle", "Shane", 75.23,
         43.4, 48.52, 0.96f));
 
-        Simulation simulation=new Simulation();
+        Simulation tester=new Simulation();
         ArrayList<SimulationParticipant> simulationParticipants= new ArrayList<>();
         simulationParticipants.add(new SimulationParticipant(1,1, 1.03f));
         simulationParticipants.add(new SimulationParticipant(2,2, 0.99f));
         simulationParticipants.add(new SimulationParticipant(2,2, 0.96f));
-
-        simulation.setId(1);
-        simulation.setName("Simulation 1");
-        simulation.setCreated(LocalDateTime.now());
-        simulation.setSimulationParticipants(simulationParticipants);
-        simulationDao.insertOne(simulation, simulationParticipantsCompleted);
+        tester.setId(1);
+        tester.setName("Simulation 1");
+        tester.setCreated(LocalDateTime.now());
+        tester.setSimulationParticipants(simulationParticipants);
+        Simulation expected = simulationDao.insertOne(tester, simulationParticipantsCompleted);
+        assertEquals(expected, tester);
     }
 
     @Test (expected = NullPointerException.class)

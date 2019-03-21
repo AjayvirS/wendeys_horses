@@ -1206,3 +1206,125 @@
 19:55:01.208 | INFO  |                      DBConnectionManager: Close database connection
 19:55:01.216 | INFO  |                      DBConnectionManager: Close database connection
 19:55:01.216 | INFO  |                      DBConnectionManager: Close database connection
+23:17:35.574 | INFO  |                             HorseDaoTest: Starting HorseDaoTest on Ajayvirs-MacBook-Pro.local with PID 68790 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+23:17:35.578 | DEBUG |                             HorseDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+23:17:35.578 | INFO  |                             HorseDaoTest: The following profiles are active: test
+23:17:36.648 | DEBUG |                            HorseEndpoint: Defined Endpoint
+23:17:36.667 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+23:17:36.680 | INFO  |                       SimulationEndpoint: Defined Endpoint
+23:17:37.635 | INFO  |                             HorseDaoTest: Started HorseDaoTest in 7.606 seconds (JVM running for 9.645)
+23:17:38.077 | INFO  |                                 HorseDao: Insert horse
+23:17:38.083 | INFO  |                      DBConnectionManager: Get database connection
+23:17:38.084 | INFO  |                      DBConnectionManager: Establish database connection
+23:17:38.358 | INFO  |                      DBConnectionManager: Close database connection
+23:17:38.365 | INFO  |                      DBConnectionManager: Close database connection
+23:22:56.583 | INFO  |                             HorseDaoTest: Starting HorseDaoTest on Ajayvirs-MacBook-Pro.local with PID 68807 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+23:22:56.588 | DEBUG |                             HorseDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+23:22:56.588 | INFO  |                             HorseDaoTest: The following profiles are active: test
+23:22:58.215 | DEBUG |                            HorseEndpoint: Defined Endpoint
+23:22:58.227 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+23:22:58.258 | INFO  |                       SimulationEndpoint: Defined Endpoint
+23:22:59.981 | INFO  |                             HorseDaoTest: Started HorseDaoTest in 9.427 seconds (JVM running for 11.878)
+23:23:00.858 | INFO  |                                 HorseDao: Insert horse
+23:23:00.871 | INFO  |                      DBConnectionManager: Get database connection
+23:23:00.871 | INFO  |                      DBConnectionManager: Establish database connection
+23:23:01.275 | INFO  |                      DBConnectionManager: Close database connection
+23:23:01.287 | INFO  |                      DBConnectionManager: Close database connection
+23:25:29.225 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on Ajayvirs-MacBook-Pro.local with PID 68814 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+23:25:29.228 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+23:25:29.228 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+23:25:30.632 | DEBUG |                            HorseEndpoint: Defined Endpoint
+23:25:30.636 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+23:25:30.644 | INFO  |                       SimulationEndpoint: Defined Endpoint
+23:25:31.031 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.195 seconds (JVM running for 8.304)
+23:25:54.598 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:25:54.616 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 5, Luck factor: 0.96}, {Horse ID: 2, Jockey ID: 4, Luck factor: 1.03}, {Horse ID: 3, Jockey ID: 3, Luck factor: 1.0}, {Horse ID: 4, Jockey ID: 2, Luck factor: 1.06}]
+23:25:54.616 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:25:54.617 | ERROR |                        SimulationService: Luck factor of participant out of range.
+23:26:23.738 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:26:23.738 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 5, Luck factor: 0.96}, {Horse ID: 2, Jockey ID: 4, Luck factor: 1.03}, {Horse ID: 3, Jockey ID: 3, Luck factor: 1.0}, {Horse ID: 4, Jockey ID: 2, Luck factor: 1.05}]
+23:26:23.738 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:26:23.738 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+23:26:23.749 | INFO  |                                 HorseDao: Get correct version of participant horses
+23:26:23.749 | INFO  |                      DBConnectionManager: Get database connection
+23:26:23.750 | INFO  |                      DBConnectionManager: Establish database connection
+23:26:23.978 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+23:26:23.978 | INFO  |                      DBConnectionManager: Get database connection
+23:26:57.816 | INFO  |                           JockeyEndpoint: GET ALL /api/v1/jockeys:
+23:26:57.817 | INFO  |                            JockeyService: Get jockey/s with following optional parameters: 
+23:26:57.817 | INFO  |                                JockeyDao: Get jockey/s with following optional parameters: 
+23:26:57.817 | INFO  |                      DBConnectionManager: Get database connection
+23:27:18.454 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:27:18.455 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 2, Luck factor: 0.96}]
+23:27:18.455 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:27:18.455 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+23:27:18.455 | INFO  |                                 HorseDao: Get correct version of participant horses
+23:27:18.455 | INFO  |                      DBConnectionManager: Get database connection
+23:27:18.460 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+23:27:18.461 | INFO  |                      DBConnectionManager: Get database connection
+23:27:18.469 | INFO  |                        SimulationService: Insert simulation with following data: Name: Simulation 1, Participants: [{Horse ID: 1, Jockey ID: 2, Luck factor: 0.96}]
+23:27:22.628 | INFO  |                               Simulation: Insert Simulation
+23:27:22.629 | INFO  |                      DBConnectionManager: Get database connection
+23:27:43.397 | INFO  |                        SimulationService: Simulation data calculated and sorted by highest average Speed
+23:27:43.398 | INFO  |                        SimulationService: Set rank of participants
+23:27:43.461 | INFO  |                      DBConnectionManager: Close database connection
+23:40:03.815 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on Ajayvirs-MacBook-Pro.local with PID 68853 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+23:40:03.817 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+23:40:03.818 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+23:40:05.493 | DEBUG |                            HorseEndpoint: Defined Endpoint
+23:40:05.497 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+23:40:05.502 | INFO  |                       SimulationEndpoint: Defined Endpoint
+23:40:05.899 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 2.494 seconds (JVM running for 8.763)
+23:40:09.657 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:40:09.673 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 3, Luck factor: 0.96}]
+23:40:09.673 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:40:09.673 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+23:40:09.673 | INFO  |                                 HorseDao: Get correct version of participant horses
+23:40:09.673 | INFO  |                      DBConnectionManager: Get database connection
+23:40:09.673 | INFO  |                      DBConnectionManager: Establish database connection
+23:40:09.977 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+23:40:09.982 | INFO  |                      DBConnectionManager: Get database connection
+23:40:21.821 | INFO  |                                JockeyDao: Could not find participants jockeys
+23:40:21.877 | INFO  |                      DBConnectionManager: Close database connection
+23:40:52.559 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on Ajayvirs-MacBook-Pro.local with PID 68859 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+23:40:52.564 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+23:40:52.565 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+23:40:53.821 | DEBUG |                            HorseEndpoint: Defined Endpoint
+23:40:53.825 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+23:40:53.831 | INFO  |                       SimulationEndpoint: Defined Endpoint
+23:40:54.173 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 1.985 seconds (JVM running for 7.909)
+23:40:56.635 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:40:56.651 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 3, Luck factor: 0.96}, {Horse ID: 2, Jockey ID: 2, Luck factor: 0.96}]
+23:40:56.652 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:40:56.652 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+23:40:56.652 | INFO  |                                 HorseDao: Get correct version of participant horses
+23:40:56.652 | INFO  |                      DBConnectionManager: Get database connection
+23:40:56.652 | INFO  |                      DBConnectionManager: Establish database connection
+23:40:57.050 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+23:40:57.050 | INFO  |                      DBConnectionManager: Get database connection
+23:41:13.735 | INFO  |                      DBConnectionManager: Close database connection
+23:52:53.870 | INFO  |              WendysRennpferdeApplication: Starting WendysRennpferdeApplication on Ajayvirs-MacBook-Pro.local with PID 68897 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+23:52:53.872 | DEBUG |              WendysRennpferdeApplication: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+23:52:53.873 | INFO  |              WendysRennpferdeApplication: No active profile set, falling back to default profiles: default
+23:52:55.019 | DEBUG |                            HorseEndpoint: Defined Endpoint
+23:52:55.022 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+23:52:55.025 | INFO  |                       SimulationEndpoint: Defined Endpoint
+23:52:55.335 | INFO  |              WendysRennpferdeApplication: Started WendysRennpferdeApplication in 1.751 seconds (JVM running for 7.641)
+23:53:02.098 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:53:02.107 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 3, Luck factor: 0.96}, {Horse ID: 2, Jockey ID: 2, Luck factor: 0.96}]
+23:53:02.108 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:53:02.108 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+23:53:02.108 | INFO  |                                 HorseDao: Get correct version of participant horses
+23:53:02.109 | INFO  |                      DBConnectionManager: Get database connection
+23:53:02.109 | INFO  |                      DBConnectionManager: Establish database connection
+23:53:02.354 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+23:53:02.354 | INFO  |                      DBConnectionManager: Get database connection
+23:53:24.441 | INFO  |                       SimulationEndpoint: POST simulation: /api/v1/simulations
+23:53:24.442 | INFO  |                        SimulationService: Post Simulation with name: Simulation 1 and participants: [{Horse ID: 1, Jockey ID: 3, Luck factor: 0.96}]
+23:53:24.442 | INFO  |                        SimulationService: Validate data of simulation to be inserted
+23:53:24.442 | INFO  |                        SimulationService: Prepare Simulation and calculate values based on horse speed, luck and skill
+23:53:24.442 | INFO  |                                 HorseDao: Get correct version of participant horses
+23:53:24.442 | INFO  |                      DBConnectionManager: Get database connection
+23:53:24.451 | INFO  |                                JockeyDao: Get correct version of participant jockeys
+23:53:24.451 | INFO  |                      DBConnectionManager: Get database connection
+23:53:37.445 | INFO  |                      DBConnectionManager: Close database connection
