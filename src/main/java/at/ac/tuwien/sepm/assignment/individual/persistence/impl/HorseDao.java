@@ -224,7 +224,6 @@ public class HorseDao implements IHorseDao {
             LOGGER.error("Could not find horse/s with following optional parameters: "+horse.printOptionals());
         }
         return filteredList;
-
     }
 
 
@@ -312,7 +311,6 @@ public class HorseDao implements IHorseDao {
         //then it proceeds to get the most recently updated horse right before the created date
         HashMap<Integer, Horse> horsesById= new HashMap<>();
         Connection con=dbConnectionManager.getConnection();
-        sim.setCreated(LocalDateTime.now());
 
         String sql="SELECT *\n" +
             "FROM (\n" +

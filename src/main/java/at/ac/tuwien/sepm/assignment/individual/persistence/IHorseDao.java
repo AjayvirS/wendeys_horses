@@ -48,5 +48,5 @@ public interface IHorseDao {
      * @return A list of filtered records of horses as ArrayList
      * @throws PersistenceException will be thrown if something goes wrong during the database access
      */
-    ArrayList getAllOrFiltered(Horse horse) throws PersistenceException;
+    ArrayList<Horse> getAllOrFiltered(Horse horse) throws PersistenceException;
 }
