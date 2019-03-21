@@ -26,6 +26,7 @@ public class JockeyDaoTest {
     IJockeyDao jockeyDao;
     @Autowired
     DBConnectionManager dbConnectionManager;
+    private static final Jockey TEST_JOCKEY1=new Jockey(null,"Tom", 76.4, null,null);
 
     /**
      * It is important to close the database connection after each test in order to clean the in-memory database
@@ -37,7 +38,7 @@ public class JockeyDaoTest {
 
     @Test(expected = NotFoundException.class)
     public void givenInsertDeleteFind_thenNotFoundException() throws PersistenceException, NotFoundException {
-        jockeyDao.insertOne(new Jockey(null,"Tom", 76.4, null,null));
+        jockeyDao.insertOne(TEST_JOCKEY1);
         jockeyDao.deleteOneById(1);
         jockeyDao.findOneById(1);
     }

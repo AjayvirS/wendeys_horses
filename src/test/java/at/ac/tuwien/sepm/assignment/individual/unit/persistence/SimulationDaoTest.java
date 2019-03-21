@@ -34,6 +34,19 @@ public class SimulationDaoTest {
     IJockeyDao jockeyDao;
     @Autowired
     DBConnectionManager dbConnectionManager;
+    private static final ArrayList<SimulationParticipant> SIMULATION_PARTICIPANTS= new ArrayList<>();
+    private static final ArrayList<SimulationParticipantOutput> TEST_SIMPARTCOMP = new ArrayList<>();
+    private static final SimulationParticipantOutput SIMULATION_PARTICIPANT_OUTPUT1 =new SimulationParticipantOutput(1,1,"Don", "Jake", 60.65,
+        60.0, 35.5, 1.03f);
+    private static final SimulationParticipantOutput SIMULATION_PARTICIPANT_OUTPUT2 =new SimulationParticipantOutput(2,2,"Cat", "Thomas", 88.56,
+            55.4, 38.55, 0.99f);
+    private static final SimulationParticipantOutput SIMULATION_PARTICIPANT_OUTPUT3 = new SimulationParticipantOutput(3,3,"Cradle", "Shane", 75.23,
+        43.4, 48.52, 0.96f);
+    private static final SimulationParticipant SIMULATION_PARTICIPANT1=new SimulationParticipant(1,1, 1.03f);
+    private static final SimulationParticipant SIMULATION_PARTICIPANT2=new SimulationParticipant(2,2, 0.99f);
+    private static final SimulationParticipant SIMULATION_PARTICIPANT3=new SimulationParticipant(2,2, 0.96f);
+
+
 
     /**
      * It is important to close the database connection after each test in order to clean the in-memory database
@@ -51,38 +64,32 @@ public class SimulationDaoTest {
 
     @Test
     public void addSimulationData_whenInsertingSimulation_thenGetSimulationData() throws PersistenceException, NotFoundException {
-        ArrayList<SimulationParticipantOutput> simulationParticipantsCompleted= new ArrayList<>();
 
-        simulationParticipantsCompleted.add(new SimulationParticipantOutput(1,1,"Don", "Jake", 60.65,
-        60.0, 35.5, 1.03f));
 
-        simulationParticipantsCompleted.add(new SimulationParticipantOutput(2,2,"Cat", "Thomas", 88.56,
-        55.4, 38.55, 0.99f));
-        simulationParticipantsCompleted.add(new SimulationParticipantOutput(3,3,"Cradle", "Shane", 75.23,
-        43.4, 48.52, 0.96f));
+        TEST_SIMPARTCOMP.add(SIMULATION_PARTICIPANT_OUTPUT1);
+        TEST_SIMPARTCOMP.add(SIMULATION_PARTICIPANT_OUTPUT2);
+        TEST_SIMPARTCOMP.add(SIMULATION_PARTICIPANT_OUTPUT3);
 
         Simulation tester=new Simulation();
-        ArrayList<SimulationParticipant> simulationParticipants= new ArrayList<>();
-        simulationParticipants.add(new SimulationParticipant(1,1, 1.03f));
-        simulationParticipants.add(new SimulationParticipant(2,2, 0.99f));
-        simulationParticipants.add(new SimulationParticipant(2,2, 0.96f));
+
+        SIMULATION_PARTICIPANTS.add(SIMULATION_PARTICIPANT1);
+        SIMULATION_PARTICIPANTS.add(SIMULATION_PARTICIPANT2);
+        SIMULATION_PARTICIPANTS.add(SIMULATION_PARTICIPANT3);
         tester.setId(1);
         tester.setName("Simulation 1");
         tester.setCreated(LocalDateTime.now());
-        tester.setSimulationParticipants(simulationParticipants);
-        Simulation expected = simulationDao.insertOne(tester, simulationParticipantsCompleted);
+        tester.setSimulationParticipants(SIMULATION_PARTICIPANTS);
+        Simulation expected = simulationDao.insertOne(tester, TEST_SIMPARTCOMP);
         assertEquals(expected, tester);
     }
 
     @Test (expected = NullPointerException.class)
     public void addSimulationDataWithNullParticipantlist() throws PersistenceException, NotFoundException {
-        ArrayList<SimulationParticipantOutput> simulationParticipantsCompleted= new ArrayList<>();
-
         Simulation simulation=new Simulation();
         simulation.setId(1);
         simulation.setName("Simulation 1");
         simulation.setCreated(LocalDateTime.now());
-        simulationDao.insertOne(simulation, simulationParticipantsCompleted);
+        simulationDao.insertOne(simulation, null);
     }
 
 

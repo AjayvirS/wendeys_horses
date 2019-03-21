@@ -19,7 +19,8 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
 public class HorseDaoTest {
-
+    private static final Horse TEST_HORSE1 = new Horse(null, "Donald", "American", 50.0, 55.0, null, null);
+    private static final Horse TEST_HORSE2= new Horse(null,null,null,56.0,null,null,null);
     @Autowired
     IHorseDao horseDao;
     @Autowired
@@ -41,9 +42,8 @@ public class HorseDaoTest {
 
     @Test
     public void WhenInsertHorse_giveHorseByIdAndFindHorseById() throws PersistenceException{
-        Horse testerObj = new Horse(null, "Donald", "American", 50.0, 55.0, null, null);
-        Horse expectedObj=horseDao.insertOne(testerObj);
-        assertEquals(testerObj,expectedObj);
+        Horse expectedObj=horseDao.insertOne(TEST_HORSE1);
+        assertEquals(TEST_HORSE1,expectedObj);
     }
 
     @Test(expected= NotFoundException.class)
@@ -53,8 +53,8 @@ public class HorseDaoTest {
 
     @Test(expected = InvalidDataException.class)
     public void WhenUpdatedMinSpeed_XOR_MaxSpeed_AndMAXSmallerMin_thengetInvalidDataException() throws PersistenceException, NotFoundException, InvalidDataException {
-        horseDao.insertOne(new Horse(null, "Donald", "American", 50.0, 55.0, null, null));
-        horseDao.updateOneById(1, new Horse(null,null,null,56.0,null,null,null));
+        horseDao.insertOne(TEST_HORSE1);
+        horseDao.updateOneById(1, TEST_HORSE2);
     }
 
 }

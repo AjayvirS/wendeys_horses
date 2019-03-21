@@ -402,3 +402,185 @@
 02:09:00.418 | INFO  |                      DBConnectionManager: Close database connection
 02:09:00.426 | INFO  |                      DBConnectionManager: Close database connection
 02:09:00.426 | INFO  |                      DBConnectionManager: Close database connection
+12:22:38.175 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 69960 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:22:38.177 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:22:38.178 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:22:40.177 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:22:40.184 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:22:40.190 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:22:40.748 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 7.985 seconds (JVM running for 10.305)
+12:22:41.433 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:22:41.434 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:22:41.435 | ERROR |                             HorseService: Name is not set.
+12:22:41.470 | INFO  |                      DBConnectionManager: Close database connection
+12:22:41.488 | INFO  |                      DBConnectionManager: Close database connection
+12:23:10.014 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 69964 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:23:10.016 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:23:10.016 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:23:11.406 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:23:11.414 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:23:11.422 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:23:11.986 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 7.451 seconds (JVM running for 9.627)
+12:23:12.646 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:23:12.647 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:23:12.647 | ERROR |                             HorseService: Name is not set.
+12:23:12.681 | INFO  |                      DBConnectionManager: Close database connection
+12:23:12.687 | INFO  |                      DBConnectionManager: Close database connection
+12:23:56.813 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 69970 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:23:56.816 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:23:56.816 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:23:59.073 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:23:59.083 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:23:59.092 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:23:59.780 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 8.789 seconds (JVM running for 10.918)
+12:24:00.558 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:24:00.562 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:24:00.563 | ERROR |                             HorseService: Name is not set.
+12:24:00.630 | INFO  |                      DBConnectionManager: Close database connection
+12:24:00.641 | INFO  |                      DBConnectionManager: Close database connection
+12:24:42.893 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 69974 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:24:42.895 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:24:42.895 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:24:45.038 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:24:45.050 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:24:45.062 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:24:45.696 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 8.395 seconds (JVM running for 10.521)
+12:24:46.235 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:24:46.236 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:24:46.236 | ERROR |                             HorseService: Name is not set.
+12:24:46.271 | INFO  |                      DBConnectionManager: Close database connection
+12:24:46.276 | INFO  |                      DBConnectionManager: Close database connection
+12:25:41.306 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 69977 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:25:41.310 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:25:41.311 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:25:43.729 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:25:43.738 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:25:43.748 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:25:44.928 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 9.411 seconds (JVM running for 12.121)
+12:26:00.583 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:26:00.585 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:26:00.585 | ERROR |                             HorseService: Name is not set.
+12:26:23.459 | INFO  |                      DBConnectionManager: Close database connection
+12:26:32.034 | INFO  |                      DBConnectionManager: Close database connection
+12:27:11.303 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 69984 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:27:11.308 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:27:11.308 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:27:13.868 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:27:13.877 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:27:13.886 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:27:14.745 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 9.211 seconds (JVM running for 11.35)
+12:27:21.228 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:27:21.231 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:27:21.231 | ERROR |                             HorseService: Name is not set.
+12:27:33.382 | INFO  |                      DBConnectionManager: Close database connection
+12:27:33.391 | INFO  |                      DBConnectionManager: Close database connection
+12:50:32.295 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 70011 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:50:32.299 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:50:32.300 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:50:34.030 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:50:34.037 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:50:34.044 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:50:34.638 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 7.851 seconds (JVM running for 10.142)
+12:50:35.614 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:50:35.626 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:50:35.626 | ERROR |                             HorseService: Name is not set.
+12:50:35.679 | INFO  |                      DBConnectionManager: Close database connection
+12:50:35.689 | INFO  |                      DBConnectionManager: Close database connection
+12:54:42.711 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 70025 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:54:42.716 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:54:42.716 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:54:44.412 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:54:44.420 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:54:44.428 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:54:44.994 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 7.809 seconds (JVM running for 9.899)
+12:54:45.598 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:54:45.599 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:54:45.599 | ERROR |                             HorseService: Name is not set.
+12:54:45.642 | INFO  |                      DBConnectionManager: Close database connection
+12:54:45.652 | INFO  |                      DBConnectionManager: Close database connection
+12:55:26.255 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 70030 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:55:26.257 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:55:26.257 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:55:27.632 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:55:27.639 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:55:27.647 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:55:28.181 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 7.383 seconds (JVM running for 9.413)
+12:55:28.719 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:55:28.720 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:55:28.720 | ERROR |                             HorseService: Name is not set.
+12:55:28.756 | INFO  |                      DBConnectionManager: Close database connection
+12:55:28.768 | INFO  |                      DBConnectionManager: Close database connection
+12:56:00.950 | INFO  |                        HorseEndpointTest: Starting HorseEndpointTest on Ajayvirs-MacBook-Pro.local with PID 70035 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+12:56:00.952 | DEBUG |                        HorseEndpointTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+12:56:00.952 | INFO  |                        HorseEndpointTest: The following profiles are active: test
+12:56:02.450 | DEBUG |                            HorseEndpoint: Defined Endpoint
+12:56:02.458 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+12:56:02.464 | INFO  |                       SimulationEndpoint: Defined Endpoint
+12:56:03.068 | INFO  |                        HorseEndpointTest: Started HorseEndpointTest in 7.635 seconds (JVM running for 9.671)
+12:56:03.601 | INFO  |                            HorseEndpoint: POST /api/v1/horses, Horse: HorseDto{id=null, name=' ', breed='Breed1', minSpeed=45.0, maxSpeed=55.0, created=null, updated=null}
+12:56:03.604 | INFO  |                             HorseService: Validate data of horse to be inserted
+12:56:03.604 | ERROR |                             HorseService: Name is not set.
+12:56:03.639 | INFO  |                      DBConnectionManager: Close database connection
+12:56:03.646 | INFO  |                      DBConnectionManager: Close database connection
+13:13:41.833 | INFO  |                             HorseDaoTest: Starting HorseDaoTest on Ajayvirs-MacBook-Pro.local with PID 70146 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+13:13:41.837 | DEBUG |                             HorseDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+13:13:41.837 | INFO  |                             HorseDaoTest: The following profiles are active: test
+13:13:42.776 | DEBUG |                            HorseEndpoint: Defined Endpoint
+13:13:42.789 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+13:13:42.797 | INFO  |                       SimulationEndpoint: Defined Endpoint
+13:13:43.623 | INFO  |                             HorseDaoTest: Started HorseDaoTest in 7.598 seconds (JVM running for 9.421)
+13:13:44.048 | INFO  |                                 HorseDao: Insert horse
+13:13:44.057 | INFO  |                      DBConnectionManager: Get database connection
+13:13:44.057 | INFO  |                      DBConnectionManager: Establish database connection
+13:13:44.317 | INFO  |                      DBConnectionManager: Close database connection
+13:13:44.327 | INFO  |                      DBConnectionManager: Close database connection
+13:16:25.024 | INFO  |                             HorseDaoTest: Starting HorseDaoTest on Ajayvirs-MacBook-Pro.local with PID 70155 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+13:16:25.028 | DEBUG |                             HorseDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+13:16:25.028 | INFO  |                             HorseDaoTest: The following profiles are active: test
+13:16:25.962 | DEBUG |                            HorseEndpoint: Defined Endpoint
+13:16:25.974 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+13:16:25.985 | INFO  |                       SimulationEndpoint: Defined Endpoint
+13:16:26.861 | INFO  |                             HorseDaoTest: Started HorseDaoTest in 7.512 seconds (JVM running for 9.199)
+13:16:27.284 | INFO  |                                 HorseDao: Insert horse
+13:16:27.291 | INFO  |                      DBConnectionManager: Get database connection
+13:16:27.292 | INFO  |                      DBConnectionManager: Establish database connection
+13:16:27.537 | INFO  |                      DBConnectionManager: Get database connection
+13:16:27.538 | INFO  |                                 HorseDao: Update horse with id 1
+13:16:27.538 | INFO  |                                 HorseDao: Get horse with id 1
+13:16:27.538 | INFO  |                      DBConnectionManager: Get database connection
+13:16:27.544 | ERROR |                                 HorseDao: Maximum speed is smaller than minimum speed
+13:16:27.545 | INFO  |                      DBConnectionManager: Close database connection
+13:16:27.555 | INFO  |                      DBConnectionManager: Close database connection
+13:31:19.577 | INFO  |                        SimulationDaoTest: Starting SimulationDaoTest on Ajayvirs-MacBook-Pro.local with PID 70191 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+13:31:19.580 | DEBUG |                        SimulationDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+13:31:19.581 | INFO  |                        SimulationDaoTest: The following profiles are active: test
+13:31:20.347 | DEBUG |                            HorseEndpoint: Defined Endpoint
+13:31:20.356 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+13:31:20.365 | INFO  |                       SimulationEndpoint: Defined Endpoint
+13:31:21.009 | INFO  |                        SimulationDaoTest: Started SimulationDaoTest in 6.962 seconds (JVM running for 8.454)
+13:31:21.423 | INFO  |                               Simulation: Insert Simulation
+13:31:21.423 | INFO  |                      DBConnectionManager: Get database connection
+13:31:21.423 | INFO  |                      DBConnectionManager: Establish database connection
+13:31:21.655 | INFO  |                      DBConnectionManager: Close database connection
+13:31:21.664 | INFO  |                      DBConnectionManager: Close database connection
+13:32:19.620 | INFO  |                        SimulationDaoTest: Starting SimulationDaoTest on Ajayvirs-MacBook-Pro.local with PID 70198 (started by ajayvirsingh in /Users/ajayvirsingh/Desktop/4Semester/SEPM PR/Einzelphase/Project/sepm-individual-assignment)
+13:32:19.625 | DEBUG |                        SimulationDaoTest: Running with Spring Boot v2.1.2.RELEASE, Spring v5.1.4.RELEASE
+13:32:19.626 | INFO  |                        SimulationDaoTest: The following profiles are active: test
+13:32:20.358 | DEBUG |                            HorseEndpoint: Defined Endpoint
+13:32:20.367 | DEBUG |                           JockeyEndpoint: Defined Endpoint
+13:32:20.374 | INFO  |                       SimulationEndpoint: Defined Endpoint
+13:32:21.175 | INFO  |                        SimulationDaoTest: Started SimulationDaoTest in 7.23 seconds (JVM running for 9.482)
+13:32:21.573 | INFO  |                               Simulation: Get simulation with id 1
+13:32:21.573 | INFO  |                      DBConnectionManager: Get database connection
+13:32:21.573 | INFO  |                      DBConnectionManager: Establish database connection
+13:32:21.810 | ERROR |                               Simulation: Could not find simulation with id 1
+13:32:21.812 | INFO  |                      DBConnectionManager: Close database connection
+13:32:21.834 | INFO  |                               Simulation: Insert Simulation
+13:32:21.834 | INFO  |                      DBConnectionManager: Get database connection
+13:32:21.834 | INFO  |                      DBConnectionManager: Establish database connection
+13:32:21.854 | INFO  |                      DBConnectionManager: Close database connection
+13:32:21.859 | INFO  |                               Simulation: Insert Simulation
+13:32:21.860 | INFO  |                      DBConnectionManager: Get database connection
+13:32:21.860 | INFO  |                      DBConnectionManager: Establish database connection
+13:32:21.875 | INFO  |                      DBConnectionManager: Close database connection
+13:32:21.882 | INFO  |                      DBConnectionManager: Close database connection
