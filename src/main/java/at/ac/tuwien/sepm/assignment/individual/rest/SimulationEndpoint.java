@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+
 
 @RestController
 @RequestMapping("/api/v1/simulations")
@@ -60,14 +62,14 @@ public class SimulationEndpoint {
     }
 
     @RequestMapping(method=RequestMethod.GET)
-    SimulationOutputDto[] getAllOrFiltered(SimulationInputDto simulationInputDto){
+    ArrayList<SimulationOutputDto> getAllOrFiltered(SimulationInputDto simulationInputDto){
         LOGGER.info("GET ALL"+BASE_URL+(simulationInputDto.getName()==null?"":"Filtered: "+simulationInputDto.getName()));
 
         try {
             return simulationMapper.entitiesToDto(simulationService.getAllOrFiltered(simulationMapper.dtoToEntity(simulationInputDto)));
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Error during processing simulation with following optionals " + simulationMapper.dtoToEntity(simulationInputDto).getName());
+                "Error during processing simulation with following optionals: " + "Name= "+simulationMapper.dtoToEntity(simulationInputDto).getName());
         }
 
     }
