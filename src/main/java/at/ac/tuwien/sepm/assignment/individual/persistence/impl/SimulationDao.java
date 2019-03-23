@@ -79,7 +79,7 @@ public class SimulationDao implements ISimulationDao {
     public Simulation getOneById(Integer id) throws PersistenceException, NotFoundException {
         LOGGER.info("Get simulation with id " + id);
         Connection con = dbConnectionManager.getConnection();
-        String sql = "SELECT hj_combination.id as uid, horseid, jockeyid, luckfactor, simulationid, name, created FROM simulation JOIN hj_combination ON simulation.id=simulationid WHERE simulation" +
+        String sql = "SELECT hj_combination.id as uid, horseid, jockeyid, luckfactor, simulationid as id, name, created FROM simulation JOIN hj_combination ON simulation.id=simulationid WHERE simulation" +
             "id=?";
         Simulation simulation;
 
@@ -161,7 +161,7 @@ public class SimulationDao implements ISimulationDao {
 
     private static Simulation dbResultToSimulation(ResultSet result) throws SQLException {
         return new Simulation(
-            result.getInt("simulationid"),
+            result.getInt("id"),
             result.getString("name"),
             result.getTimestamp("created").toLocalDateTime());
     }

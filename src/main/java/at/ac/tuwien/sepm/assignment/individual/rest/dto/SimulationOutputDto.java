@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.SimulationParticipantOutpu
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -12,11 +13,11 @@ public class SimulationOutputDto{
     private Integer id;
     private String name;
     private LocalDateTime created;
-    private SimulationParticipantOutput[] horseJockeyCombinations;
+    private ArrayList<SimulationParticipantOutput> horseJockeyCombinations;
     public SimulationOutputDto(){
 
     }
-    public SimulationOutputDto(Integer id, String name, LocalDateTime created, SimulationParticipantOutput[] horseJockeyCombinations){
+    public SimulationOutputDto(Integer id, String name, LocalDateTime created, ArrayList<SimulationParticipantOutput> horseJockeyCombinations){
         this.horseJockeyCombinations = horseJockeyCombinations;
         this.id=id;
         this.name=name;
@@ -48,11 +49,12 @@ public class SimulationOutputDto{
         this.created = created;
     }
 
-    public SimulationParticipantOutput[] getHorseJockeyCombinations() {
+
+    public ArrayList<SimulationParticipantOutput> getHorseJockeyCombinations() {
         return horseJockeyCombinations;
     }
 
-    public void setHorseJockeyCombinations(SimulationParticipantOutput[] horseJockeyCombinations) {
+    public void setHorseJockeyCombinations(ArrayList<SimulationParticipantOutput> horseJockeyCombinations) {
         this.horseJockeyCombinations = horseJockeyCombinations;
     }
 
@@ -62,7 +64,7 @@ public class SimulationOutputDto{
         if (!(o instanceof SimulationOutputDto)) return false;
         SimulationOutputDto simulationOutputDto = (SimulationOutputDto) o;
         return Objects.equals(name, simulationOutputDto.name) &&
-            Arrays.equals(horseJockeyCombinations, simulationOutputDto.horseJockeyCombinations);
+            horseJockeyCombinations.equals(simulationOutputDto.horseJockeyCombinations);
     }
 
     @Override
@@ -77,7 +79,7 @@ public class SimulationOutputDto{
             "id= "+id+
             "name='" + name + '\'' +
             "created= "+ created+
-            ", Simulation Participants Completed=" + Arrays.toString(horseJockeyCombinations) +
+            ", Simulation Participants Completed=" + horseJockeyCombinations.toString() +
             '}';
     }
 }

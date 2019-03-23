@@ -13,24 +13,17 @@ public class SimulationMapper {
 
     public SimulationOutputDto entityToDto(Simulation simulation) {
 
-        SimulationParticipantOutput[]simPartsComp= new SimulationParticipantOutput[simulation.getSimulationParticipantsCompleted().size()];
 
-        for (int i = 0; i < simPartsComp.length; i++) {
-
-            simPartsComp[i]=simulation.getSimulationParticipantsCompleted().get(i);
-
-        }
-
-        return new SimulationOutputDto(simulation.getId(),simulation.getName(),simulation.getCreated(), simPartsComp);
+        return new SimulationOutputDto(simulation.getId(),simulation.getName(),simulation.getCreated(), simulation.getSimulationParticipantsCompleted());
     }
     public Simulation DtoToEntity(SimulationInputDto simulationInputDto){
         return new Simulation(simulationInputDto.getName(), simulationInputDto.getSimulationParticipants());
     }
-    public SimulationOutputDto[] entitiesToDto(ArrayList<Simulation> simulations){
-        SimulationOutputDto[] simulationOutputDtos = new SimulationOutputDto[simulations.size()];
+    public ArrayList<SimulationOutputDto> entitiesToDto(ArrayList<Simulation> simulations){
+        ArrayList<SimulationOutputDto> simulationOutputDtos= new ArrayList<>();
 
         for (int i = 0; i < simulations.size(); i++) {
-            simulationOutputDtos[i]= new SimulationOutputDto(simulations.get(i).getId(),simulations.get(i).getName(), simulations.get(i).getCreated(),null);
+                simulationOutputDtos.add(entityToDto(simulations.get(i)));
         }
         return simulationOutputDtos;
     }
